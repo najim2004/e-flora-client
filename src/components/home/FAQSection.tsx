@@ -4,23 +4,28 @@ import { FAQ } from "@/types";
 const faqs: FAQ[] = [
   {
     question: "Do I need internet access to use all features?",
-    answer: "While internet connection is required for initial setup and updates, the disease detection feature can work offline once the model is downloaded to your device. The chatbot and crop suggestions require internet connectivity.",
+    answer:
+      "While internet connection is required for initial setup and updates, the disease detection feature can work offline once the model is downloaded to your device. The chatbot and crop suggestions require internet connectivity.",
   },
   {
     question: "Is Mati'r Sathi available in languages other than Bengali?",
-    answer: "Currently, Mati'r Sathi is available in Bengali and English. We're working on adding more regional languages to better serve farmers across South Asia.",
+    answer:
+      "Currently, Mati'r Sathi is available in Bengali and English. We're working on adding more regional languages to better serve farmers across South Asia.",
   },
   {
     question: "How accurate is the disease detection?",
-    answer: "Our disease detection has a 95% accuracy rate for the 50+ most common crop diseases in the region. The system is continuously learning and improving based on user feedback.",
+    answer:
+      "Our disease detection has a 95% accuracy rate for the 50+ most common crop diseases in the region. The system is continuously learning and improving based on user feedback.",
   },
   {
     question: "Is there a cost to use Mati'r Sathi?",
-    answer: "Mati'r Sathi offers a free basic plan with limited features. Premium features like advanced soil analysis and personalized crop planning are available through affordable subscription plans.",
+    answer:
+      "Mati'r Sathi offers a free basic plan with limited features. Premium features like advanced soil analysis and personalized crop planning are available through affordable subscription plans.",
   },
   {
     question: "Can I use Mati'r Sathi on basic smartphones?",
-    answer: "Yes, Mati'r Sathi is optimized to work on entry-level smartphones with minimal storage and processing power. We also offer SMS-based services for farmers without smartphones.",
+    answer:
+      "Yes, Mati'r Sathi is optimized to work on entry-level smartphones with minimal storage and processing power. We also offer SMS-based services for farmers without smartphones.",
   },
 ];
 
@@ -36,8 +41,8 @@ export const FAQSection = () => {
             Frequently Asked Questions
           </h2>
           <p className="text-lg text-gray-600">
-            Find answers to common questions about Mati'r Sathi and how it can help
-            your farming.
+            Find answers to common questions about Mati&#39;r Sathi and how it
+            can help your farming.
           </p>
         </div>
 
