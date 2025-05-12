@@ -1,4 +1,14 @@
 import React from "react";
+import Image from "next/image";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faSpinner,
+  faLocationDot,
+  faTemperatureHigh,
+  faDroplet,
+  faCloudRain,
+  faArrowRight,
+} from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -11,6 +21,15 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { WeatherData, CropSuggestion, SoilType } from "@/types";
+
+const getWeatherIcon = (iconName: string) => {
+  const iconMap: { [key: string]: any } = {
+    sun: faTemperatureHigh,
+    cloud: faCloudRain,
+    rain: faDroplet,
+  };
+  return iconMap[iconName] || faTemperatureHigh;
+};
 
 interface Props {
   location: string;
@@ -46,7 +65,8 @@ export const CropSuggestionsSection = ({
             Get Personalized Crop Suggestions
           </h2>
           <p className="text-lg text-gray-600">
-            Enter your location and soil details to receive AI-powered crop recommendations
+            Enter your location and soil details to receive AI-powered crop
+            recommendations
           </p>
         </div>
 
@@ -54,7 +74,9 @@ export const CropSuggestionsSection = ({
         <div className="grid gap-8 mb-12 md:grid-cols-2">
           <Card className="p-6">
             <CardHeader>
-              <CardTitle className="text-xl text-[#2E7D32]">Location Details</CardTitle>
+              <CardTitle className="text-xl text-[#2E7D32]">
+                Location Details
+              </CardTitle>
               <CardDescription>Enter your location or use GPS</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -72,9 +94,9 @@ export const CropSuggestionsSection = ({
                   className="bg-[#2E7D32] hover:bg-[#1B5E20] text-white cursor-pointer !rounded-button whitespace-nowrap"
                 >
                   {isGpsLoading ? (
-                    <i className="fas fa-spinner fa-spin"></i>
+                    <FontAwesomeIcon icon={faSpinner} spin />
                   ) : (
-                    <i className="fas fa-location-dot"></i>
+                    <FontAwesomeIcon icon={faLocationDot} />
                   )}
                 </Button>
               </div>
@@ -98,32 +120,50 @@ export const CropSuggestionsSection = ({
           {/* Weather Forecast */}
           <Card className="p-6">
             <CardHeader>
-              <CardTitle className="text-xl text-[#2E7D32]">Weather Forecast</CardTitle>
-              <CardDescription>5-day weather prediction for your area</CardDescription>
+              <CardTitle className="text-xl text-[#2E7D32]">
+                Weather Forecast
+              </CardTitle>
+              <CardDescription>
+                5-day weather prediction for your area
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-5 gap-2">
                 {weatherData.forecast.map((day, index) => (
                   <div key={index} className="text-center">
-                    <p className="text-sm font-medium text-gray-600">{day.day}</p>
-                    <i className={`fas fa-${day.icon} text-2xl text-[#2E7D32] my-2`}></i>
+                    <p className="text-sm font-medium text-gray-600">
+                      {day.day}
+                    </p>
+                    <FontAwesomeIcon
+                      icon={getWeatherIcon(day.icon)}
+                      className="text-2xl text-[#2E7D32] my-2"
+                    />
                     <p className="text-sm font-bold">{day.temp}</p>
                   </div>
                 ))}
               </div>
               <div className="grid grid-cols-3 gap-4 mt-6">
                 <div className="text-center">
-                  <i className="mb-2 text-2xl text-[#2E7D32] fas fa-temperature-high"></i>
+                  <FontAwesomeIcon
+                    icon={faTemperatureHigh}
+                    className="mb-2 text-2xl text-[#2E7D32]"
+                  />
                   <p className="text-sm text-gray-600">Temperature</p>
                   <p className="font-bold">{weatherData.temperature}</p>
                 </div>
                 <div className="text-center">
-                  <i className="mb-2 text-2xl text-[#2E7D32] fas fa-droplet"></i>
+                  <FontAwesomeIcon
+                    icon={faDroplet}
+                    className="mb-2 text-2xl text-[#2E7D32]"
+                  />
                   <p className="text-sm text-gray-600">Humidity</p>
                   <p className="font-bold">{weatherData.humidity}</p>
                 </div>
                 <div className="text-center">
-                  <i className="mb-2 text-2xl text-[#2E7D32] fas fa-cloud-rain"></i>
+                  <FontAwesomeIcon
+                    icon={faCloudRain}
+                    className="mb-2 text-2xl text-[#2E7D32]"
+                  />
                   <p className="text-sm text-gray-600">Rainfall</p>
                   <p className="font-bold">{weatherData.rainfall}</p>
                 </div>
@@ -141,9 +181,11 @@ export const CropSuggestionsSection = ({
             {cropSuggestions.map((crop, index) => (
               <Card key={index} className="overflow-hidden">
                 <div className="h-48 overflow-hidden">
-                  <img
+                  <Image
                     src={crop.image}
                     alt={crop.name}
+                    width={400}
+                    height={300}
                     className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
                   />
                 </div>
@@ -182,24 +224,15 @@ export const CropSuggestionsSection = ({
                 <CardFooter>
                   <Button className="w-full bg-[#2E7D32] hover:bg-[#1B5E20] text-white cursor-pointer !rounded-button whitespace-nowrap">
                     View Detailed Guide
-                    <i className="ml-2 fas fa-arrow-right"></i>
+                    <FontAwesomeIcon icon={faArrowRight} className="ml-2" />
                   </Button>
                 </CardFooter>
               </Card>
             ))}
           </div>
         </div>
-
-        {/* Action Button */}
-        <div className="text-center">
-          <Button className="px-8 py-3 text-lg bg-[#2E7D32] hover:bg-[#1B5E20] text-white cursor-pointer !rounded-button whitespace-nowrap">
-            Get More Recommendations
-            <i className="ml-2 fas fa-seedling"></i>
-          </Button>
-        </div>
       </div>
     </section>
   );
 };
-
 export default CropSuggestionsSection;
