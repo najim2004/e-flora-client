@@ -8,10 +8,10 @@ import Link from "next/link";
 
 const Navbar: React.FC = () => {
   const navItems = [
-    { id: "home", label: "Home" },
-    { id: "features", label: "Features" },
-    { id: "chatbot", label: "Chatbot" },
-    { id: "support", label: "Support" },
+    { id: "home", href: "/", label: "Home" },
+    { id: "features", href: "/", label: "Features" },
+    { id: "chatbot", href: "/", label: "Chatbot" },
+    { id: "support", href: "/", label: "Support" },
   ];
 
   return (
@@ -34,7 +34,7 @@ const Navbar: React.FC = () => {
           {navItems.map((item) => (
             <NavLink
               key={item.id}
-              href={`/${item.id}`}
+              href={`/${item.href}`}
               className={`text-base font-medium text-gray-600 cursor-pointer !rounded-button whitespace-nowrap`}
               activeClass="text-[#2E7D32]"
             >
@@ -53,7 +53,7 @@ const Navbar: React.FC = () => {
           </Button>
 
           <Button className="bg-[#2E7D32] hover:bg-[#1B5E20] text-white cursor-pointer !rounded-button whitespace-nowrap">
-            <Link href="/singin">Sign In</Link>
+            <Link href="/signin">Sign In</Link>
           </Button>
 
           <Hamburger />
