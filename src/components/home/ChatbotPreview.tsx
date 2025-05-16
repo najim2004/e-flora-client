@@ -1,6 +1,7 @@
 import React from "react";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
+import { CheckCircle2, MessageCircle } from "lucide-react";
 
 function ChatbotPreview() {
   return (
@@ -36,14 +37,14 @@ function ChatbotPreview() {
                 "Connects to human experts when needed",
               ].map((item, index) => (
                 <li key={index} className="flex items-center">
-                  <i className="mr-3 text-[#2E7D32] fas fa-check-circle"></i>
+                  <CheckCircle2 className="w-5 h-5 mr-3 text-[#2E7D32]" />
                   <span className="text-gray-700">{item}</span>
                 </li>
               ))}
             </ul>
             <Button className="bg-[#2E7D32] hover:bg-[#1B5E20] text-white cursor-pointer !rounded-button whitespace-nowrap">
               Try the Chatbot
-              <i className="ml-2 fas fa-comments"></i>
+              <MessageCircle className="w-5 h-5 ml-2" />
             </Button>
           </div>
         </div>

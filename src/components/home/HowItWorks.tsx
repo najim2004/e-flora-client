@@ -1,5 +1,12 @@
 import React from "react";
 import { Badge } from "../ui/badge";
+import {
+  UserPlus,
+  Camera,
+  Brain,
+  CheckCircle,
+  ChevronRight,
+} from "lucide-react";
 
 function HowItWorks() {
   return (
@@ -20,7 +27,7 @@ function HowItWorks() {
         <div className="grid gap-8 md:grid-cols-4">
           <div className="relative p-6 text-center bg-white rounded-lg shadow-md">
             <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 text-white bg-[#2E7D32] rounded-full">
-              <i className="text-2xl fas fa-user-plus"></i>
+              <UserPlus className="w-8 h-8" />
             </div>
             <h3 className="mb-2 text-xl font-semibold text-gray-900">
               Sign Up
@@ -29,12 +36,12 @@ function HowItWorks() {
               Create your free account with basic information about your farm
             </p>
             <div className="absolute top-1/2 right-0 hidden transform translate-x-1/2 -translate-y-1/2 md:block">
-              <i className="text-3xl text-[#81C784] fas fa-chevron-right"></i>
+              <ChevronRight className="w-8 h-8 text-[#81C784]" />
             </div>
           </div>
           <div className="relative p-6 text-center bg-white rounded-lg shadow-md">
             <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 text-white bg-[#2E7D32] rounded-full">
-              <i className="text-2xl fas fa-camera"></i>
+              <Camera className="w-8 h-8" />
             </div>
             <h3 className="mb-2 text-xl font-semibold text-gray-900">
               Upload Photos
@@ -43,12 +50,12 @@ function HowItWorks() {
               Take pictures of your crops or issues you&#39;re experiencing
             </p>
             <div className="absolute top-1/2 right-0 hidden transform translate-x-1/2 -translate-y-1/2 md:block">
-              <i className="text-3xl text-[#81C784] fas fa-chevron-right"></i>
+              <ChevronRight className="w-8 h-8 text-[#81C784]" />
             </div>
           </div>
           <div className="relative p-6 text-center bg-white rounded-lg shadow-md">
             <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 text-white bg-[#2E7D32] rounded-full">
-              <i className="text-2xl fas fa-robot"></i>
+              <Brain className="w-8 h-8" />
             </div>
             <h3 className="mb-2 text-xl font-semibold text-gray-900">
               Get Analysis
@@ -57,12 +64,12 @@ function HowItWorks() {
               Our AI analyzes your data and provides personalized insights
             </p>
             <div className="absolute top-1/2 right-0 hidden transform translate-x-1/2 -translate-y-1/2 md:block">
-              <i className="text-3xl text-[#81C784] fas fa-chevron-right"></i>
+              <ChevronRight className="w-8 h-8 text-[#81C784]" />
             </div>
           </div>
           <div className="p-6 text-center bg-white rounded-lg shadow-md">
             <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 text-white bg-[#2E7D32] rounded-full">
-              <i className="text-2xl fas fa-check-circle"></i>
+              <CheckCircle className="w-8 h-8" />
             </div>
             <h3 className="mb-2 text-xl font-semibold text-gray-900">
               Implement Solutions

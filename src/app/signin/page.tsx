@@ -1,122 +1,182 @@
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import React from "react";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faGoogle,
-  faTwitter,
-  faFacebookF,
-} from "@fortawesome/free-brands-svg-icons";
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import Link from "next/link";
-const SignInPage = () => {
+import NavLink from "@/components/ui/navlink";
+
+export default function LoginPage() {
   return (
-    <div className="flex items-center justify-center min-h-[calc(100vh-64px)] py-8">
-      <div className="w-full max-w-md p-6 bg-white rounded-sm">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-          Sign In
-        </h2>
-        <form className="space-y-4">
-          <div>
-            <label
-              htmlFor="email"
-              className="block mb-2 text-sm font-medium text-gray-700"
-            >
-              Email or Username
-            </label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="Enter your email or username"
-              className="w-full"
-            />
+    <div className="min-h-screen bg-green-50 flex flex-col items-center justify-center p-4">
+      <Card className="w-full max-w-md border-green-100 shadow-md rounded-sm">
+        <CardHeader className="text-center">
+          <CardTitle className="text-green-800 text-2xl">
+            Welcome Back
+          </CardTitle>
+          <CardDescription className="text-green-700">
+            Sign in to your account to continue
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-2 mb-6 bg-gray-100 p-1 rounded-sm">
+            <NavLink href="/signin" className="p-1.5 text-center text-gray-600 rounded-sm text-sm font-medium" activeClass="bg-green-600 text-white">
+              Sing In
+            </NavLink>
+            <NavLink href="/signup" className="p-1.5 text-center text-gray-600 rounded-sm text-sm font-medium" activeClass="bg-green-600 text-white">
+              Sign Up
+            </NavLink>
           </div>
-          <div>
-            <label
-              htmlFor="password"
-              className="block mb-2 text-sm font-medium text-gray-700"
-            >
-              Password
-            </label>
-            <Input
-              id="password"
-              type="password"
-              placeholder="Enter your password"
-              className="w-full"
-            />
-          </div>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <input
-                id="remember-me"
-                type="checkbox"
-                className="w-4 h-4 border-gray-300 rounded text-[#2E7D32] focus:ring-[#2E7D32]"
+          <form className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="email" className="text-green-700">
+                Email
+              </Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="Enter your email"
+                className="border-green-200 focus:border-green-500 focus:ring-green-500"
               />
-              <label
-                htmlFor="remember-me"
-                className="block ml-2 text-sm text-gray-700"
-              >
-                Remember me
-              </label>
             </div>
-            <Button
-              id="forgot-password"
-              variant="link"
-              className="text-sm text-[#2E7D32] hover:text-[#1B5E20]"
-            >
-              Forgot password?
+
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <Label htmlFor="password" className="text-green-700">
+                  Password
+                </Label>
+                <Link
+                  href="/forgot-password"
+                  className="text-xs text-green-600 hover:text-green-700"
+                >
+                  Forgot Password?
+                </Link>
+              </div>
+              <Input
+                id="password"
+                type="password"
+                placeholder="Enter your password"
+                className="border-green-200 focus:border-green-500 focus:ring-green-500"
+              />
+            </div>
+
+            <Button className="w-full bg-green-600 hover:bg-green-700">
+              Sign In
             </Button>
-          </div>
-          <Button
-            id="sign-in-submit"
-            type="submit"
-            className="w-full bg-[#2E7D32] hover:bg-[#1B5E20] text-white !rounded-button whitespace-nowrap"
-          >
-            Sign In
-          </Button>
-        </form>
-        <div className="mt-6">
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300"></div>
+          </form>
+
+          <div className="mt-6">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-green-200"></div>
+              </div>
+              <div className="relative flex justify-center text-xs">
+                <span className="px-2 bg-white text-green-600">
+                  Or continue with
+                </span>
+              </div>
             </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-2 text-gray-500 bg-white">
-                Or continue with
-              </span>
-            </div>
-          </div>
-          <div className="grid grid-cols-3 gap-3 mt-6">
-            {[
-              { icon: faGoogle, label: "Google" },
-              { icon: faFacebookF, label: "Facebook" },
-              { icon: faTwitter, label: "Twitter" },
-            ].map((social, index) => (
+
+            <div className="mt-4 grid grid-cols-2 gap-3">
               <Button
-                key={index}
                 variant="outline"
-                className="flex items-center justify-center w-full px-4 py-2 space-x-2 border hover:bg-gray-50 !rounded-button whitespace-nowrap"
+                className="border-green-200 hover:bg-green-50"
               >
-                <FontAwesomeIcon icon={social.icon} className="w-4 h-4" />
-                <span className="sr-only">{social.label}</span>
+                Google
               </Button>
-            ))}
+              <Button
+                variant="outline"
+                className="border-green-200 hover:bg-green-50"
+              >
+                Facebook
+              </Button>
+            </div>
           </div>
-        </div>
-        <div className="mt-6 text-center">
-          <span className="text-sm text-gray-600">
-            Don&#39;t have an account?{" "}
-          </span>
-          <Link
-            href={"/signup"}
-            className="text-sm text-[#2E7D32] hover:text-[#1B5E20]"
-          >
-            Sign up now
-          </Link>
-        </div>
-      </div>
+
+          {/* <TabsContent value="register">
+              <form className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="name" className="text-green-700">
+                    Full Name
+                  </Label>
+                  <Input
+                    id="name"
+                    placeholder="Enter your full name"
+                    className="border-green-200 focus:border-green-500 focus:ring-green-500"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="reg-email" className="text-green-700">
+                    Email
+                  </Label>
+                  <Input
+                    id="reg-email"
+                    type="email"
+                    placeholder="Enter your email"
+                    className="border-green-200 focus:border-green-500 focus:ring-green-500"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="phone" className="text-green-700">
+                    Phone Number
+                  </Label>
+                  <Input
+                    id="phone"
+                    placeholder="Enter your phone number"
+                    className="border-green-200 focus:border-green-500 focus:ring-green-500"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="reg-password" className="text-green-700">
+                    Password
+                  </Label>
+                  <Input
+                    id="reg-password"
+                    type="password"
+                    placeholder="Create a password"
+                    className="border-green-200 focus:border-green-500 focus:ring-green-500"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="confirm-password" className="text-green-700">
+                    Confirm Password
+                  </Label>
+                  <Input
+                    id="confirm-password"
+                    type="password"
+                    placeholder="Confirm your password"
+                    className="border-green-200 focus:border-green-500 focus:ring-green-500"
+                  />
+                </div>
+
+                <Button className="w-full bg-green-600 hover:bg-green-700">
+                  Create Account
+                </Button>
+              </form>
+            </TabsContent> */}
+        </CardContent>
+      </Card>
+
+      <p className="mt-6 text-sm text-green-700 text-center">
+        By signing in, you agree to our{" "}
+        <Link href="/terms" className="text-green-600 hover:underline">
+          Terms of Service
+        </Link>{" "}
+        and{" "}
+        <Link href="/privacy" className="text-green-600 hover:underline">
+          Privacy Policy
+        </Link>
+        .
+      </p>
     </div>
   );
-};
-
-export default SignInPage;
+}

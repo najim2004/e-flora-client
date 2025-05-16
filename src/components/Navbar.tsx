@@ -5,20 +5,36 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Hamburger from "./hamburger";
 import NavLink from "./ui/navlink";
 import Link from "next/link";
+import Image from "next/image";
+
+export interface NavItems {
+  id: string;
+  href: string;
+  label: string;
+}
 
 const Navbar: React.FC = () => {
-  const navItems = [
+  const navItems: NavItems[] = [
     { id: "home", href: "/", label: "Home" },
-    { id: "features", href: "/", label: "Features" },
-    { id: "chatbot", href: "/", label: "Chatbot" },
-    { id: "support", href: "/", label: "Support" },
+    {
+      id: "crop-suggestions",
+      href: "/crop-suggestions",
+      label: "Crop Suggestions",
+    },
+    {
+      id: "disease-detection",
+      href: "/disease-detection",
+      label: "Disease Detection",
+    },
+    { id: "chatbot", href: "/chatbot", label: "Chatbot" },
+    { id: "support", href: "/support", label: "Support" },
   ];
 
   return (
     <header className="sticky top-0 z-50 w-full bg-white border-b shadow-sm">
       <div className="container flex items-center justify-between h-16 px-4 mx-auto max-w-7xl">
         <div className="flex items-center space-x-2">
-          <img
+          <Image
             src="https://readdy.ai/api/search-image?query=A%20minimalist%20logo%20for%20Matir%20Sathi%20agricultural%20platform%20with%20a%20simple%20leaf%20or%20plant%20sprout%20icon%20in%20green%20and%20brown%20earthy%20tones%2C%20modern%20clean%20design%20suitable%20for%20an%20app%20icon%2C%20transparent%20background%2C%20professional&width=50&height=50&seq=1&orientation=squarish"
             alt="Mati'r Sathi Logo"
             width={40}
@@ -34,7 +50,7 @@ const Navbar: React.FC = () => {
           {navItems.map((item) => (
             <NavLink
               key={item.id}
-              href={`/${item.href}`}
+              href={item.href || "/"}
               className={`text-base font-medium text-gray-600 cursor-pointer !rounded-button whitespace-nowrap`}
               activeClass="text-[#2E7D32]"
             >
@@ -56,7 +72,7 @@ const Navbar: React.FC = () => {
             <Link href="/signin">Sign In</Link>
           </Button>
 
-          <Hamburger />
+          <Hamburger navItems={navItems} />
         </div>
       </div>
     </header>

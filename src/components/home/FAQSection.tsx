@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { FAQ } from "@/types";
+import { ChevronDown } from "lucide-react";
 
 const faqs: FAQ[] = [
   {
@@ -55,7 +56,7 @@ export const FAQSection = () => {
                     {item.question}
                   </h3>
                   <span className="flex items-center justify-center w-8 h-8 ml-2 text-[#2E7D32] bg-[#E8F5E9] rounded-full group-open:rotate-180 transition-transform">
-                    <i className="fas fa-chevron-down"></i>
+                    <ChevronDown className="w-5 h-5" />
                   </span>
                 </summary>
                 <p className="mt-4 text-gray-600">{item.answer}</p>

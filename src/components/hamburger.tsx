@@ -11,9 +11,15 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import NavLink from "./ui/navlink";
+import { NavItems } from "./Navbar";
 
-export default function Hamburger() {
+interface HamburgerProps {
+  navItems: NavItems[];
+}
+
+export default function Hamburger({ navItems }: HamburgerProps) {
   const [open, setOpen] = useState(false);
+
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
@@ -35,38 +41,17 @@ export default function Hamburger() {
         </SheetHeader>
         <nav className="p-4">
           <div className="flex flex-col space-y-4">
-            <NavLink
-              className="justify-start text-base font-medium cursor-pointer !rounded-button whitespace-nowrap text-gray-600"
-              activeClass="text-[#2E7D32]"
-              href="/"
-              onClick={() => setOpen(false)}
-            >
-              Home
-            </NavLink>
-            <NavLink
-              onClick={() => setOpen(false)}
-              className="justify-start text-base font-medium cursor-pointer !rounded-button whitespace-nowrap text-gray-600"
-              activeClass="text-[#2E7D32]"
-              href="/features"
-            >
-              Features
-            </NavLink>
-            <NavLink
-              onClick={() => setOpen(false)}
-              className="justify-start text-base font-medium cursor-pointer !rounded-button whitespace-nowrap text-gray-600"
-              activeClass="text-[#2E7D32]"
-              href="/chatbot"
-            >
-              Chatbot
-            </NavLink>
-            <NavLink
-              onClick={() => setOpen(false)}
-              className="justify-start text-base font-medium cursor-pointer !rounded-button whitespace-nowrap text-gray-600"
-              activeClass="text-[#2E7D32]"
-              href="/support"
-            >
-              Support
-            </NavLink>
+            {navItems?.map((item) => (
+              <NavLink
+                key={item.id}
+                href={item.href || "/"}
+                className="justify-start text-base font-medium cursor-pointer !rounded-button whitespace-nowrap text-gray-600"
+                activeClass="text-[#2E7D32]"
+                onClick={() => setOpen(false)}
+              >
+                {item.label}
+              </NavLink>
+            ))}
             <Separator className="my-4" />
             <Button
               variant="outline"
