@@ -25,10 +25,18 @@ export default function LoginPage() {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 mb-6 bg-gray-100 p-1 rounded-sm">
-            <NavLink href="/signin" className="p-1.5 text-center text-gray-600 rounded-sm text-sm font-medium" activeClass="bg-green-600 text-white">
+            <NavLink
+              href="/signin"
+              className="p-1.5 text-center text-gray-600 rounded-sm text-sm font-medium"
+              activeClass="bg-green-600 text-white"
+            >
               Sing In
             </NavLink>
-            <NavLink href="/signup" className="p-1.5 text-center text-gray-600 rounded-sm text-sm font-medium" activeClass="bg-green-600 text-white">
+            <NavLink
+              href="/signup"
+              className="p-1.5 text-center text-gray-600 rounded-sm text-sm font-medium"
+              activeClass="bg-green-600 text-white"
+            >
               Sign Up
             </NavLink>
           </div>

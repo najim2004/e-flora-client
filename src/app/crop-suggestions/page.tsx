@@ -14,7 +14,6 @@ import {
   Thermometer,
   ArrowRight,
 } from "lucide-react";
-import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -29,14 +28,6 @@ export default function CropSuggestionsPage() {
   return (
     <div className="min-h-screen bg-green-50">  
       <div className="max-w-7xl mx-auto px-4 py-8">
-
-        {/* <h1 className="text-3xl md:text-4xl font-bold text-green-800 mb-6">
-          Smart Crop Suggestions
-        </h1>
-        <p className="text-lg text-green-700 mb-8">
-          Get personalized crop recommendations based on your location, soil
-          type, and current weather conditions.
-        </p> */}
 
         <div className="grid md:grid-cols-3 gap-8">
           <Card className="border-green-100 shadow-sm md:col-span-1">
