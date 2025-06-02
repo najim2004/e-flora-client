@@ -7,6 +7,7 @@ import { LanguageProvider } from "@/providers/LanguageProvider";
 import Navbar from "@/components/Navbar";
 import MobileNavigation from "@/components/mobile-navigation";
 import CommonFooter from "@/components/common-footer";
+import { ReduxProvider } from "@/providers/ReduxProvider";
 
 // Initialize Font Awesome config
 config.autoAddCss = false;
@@ -30,12 +31,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} antialiased pb-16 md:pb-0`}>
-        <LanguageProvider>
-          <Navbar />
-          <main>{children}</main>
-          <CommonFooter />
-          <MobileNavigation />
-        </LanguageProvider>
+        <ReduxProvider>
+          <LanguageProvider>
+            <Navbar />
+            <main>{children}</main>
+            <CommonFooter />
+            <MobileNavigation />
+          </LanguageProvider>
+        </ReduxProvider>
       </body>
     </html>
   );

@@ -57,3 +57,9 @@ export interface CommonHeaderProps {
   pageTitle?: string;
   showAuthButtons?: boolean;
 }
+
+export interface SuccessResponse<T> {
+  success: boolean;
+  message: string;
+  data?: T;
+}
