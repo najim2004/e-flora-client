@@ -1,4 +1,4 @@
-import { apiSlice } from '@/app/redux/apiSlice';
+import { apiSlice } from '@/redux/apiSlice';
 
 export const cropSuggestionApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({

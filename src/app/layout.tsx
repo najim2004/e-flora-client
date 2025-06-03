@@ -8,6 +8,8 @@ import Navbar from "@/components/Navbar";
 import MobileNavigation from "@/components/mobile-navigation";
 import CommonFooter from "@/components/common-footer";
 import { ReduxProvider } from "@/providers/ReduxProvider";
+import { Toaster } from "sonner";
+import FetchInitialData from "@/components/fetchInitialData";
 
 // Initialize Font Awesome config
 config.autoAddCss = false;
@@ -33,11 +35,13 @@ export default function RootLayout({
       <body className={`${inter.variable} antialiased pb-16 md:pb-0`}>
         <ReduxProvider>
           <LanguageProvider>
+            <FetchInitialData/>
             <Navbar />
             <main>{children}</main>
             <CommonFooter />
             <MobileNavigation />
           </LanguageProvider>
+          <Toaster />
         </ReduxProvider>
       </body>
     </html>

@@ -20,7 +20,7 @@ const baseQueryWithError: BaseQueryFn<
 
   if (result.error?.status === 401 || result.error?.status === 403) {
     // Dispatch logout mutation from userApiSlice
-    await api.dispatch(userApiSlice.endpoints.logout.initiate(undefined));
+    // await api.dispatch(userApiSlice.endpoints.logout.initiate(undefined));
   }
 
   return result;
@@ -30,7 +30,7 @@ export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: baseQueryWithError,
   endpoints: () => ({}),
-  tagTypes: ["User"],
+  tagTypes: [],
 });
 
 export const {} = apiSlice;

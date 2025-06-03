@@ -1,4 +1,4 @@
-import { apiSlice } from "@/app/redux/apiSlice";
+import { apiSlice } from "@/redux/apiSlice";
 import { clearUser, setUser } from "./userSlice";
 import { SuccessResponse } from "@/types";
 import { User } from "@/types/user";
@@ -6,15 +6,15 @@ import { User } from "@/types/user";
 export const userApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getUserProfile: builder.query({
-      query: (userId) => `/api/users/${userId}`,
+      query: (userId) => `/api/v1/users/${userId}`,
     }),
     login: builder.mutation({
-      query: (credentials) => ({
-        url: "/api/auth/login",
+      query: (credentials: { email: string; password: string }) => ({
+        url: "/api/v1/auth/login",
         method: "POST",
         body: credentials,
       }),
-      invalidatesTags: ["User"],
+      // invalidatesTags: ["User"],
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
@@ -26,20 +26,24 @@ export const userApiSlice = apiSlice.injectEndpoints({
         } catch (error) {
           dispatch(clearUser());
           await dispatch(userApiSlice.endpoints.logout.initiate(undefined));
-          console.error("Failed to fetch user:", error);
+          console.log("Failed to fetch user:", error);
         }
       },
     }),
     signup: builder.mutation({
-      query: (credentials) => ({
-        url: "/api/auth/signup",
+      query: (credentials: {
+        name: string;
+        email: string;
+        password: string;
+      }) => ({
+        url: "/api/v1/auth/signup",
         method: "POST",
         body: credentials,
       }),
     }),
     logout: builder.mutation({
       query: () => ({
-        url: "/api/auth/logout",
+        url: "/api/v1/auth/logout",
         method: "POST",
       }),
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
@@ -49,16 +53,16 @@ export const userApiSlice = apiSlice.injectEndpoints({
           console.log("User logged out successfully");
         } catch (error) {
           dispatch(clearUser());
-          console.error("Failed to logout:", error);
+          console.log("Failed to logout:", error);
         }
       },
     }),
     me: builder.query<SuccessResponse<User>, void>({
       query: () => ({
-        url: "/auth/me",
+        url: "/api/v1/auth/me",
         method: "GET",
       }),
-      providesTags: ["User"],
+      // providesTags: ["User"],
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
@@ -70,34 +74,34 @@ export const userApiSlice = apiSlice.injectEndpoints({
         } catch (error) {
           dispatch(clearUser());
           await dispatch(userApiSlice.endpoints.logout.initiate(undefined));
-          console.error("Failed to fetch user:", error);
+          console.log("Failed to fetch user:", error);
         }
       },
     }),
     updateProfile: builder.mutation({
       query: (data) => ({
-        url: "/api/users/profile",
+        url: "/api/v1/users/profile",
         method: "PATCH",
         body: data,
       }),
     }),
     changePassword: builder.mutation({
       query: (passwords) => ({
-        url: "/api/users/change-password",
+        url: "/api/v1/users/change-password",
         method: "POST",
         body: passwords,
       }),
     }),
     forgotPassword: builder.mutation({
       query: (email) => ({
-        url: "/api/auth/forgot-password",
+        url: "/api/v1/auth/forgot-password",
         method: "POST",
         body: { email },
       }),
     }),
     resetPassword: builder.mutation({
       query: (data) => ({
-        url: "/api/auth/reset-password",
+        url: "/api/v1/auth/reset-password",
         method: "POST",
         body: data,
       }),
