@@ -1,11 +1,27 @@
-import { apiSlice } from '@/redux/apiSlice';
+import { apiSlice } from "@/redux/apiSlice";
+import { CropSuggestionBody } from "@/types/cropSuggestion";
 
 export const cropSuggestionApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getCropSuggestions: builder.query({
-      query: (location) => `/api/crop-suggestions?location=${location}`,
+    requestCropSuggestion: builder.mutation({
+      query: (body: CropSuggestionBody) => ({
+        url: `/api/v1/crops/crop-suggestion`,
+        method: "POST",
+        body,
+      }),
+    }),
+    cropSuggestionResult: builder.query({
+      query: (cropId: string) =>
+        `/api/v1/crops/crop-suggestion/result/${cropId}`,
+    }),
+    cropSuggestionHistory: builder.query({
+      query: (params: Record<string, unknown>) => ({
+        url: `/api/v1/crops/crop-suggestion/histories`,
+        method: "POST",
+        params,
+      }),
     }),
   }),
 });
 
-export const { useGetCropSuggestionsQuery } = cropSuggestionApiSlice;
+export const { useRequestCropSuggestionMutation } = cropSuggestionApiSlice;
