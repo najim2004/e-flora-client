@@ -5,3 +5,9 @@ export const errorToast = (message: string) =>
     className: "!bg-destructive border !border-red-500 !text-white",
     position: "top-center",
   });
+
+export const successToast = (message: string) =>
+  toast.success(message, {
+    className: "!bg-green-500 border !border-green-600 !text-white",
+    position: "top-center",
+  });

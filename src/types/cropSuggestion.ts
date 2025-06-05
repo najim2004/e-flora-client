@@ -4,8 +4,8 @@ export interface Location {
 }
 
 export interface CropSuggestionBody {
-  soilType: "chalky" | "peaty" | "silty" | "loamy" | "sandy" | "clay";
+  soilType:string;
   farmSize: number;
-  irrigationAvailability: "rainfed" | "partial" | "full";
+  irrigationAvailability:string;
   location: Location;
 }

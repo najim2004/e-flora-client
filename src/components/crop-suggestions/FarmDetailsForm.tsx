@@ -1,6 +1,6 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -9,106 +9,173 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { MapPin } from "lucide-react";
+import { errorToast } from "../customToast";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+
+export const formSchema = z.object({
+  location: z.string().min(1, {
+    message: "Location is required.",
+  }),
+  soilType: z.string().min(1, {
+    message: "Soil type is required.",
+  }),
+  farmSize: z.string().min(1, {
+    message: "Farm size is required.",
+  }),
+  irrigation: z.string().min(1, {
+    message: "Irrigation availability is required.",
+  }),
+});
 
 interface FarmDetailsFormProps {
-  location: string;
-  soilType: string;
-  farmSize: string;
-  irrigation: string;
-  onLocationChange: (value: string) => void;
-  onSoilTypeChange: (value: string) => void;
-  onFarmSizeChange: (value: string) => void;
-  onIrrigationChange: (value: string) => void;
-  onSubmit: () => void;
+  defaultValues: z.infer<typeof formSchema>;
+  onSubmit: (values: z.infer<typeof formSchema>) => void;
+  isLoading?: boolean;
 }
 
 export default function FarmDetailsForm({
-  location,
-  soilType,
-  farmSize,
-  irrigation,
-  onLocationChange,
-  onSoilTypeChange,
-  onFarmSizeChange,
-  onIrrigationChange,
+  defaultValues,
   onSubmit,
+  isLoading=false,
 }: FarmDetailsFormProps) {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues,
+  });
+
+  const handleUseCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const coords = {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          };
+          form.setValue("location", `${coords.latitude}, ${coords.longitude}`);
+        },
+        (error) => {
+          console.log("Error getting location:", error);
+          errorToast("Failed to detect your location");
+        }
+      );
+    } else {
+      errorToast("Geolocation is not supported by this browser.");
+    }
+  };
+
   return (
-    <form className="space-y-6" onSubmit={(e) => {e.preventDefault(); onSubmit();}}>
-      <div className="space-y-2">
-        <Label htmlFor="location" className="text-green-700">
-          Location
-        </Label>
-        <div className="relative">
-          <Input
-            id="location"
-            placeholder="Enter your location"
-            className="pl-10 border-green-200 focus:border-green-500 focus:ring-green-500"
-            value={location}
-            onChange={(e) => onLocationChange(e.target.value)}
-          />
-          <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-green-500" />
-        </div>
-        <Button
-          variant="outline"
-          className="w-full mt-2 border-green-600 text-green-600 hover:bg-green-50"
-        >
-          Use Current Location
-        </Button>
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="soil-type" className="text-green-700">
-          Soil Type
-        </Label>
-        <Select value={soilType} onValueChange={onSoilTypeChange}>
-          <SelectTrigger className="border-green-200 focus:border-green-500 focus:ring-green-500 w-full">
-            <SelectValue placeholder="Select soil type">{soilType}</SelectValue>
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="clay">Clay Soil</SelectItem>
-            <SelectItem value="sandy">Sandy Soil</SelectItem>
-            <SelectItem value="loamy">Loamy Soil</SelectItem>
-            <SelectItem value="silty">Silty Soil</SelectItem>
-            <SelectItem value="peaty">Peaty Soil</SelectItem>
-            <SelectItem value="chalky">Chalky Soil</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="farm-size" className="text-green-700">
-          Farm Size (Acres)
-        </Label>
-        <Input
-          id="farm-size"
-          type="number"
-          placeholder="Enter farm size"
-          className="border-green-200 focus:border-green-500 focus:ring-green-500"
-          value={farmSize}
-          onChange={(e) => onFarmSizeChange(e.target.value)}
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <FormField
+          control={form.control}
+          name="location"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Location (Latitude, Longitude)</FormLabel>
+              <FormControl>
+                <div className="relative">
+                  <Input
+                    placeholder="Enter latitude, longitude"
+                    className="pr-10 border-green-200 focus:border-green-500 focus:ring-green-500"
+                    {...field}
+                  />
+                  <MapPin
+                    onClick={handleUseCurrentLocation}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-green-500 cursor-pointer"
+                  />
+                </div>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-      </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="irrigation" className="text-green-700">
-          Irrigation Availability
-        </Label>
-        <Select value={irrigation} onValueChange={onIrrigationChange}>
-          <SelectTrigger className="border-green-200 focus:border-green-500 focus:ring-green-500 w-full">
-            <SelectValue placeholder="Select availability">{irrigation}</SelectValue>
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="full">Full irrigation</SelectItem>
-            <SelectItem value="partial">Partial irrigation</SelectItem>
-            <SelectItem value="rainfed">Rainfed only</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+        <FormField
+          control={form.control}
+          name="soilType"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Soil Type</FormLabel>
+              <FormControl>
+                <Select onValueChange={field.onChange} value={field.value}>
+                  <SelectTrigger className="border-green-200 focus:border-green-500 focus:ring-green-500 w-full">
+                    <SelectValue placeholder="Select soil type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="clay">Clay Soil</SelectItem>
+                    <SelectItem value="sandy">Sandy Soil</SelectItem>
+                    <SelectItem value="loamy">Loamy Soil</SelectItem>
+                    <SelectItem value="silty">Silty Soil</SelectItem>
+                    <SelectItem value="peaty">Peaty Soil</SelectItem>
+                    <SelectItem value="chalky">Chalky Soil</SelectItem>
+                  </SelectContent>
+                </Select>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      <Button className="w-full bg-green-600 hover:bg-green-700" type="submit">
-        Get Recommendations
-      </Button>
-    </form>
+        <FormField
+          control={form.control}
+          name="farmSize"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Farm Size (Acres)</FormLabel>
+              <FormControl>
+                <Input
+                  type="number"
+                  placeholder="Enter farm size"
+                  className="border-green-200 focus:border-green-500 focus:ring-green-500"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="irrigation"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Irrigation Availability</FormLabel>
+              <FormControl>
+                <Select onValueChange={field.onChange} value={field.value}>
+                  <SelectTrigger className="border-green-200 focus:border-green-500 focus:ring-green-500 w-full">
+                    <SelectValue placeholder="Select availability" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="full">Full irrigation</SelectItem>
+                    <SelectItem value="partial">Partial irrigation</SelectItem>
+                    <SelectItem value="rainfed">Rainfed only</SelectItem>
+                  </SelectContent>
+                </Select>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <Button
+          className="w-full bg-green-600 hover:bg-green-700"
+          type="submit"
+          disabled={isLoading}
+        >
+          {isLoading ? "Loading..." : "Get Recommendations"}
+        </Button>
+      </form>
+    </Form>
   );
 }
