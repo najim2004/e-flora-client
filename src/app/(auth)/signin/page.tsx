@@ -50,24 +50,23 @@ export default function LoginPage() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     try {
-      const { data, error } = await loginMutation({
+      const res = await loginMutation({
         email: values.email,
         password: values.password,
       }).unwrap();
-      if (data.success) {
+      console.log(res);
+      if (res?.success) {
         router.replace("/");
       } else {
         errorToast(
-          data?.error?.message ||
-            error.message ||
-            "Something went wrong please try again letter"
+          res?.message || "Something went wrong please try again letter"
         );
       }
-    } catch (error) {
+    } catch (error: any) {
+      console.log(error);
       errorToast(
-        error instanceof Error
-          ? error.message
-          : "Something went wrong please try again later"
+        error?.data?.error?.message ||
+          "Something went wrong please try again later"
       );
     }
   }

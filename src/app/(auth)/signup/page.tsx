@@ -58,23 +58,19 @@ export default function SignUpPage() {
     console.log(values);
     if (isLoading) return;
     try {
-      const { data, error } = await signUpMutation(values).unwrap();
-      if (data?.success) {
-        console.log("User created successfully:", data.data);
+      const res = await signUpMutation(values).unwrap();
+      if (res?.success) {
+        console.log("User created successfully:", res);
         router.push("/signin");
       } else {
         errorToast(
-          data.error.message ||
-            error.message ||
-            "Something went wrong please try again letter"
+          res.message || "Something went wrong please try again letter"
         );
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log("Error:", error);
       errorToast(
-        error instanceof Error
-          ? error.message
-          : "Something went wrong please try again"
+        error?.data?.error?.message || "Something went wrong please try again"
       );
     }
   }

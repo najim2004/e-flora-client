@@ -18,7 +18,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          if (data.data && data?.success) {
+          if (data?.data && data?.success) {
             dispatch(setUser(data.data));
           } else {
             throw new Error("Failed to get user data");
@@ -36,7 +36,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
         email: string;
         password: string;
       }) => ({
-        url: "/api/v1/auth/signup",
+        url: "/api/v1/auth/register ",
         method: "POST",
         body: credentials,
       }),
@@ -59,14 +59,14 @@ export const userApiSlice = apiSlice.injectEndpoints({
     }),
     me: builder.query<SuccessResponse<User>, void>({
       query: () => ({
-        url: "/api/v1/auth/me",
+        url: "/api/v1/users/me",
         method: "GET",
       }),
       // providesTags: ["User"],
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          if (data.data && data?.success) {
+          if (data?.data && data?.success) {
             dispatch(setUser(data.data));
           } else {
             throw new Error("Failed to get user data");

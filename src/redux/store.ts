@@ -1,12 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { apiSlice } from "@/redux/apiSlice";
 import persistedUserReducer from "@/redux/features/user/userSlice";
+import cropSuggestionReducer from "@/redux/features/cropSuggestions/cropSuggestionSlice";
 import { persistStore } from "redux-persist";
 
 export const store = configureStore({
   reducer: {
     [apiSlice.reducerPath]: apiSlice.reducer,
     user: persistedUserReducer,
+    cropSuggestion: cropSuggestionReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

@@ -5,7 +5,17 @@ import {
   Thermometer,
 } from "lucide-react";
 
-export default function WeatherConditions() {
+interface WeatherConditionsProps {
+  weatherData: {
+    avgMaxTemp: number;
+    avgMinTemp: number;
+    avgHumidity: number;
+    avgRainfall: number;
+    dominantWindDirection: string;
+  };
+}
+
+export default function WeatherConditions({ weatherData }: WeatherConditionsProps) {
   return (
     <div className="mb-8 p-4 bg-green-100 rounded-lg">
       <h3 className="font-medium text-green-800 mb-2">
@@ -16,29 +26,35 @@ export default function WeatherConditions() {
           <Thermometer className="h-5 w-5 text-green-600 mr-2" />
           <div>
             <p className="text-sm text-green-700">Temperature</p>
-            <p className="font-medium text-green-800">28°C</p>
+            <p className="font-medium text-green-800">
+              {weatherData?.avgMaxTemp}°C
+            </p>
           </div>
         </div>
         <div className="flex items-center">
           <Droplets className="h-5 w-5 text-green-600 mr-2" />
           <div>
             <p className="text-sm text-green-700">Humidity</p>
-            <p className="font-medium text-green-800">65%</p>
+            <p className="font-medium text-green-800">
+              {weatherData?.avgHumidity}%
+            </p>
           </div>
         </div>
         <div className="flex items-center">
           <Cloud className="h-5 w-5 text-green-600 mr-2" />
           <div>
             <p className="text-sm text-green-700">Rainfall</p>
-            <p className="font-medium text-green-800">120mm/month</p>
+            <p className="font-medium text-green-800">
+              {weatherData?.avgRainfall}mm/month
+            </p>
           </div>
         </div>
         <div className="flex items-center">
           <MapPin className="h-5 w-5 text-green-600 mr-2" />
           <div>
-            <p className="text-sm text-green-700">Location</p>
+            <p className="text-sm text-green-700">Wind Direction</p>
             <p className="font-medium text-green-800">
-              Dhaka, Bangladesh
+              {weatherData?.dominantWindDirection}°
             </p>
           </div>
         </div>
