@@ -11,7 +11,7 @@ export interface CropSuggestionBody {
 }
 
 export interface CropDetails {
-  status: "success" | "failed";
+  status: "success" | "failed" | "pending";
   id?: string;
   slug?: string;
 }

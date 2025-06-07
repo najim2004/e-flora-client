@@ -55,8 +55,17 @@ const cropSuggestionSlice = createSlice({
         );
 
         if (crop) {
-          crop.cropDetails.status = details.status;
-          crop.cropDetails.slug = details.slug;
+          // Initialize cropDetails if it doesn't exist
+          if (!crop.cropDetails) {
+            crop.cropDetails = {
+              status: details.status,
+              slug: details.slug,
+            }; 
+          } else {
+            // Update existing cropDetails
+            crop.cropDetails.status = details.status;
+            crop.cropDetails.slug = details.slug;
+          }
         }
       }
     },

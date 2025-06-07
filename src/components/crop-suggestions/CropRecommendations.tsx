@@ -1,20 +1,17 @@
-'use client'
+"use client";
 
-'use client'
+"use client";
 
+import { Crop } from "@/types/cropSuggestion";
 import CropRecommendationCard from "./CropRecommendationCard";
 
 interface CropRecommendationsProps {
-  cropData: {
-    name: string;
-    scientificName: string;
-    description: string;
-    match: number;
-    icon: string;
-  }[];
+  cropData: Crop[];
 }
 
-export default function CropRecommendations({ cropData }: CropRecommendationsProps) {
+export default function CropRecommendations({
+  cropData,
+}: CropRecommendationsProps) {
   return (
     <div className="space-y-4">
       {cropData?.map((crop) => (
@@ -25,6 +22,7 @@ export default function CropRecommendations({ cropData }: CropRecommendationsPro
           matchPercentage={crop.match}
           imageSrc={`/${crop.icon}`}
           imageAlt={crop.name}
+          cropDetails={crop.cropDetails}
         />
       ))}
     </div>

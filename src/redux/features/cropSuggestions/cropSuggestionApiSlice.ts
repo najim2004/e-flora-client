@@ -24,4 +24,8 @@ export const cropSuggestionApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useRequestCropSuggestionMutation } = cropSuggestionApiSlice;
+export const {
+  useRequestCropSuggestionMutation,
+  useCropSuggestionResultQuery,
+  useCropSuggestionHistoryQuery,
+} = cropSuggestionApiSlice;

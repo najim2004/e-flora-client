@@ -1,4 +1,6 @@
 "use client";
+
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -46,12 +48,19 @@ interface FarmDetailsFormProps {
 export default function FarmDetailsForm({
   defaultValues,
   onSubmit,
-  isLoading=false,
+  isLoading = false,
 }: FarmDetailsFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues,
   });
+
+  const { reset } = form;
+
+  // 🔁 Reset form when defaultValues change (e.g., from cropSuggestionData)
+  useEffect(() => {
+    reset(defaultValues);
+  }, [defaultValues, reset]);
 
   const handleUseCurrentLocation = () => {
     if (navigator.geolocation) {
