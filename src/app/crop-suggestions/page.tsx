@@ -63,6 +63,7 @@ export default function CropSuggestionsPage() {
       setProgress(data);
     };
 
+    // Modify handleCompleted
     const handleCompleted = (payload: {
       data: CropSuggestionResponse;
       timestamp: Date;
@@ -132,6 +133,7 @@ export default function CropSuggestionsPage() {
   const [suggestionRequestMutation, { isLoading }] =
     useRequestCropSuggestionMutation();
 
+  // Modify handleSubmit
   const handleSubmit = async (formData: z.infer<typeof formSchema>) => {
     if (!isAuthenticated || isLoading) return;
 
@@ -148,13 +150,6 @@ export default function CropSuggestionsPage() {
         successToast(
           res.message || "Request accepted! Please wait while we process."
         );
-
-        // Remove `id` param from URL without page reload
-        const url = new URL(window.location.href);
-        url.searchParams.delete("id");
-        window.history.replaceState(null, "", url.toString());
-
-        // Optional: Clear previous data if needed
         setCropSuggestionData(null);
       } else {
         errorToast(res.error.message || "Failed to submit request!");

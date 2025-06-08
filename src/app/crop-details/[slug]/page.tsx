@@ -40,7 +40,7 @@ import { Badge } from "@/components/ui/badge";
 export default function CropDetailsPage({
   params,
 }: {
-  params: { cropId: string };
+  params: { slug: string };
 }) {
   const [saved, setSaved] = useState(false);
 
