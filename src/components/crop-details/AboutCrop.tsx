@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   CloudRain,
   Droplets,
@@ -23,12 +18,10 @@ const AboutCrop: React.FC<AboutCropProps> = ({ crop }) => {
   return (
     <Card className="border-green-100 shadow-sm mb-6">
       <CardHeader>
-        <CardTitle className="text-green-800">
-          About {crop.name}
-        </CardTitle>
+        <CardTitle className="text-green-800">About {crop?.name}</CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="text-green-700">{crop.description}</p>
+        <p className="text-green-700">{crop?.description}</p>
 
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
@@ -43,7 +36,7 @@ const AboutCrop: React.FC<AboutCropProps> = ({ crop }) => {
                 <div>
                   <p className="text-sm text-green-600">Temperature</p>
                   <p className="font-medium text-green-800">
-                    {crop.climate.temperature}
+                    {crop?.climate?.temperature}
                   </p>
                 </div>
               </div>
@@ -54,7 +47,7 @@ const AboutCrop: React.FC<AboutCropProps> = ({ crop }) => {
                 <div>
                   <p className="text-sm text-green-600">Rainfall</p>
                   <p className="font-medium text-green-800">
-                    {crop.climate.rainfall}
+                    {crop?.climate?.rainfall}
                   </p>
                 </div>
               </div>
@@ -65,7 +58,7 @@ const AboutCrop: React.FC<AboutCropProps> = ({ crop }) => {
                 <div>
                   <p className="text-sm text-green-600">Humidity</p>
                   <p className="font-medium text-green-800">
-                    {crop.climate.humidity}
+                    {crop?.climate?.humidity}
                   </p>
                 </div>
               </div>
@@ -84,7 +77,7 @@ const AboutCrop: React.FC<AboutCropProps> = ({ crop }) => {
                 <div>
                   <p className="text-sm text-green-600">Soil Types</p>
                   <p className="font-medium text-green-800">
-                    {crop.soil.types.join(", ")}
+                    {crop?.soil?.types}
                   </p>
                 </div>
               </div>
@@ -94,9 +87,7 @@ const AboutCrop: React.FC<AboutCropProps> = ({ crop }) => {
                 </div>
                 <div>
                   <p className="text-sm text-green-600">Soil pH</p>
-                  <p className="font-medium text-green-800">
-                    {crop.soil.ph}
-                  </p>
+                  <p className="font-medium text-green-800">{crop?.soil?.ph}</p>
                 </div>
               </div>
               <div className="flex items-center">
@@ -106,7 +97,7 @@ const AboutCrop: React.FC<AboutCropProps> = ({ crop }) => {
                 <div>
                   <p className="text-sm text-green-600">Drainage</p>
                   <p className="font-medium text-green-800">
-                    {crop.soil.drainage}
+                    {crop?.soil?.drainage}
                   </p>
                 </div>
               </div>

@@ -19,19 +19,19 @@ const FertilizerApplication: React.FC<FertilizerApplicationProps> = ({ crop }) =
           <li className="flex items-start">
             <span className="text-green-500 mr-2">•</span>
             <span>
-              Nitrogen (N): {crop.fertilizer.nitrogen}
+              Nitrogen (N): {crop.management.fertilizer.nitrogen}
             </span>
           </li>
           <li className="flex items-start">
             <span className="text-green-500 mr-2">•</span>
             <span>
-              Phosphorus (P): {crop.fertilizer.phosphorus}
+              Phosphorus (P): {crop.management.fertilizer.phosphorus}
             </span>
           </li>
           <li className="flex items-start">
             <span className="text-green-500 mr-2">•</span>
             <span>
-              Potassium (K): {crop.fertilizer.potassium}
+              Potassium (K): {crop.management.fertilizer.potassium}
             </span>
           </li>
         </ul>
@@ -41,7 +41,7 @@ const FertilizerApplication: React.FC<FertilizerApplicationProps> = ({ crop }) =
           Application schedule:
         </p>
         <ul className="space-y-2 text-green-700">
-          {crop.fertilizer.application.map((item, index) => (
+          {crop.management.fertilizer.Application.map((item: string, index: number) => (
             <li key={index} className="flex items-start">
               <span className="text-green-500 mr-2">•</span>
               <span>{item}</span>

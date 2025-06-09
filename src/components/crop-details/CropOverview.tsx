@@ -17,16 +17,14 @@ import { Crop } from "@/types/cropDetails";
 
 interface CropOverviewProps {
   crop: Crop;
-  saved: boolean;
-  setSaved: (saved: boolean) => void;
 }
 
-const CropOverview: React.FC<CropOverviewProps> = ({ crop, saved, setSaved }) => {
+const CropOverview: React.FC<CropOverviewProps> = ({ crop }) => {
   return (
     <Card className="border-green-100 shadow-sm overflow-hidden pt-0">
       <div className="bg-green-100 p-6 flex items-center justify-center">
         <Image
-          src={crop.image || "/placeholder.svg"}
+          src={crop.img || "/placeholder.svg"}
           alt={crop.name}
           width={300}
           height={300}
@@ -41,7 +39,7 @@ const CropOverview: React.FC<CropOverviewProps> = ({ crop, saved, setSaved }) =>
           {crop.scientificName}
         </p>
 
-        <div className="flex items-center mb-4">
+        {/* <div className="flex items-center mb-4">
           <div className="mr-2 text-sm font-medium text-green-700">
             Match for your farm:
           </div>
@@ -54,7 +52,7 @@ const CropOverview: React.FC<CropOverviewProps> = ({ crop, saved, setSaved }) =>
               {crop.matchPercentage}%
             </span>
           </div>
-        </div>
+        </div> */}
 
         <div className="space-y-3">
           <div className="flex items-center">
@@ -104,14 +102,9 @@ const CropOverview: React.FC<CropOverviewProps> = ({ crop, saved, setSaved }) =>
             Suitable Soil Types
           </h3>
           <div className="flex flex-wrap gap-2">
-            {crop.soil.types.map((soilType: string, index: number) => (
-              <Badge
-                key={index}
-                className="bg-green-100 text-green-700 hover:bg-green-200"
-              >
-                {soilType}
-              </Badge>
-            ))}
+            <Badge className="bg-green-100 text-green-700 hover:bg-green-200">
+              {crop.soil.types}
+            </Badge>
           </div>
         </div>
 

@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { CropDetails } from "@/types/cropSuggestion";
 import { ArrowRight, LoaderCircle } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 interface CropRecommendationCardProps {
   name: string;
@@ -51,9 +52,12 @@ export default function CropRecommendationCard({
           {cropDetails.status === "pending" ? (
             <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
           ) : cropDetails.status === "success" ? (
-            <>
+            <Link
+              href={`/crop-details/${cropDetails?.slug}`}
+              className="size-fit flex justify-center items-center"
+            >
               Details <ArrowRight className="ml-1 h-4 w-4" />
-            </>
+            </Link>
           ) : (
             "Retry"
           )}

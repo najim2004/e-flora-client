@@ -32,17 +32,16 @@ const EconomicsMarketInformation: React.FC<EconomicsMarketInformationProps> = ({
             <ul className="space-y-2 text-green-700">
               <li className="flex items-start">
                 <span className="text-green-500 mr-2">•</span>
-                <span>Average yield: {crop.yield.average}</span>
+                <span>Average yield: {crop.economics.yield.average}</span>
               </li>
               <li className="flex items-start">
                 <span className="text-green-500 mr-2">•</span>
-                <span>Potential yield: {crop.yield.potential}</span>
+                <span>Potential yield: {crop.economics.yield.potential}</span>
               </li>
               <li className="flex items-start">
                 <span className="text-green-500 mr-2">•</span>
                 <span>
-                  Factors affecting yield: soil fertility, water management,
-                  pest control, variety
+                  Factors affecting yield: {crop.economics.yield.factorsAffectingYield}
                 </span>
               </li>
             </ul>
@@ -73,10 +72,10 @@ const EconomicsMarketInformation: React.FC<EconomicsMarketInformationProps> = ({
                       Land preparation
                     </td>
                     <td className="border border-green-200 px-4 py-2 text-right text-green-700">
-                      5,000
+                      {crop.economics.productionCosts.landPreparation.cost}
                     </td>
                     <td className="border border-green-200 px-4 py-2 text-right text-green-700">
-                      10%
+                      {crop.economics.productionCosts.landPreparation.percentage}%
                     </td>
                   </tr>
                   <tr>
@@ -84,10 +83,10 @@ const EconomicsMarketInformation: React.FC<EconomicsMarketInformationProps> = ({
                       Seeds
                     </td>
                     <td className="border border-green-200 px-4 py-2 text-right text-green-700">
-                      3,000
+                      {crop.economics.productionCosts.seeds.cost}
                     </td>
                     <td className="border border-green-200 px-4 py-2 text-right text-green-700">
-                      6%
+                      {crop.economics.productionCosts.seeds.percentage}%
                     </td>
                   </tr>
                   <tr>
@@ -95,10 +94,10 @@ const EconomicsMarketInformation: React.FC<EconomicsMarketInformationProps> = ({
                       Fertilizers
                     </td>
                     <td className="border border-green-200 px-4 py-2 text-right text-green-700">
-                      8,000
+                      {crop.economics.productionCosts.fertilizers.cost}
                     </td>
                     <td className="border border-green-200 px-4 py-2 text-right text-green-700">
-                      16%
+                      {crop.economics.productionCosts.fertilizers.percentage}%
                     </td>
                   </tr>
                   <tr>
@@ -106,10 +105,10 @@ const EconomicsMarketInformation: React.FC<EconomicsMarketInformationProps> = ({
                       Irrigation
                     </td>
                     <td className="border border-green-200 px-4 py-2 text-right text-green-700">
-                      10,000
+                      {crop.economics.productionCosts.irrigation.cost}
                     </td>
                     <td className="border border-green-200 px-4 py-2 text-right text-green-700">
-                      20%
+                      {crop.economics.productionCosts.irrigation.percentage}%
                     </td>
                   </tr>
                   <tr>
@@ -117,10 +116,10 @@ const EconomicsMarketInformation: React.FC<EconomicsMarketInformationProps> = ({
                       Plant protection (pesticides)
                     </td>
                     <td className="border border-green-200 px-4 py-2 text-right text-green-700">
-                      4,000
+                      {crop.economics.productionCosts.plantProtection.cost}
                     </td>
                     <td className="border border-green-200 px-4 py-2 text-right text-green-700">
-                      8%
+                      {crop.economics.productionCosts.plantProtection.percentage}%
                     </td>
                   </tr>
                   <tr>
@@ -128,10 +127,10 @@ const EconomicsMarketInformation: React.FC<EconomicsMarketInformationProps> = ({
                       Labor
                     </td>
                     <td className="border border-green-200 px-4 py-2 text-right text-green-700">
-                      15,000
+                      {crop.economics.productionCosts.labor.cost}
                     </td>
                     <td className="border border-green-200 px-4 py-2 text-right text-green-700">
-                      30%
+                      {crop.economics.productionCosts.labor.percentage}%
                     </td>
                   </tr>
                   <tr>
@@ -139,10 +138,10 @@ const EconomicsMarketInformation: React.FC<EconomicsMarketInformationProps> = ({
                       Harvesting and post-harvest
                     </td>
                     <td className="border border-green-200 px-4 py-2 text-right text-green-700">
-                      5,000
+                      {crop.economics.productionCosts.harvestingPostHarvest.cost}
                     </td>
                     <td className="border border-green-200 px-4 py-2 text-right text-green-700">
-                      10%
+                      {crop.economics.productionCosts.harvestingPostHarvest.percentage}%
                     </td>
                   </tr>
                   <tr className="bg-green-50 font-medium">
@@ -150,7 +149,7 @@ const EconomicsMarketInformation: React.FC<EconomicsMarketInformationProps> = ({
                       Total
                     </td>
                     <td className="border border-green-200 px-4 py-2 text-right text-green-800">
-                      50,000
+                      {crop.economics.productionCosts.total}
                     </td>
                     <td className="border border-green-200 px-4 py-2 text-right text-green-800">
                       100%
@@ -172,21 +171,20 @@ const EconomicsMarketInformation: React.FC<EconomicsMarketInformationProps> = ({
             <ul className="space-y-2 text-green-700">
               <li className="flex items-start">
                 <span className="text-green-500 mr-2">•</span>
-                <span>Current market price: {crop.market.price}</span>
+                <span>Current market price: {crop.economics.market.price}</span>
               </li>
               <li className="flex items-start">
                 <span className="text-green-500 mr-2">•</span>
-                <span>Market demand: {crop.market.demand}</span>
+                <span>Market demand: {crop.economics.market.demand}</span>
               </li>
               <li className="flex items-start">
                 <span className="text-green-500 mr-2">•</span>
-                <span>Storage life: {crop.market.storageLife}</span>
+                <span>Storage life: {crop.economics.market.storageLife}</span>
               </li>
               <li className="flex items-start">
                 <span className="text-green-500 mr-2">•</span>
                 <span>
-                  Price fluctuation: Prices typically peak during
-                  July-September and are lowest during April-May (harvest season)
+                  Price fluctuation: {crop.economics.market.priceFluctuation}
                 </span>
               </li>
             </ul>
@@ -214,7 +212,7 @@ const EconomicsMarketInformation: React.FC<EconomicsMarketInformationProps> = ({
                       Average yield (kg/acre)
                     </td>
                     <td className="border border-green-200 px-4 py-2 text-right text-green-700">
-                      3,000
+                      {crop.economics.profitabilityAnalysis.averageYield}
                     </td>
                   </tr>
                   <tr>
@@ -222,7 +220,7 @@ const EconomicsMarketInformation: React.FC<EconomicsMarketInformationProps> = ({
                       Average price (Taka/kg)
                     </td>
                     <td className="border border-green-200 px-4 py-2 text-right text-green-700">
-                      20
+                      {crop.economics.profitabilityAnalysis.averagePrice}
                     </td>
                   </tr>
                   <tr>
@@ -230,7 +228,7 @@ const EconomicsMarketInformation: React.FC<EconomicsMarketInformationProps> = ({
                       Gross revenue (Taka/acre)
                     </td>
                     <td className="border border-green-200 px-4 py-2 text-right text-green-700">
-                      60,000
+                      {crop.economics.profitabilityAnalysis.grossRevenue}
                     </td>
                   </tr>
                   <tr>
@@ -238,7 +236,7 @@ const EconomicsMarketInformation: React.FC<EconomicsMarketInformationProps> = ({
                       Total cost (Taka/acre)
                     </td>
                     <td className="border border-green-200 px-4 py-2 text-right text-green-700">
-                      50,000
+                      {crop.economics.profitabilityAnalysis.totalCost}
                     </td>
                   </tr>
                   <tr className="bg-green-50 font-medium">
@@ -246,7 +244,7 @@ const EconomicsMarketInformation: React.FC<EconomicsMarketInformationProps> = ({
                       Net profit (Taka/acre)
                     </td>
                     <td className="border border-green-200 px-4 py-2 text-right text-green-800">
-                      10,000
+                      {crop.economics.profitabilityAnalysis.netProfit}
                     </td>
                   </tr>
                   <tr>
@@ -254,7 +252,7 @@ const EconomicsMarketInformation: React.FC<EconomicsMarketInformationProps> = ({
                       Benefit-Cost Ratio (BCR)
                     </td>
                     <td className="border border-green-200 px-4 py-2 text-right text-green-700">
-                      1.2
+                      {crop.economics.profitabilityAnalysis.benefitCostRatio}
                     </td>
                   </tr>
                 </tbody>

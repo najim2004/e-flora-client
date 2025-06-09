@@ -5,7 +5,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Crop } from "@/types/cropDetails";
+import { Crop, DiseaseManagement as DiseaseManagementType } from "@/types/cropDetails";
 
 interface DiseaseManagementProps {
   crop: Crop;
@@ -18,7 +18,7 @@ const DiseaseManagement: React.FC<DiseaseManagementProps> = ({ crop }) => {
         Disease Management
       </h3>
       <Accordion type="single" collapsible className="w-full">
-        {crop.diseases.map((disease, index) => (
+        {crop.management.diseaseManagement.map((disease: DiseaseManagementType, index: number) => (
           <AccordionItem key={index} value={`disease-${index}`}>
             <AccordionTrigger className="text-green-800 hover:text-green-600">
               {disease.name}
@@ -35,7 +35,7 @@ const DiseaseManagement: React.FC<DiseaseManagementProps> = ({ crop }) => {
                   <p className="font-medium text-green-700">
                     Management:
                   </p>
-                  <p>{disease.management}</p>
+                  <p>{disease.managements}</p>
                 </div>
               </div>
             </AccordionContent>
