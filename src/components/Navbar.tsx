@@ -6,6 +6,17 @@ import Hamburger from "./hamburger";
 import NavLink from "./ui/navlink";
 import Link from "next/link";
 import Image from "next/image";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import * as Avatar from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
 
 export interface NavItems {
   id: string;
@@ -29,7 +40,7 @@ const Navbar: React.FC = () => {
     { id: "chatbot", href: "/chatbot", label: "Chatbot" },
     { id: "support", href: "/support", label: "Support" },
   ];
-
+  const userState = useSelector((state: RootState) => state.user);
   return (
     <header className="sticky top-0 z-50 w-full bg-white border-b shadow-sm">
       <div className="container flex items-center justify-between h-16 px-4 mx-auto max-w-7xl">
@@ -68,9 +79,42 @@ const Navbar: React.FC = () => {
             <span>English</span>
           </Button>
 
-          <Button className="bg-[#2E7D32] hover:bg-[#1B5E20] text-white cursor-pointer !rounded-button whitespace-nowrap">
-            <Link href="/signin">Sign In</Link>
-          </Button>
+          {userState?.isAuthenticated ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  className="relative size-8 rounded-full border data-[state=open]:bg-secondary"
+                >
+                  <Avatar.Avatar className="size-8">
+                    <Avatar.AvatarImage
+                      src={userState?.user?.profileImage}
+                      alt={userState.user?.name}
+                    />
+                    <Avatar.AvatarFallback>
+                      {userState.user?.name[0] || "U"}
+                    </Avatar.AvatarFallback>
+                  </Avatar.Avatar>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56" align="end" forceMount>
+                <DropdownMenuLabel className="font-normal">
+                  My Account
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>Profile</DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>Sign Out</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Button
+              asChild
+              className="bg-[#2E7D32] hover:bg-[#1B5E20] text-white cursor-pointer !rounded-button whitespace-nowrap"
+            >
+              <Link href="/signin">Sign In</Link>
+            </Button>
+          )}
 
           <Hamburger navItems={navItems} />
         </div>

@@ -11,7 +11,6 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { notFound } from "next/navigation";
-import MatchPercentage from "@/components/crop-details/MatchPercentage";
 
 interface CropDetailsPageProps {
   params: { slug: string };
@@ -34,7 +33,7 @@ async function getCropDetails(slug: string): Promise<Crop> {
 
 const CropDetailsPage: React.FC<CropDetailsPageProps> = async ({ params }) => {
   const crop = await getCropDetails(params.slug);
-  console.log(crop);
+  if(!crop) notFound()
   return (
     <div className="flex flex-col min-h-screen bg-green-50">
       <main className="flex-1 max-w-7xl mx-auto px-4 py-8">
@@ -81,7 +80,6 @@ const CropDetailsPage: React.FC<CropDetailsPageProps> = async ({ params }) => {
           </div>
 
           <div className="md:col-span-2">
-            <MatchPercentage cropName={crop.name} />
             <AboutCrop crop={crop} />
 
             <Tabs defaultValue="cultivation" className="w-full">
@@ -136,7 +134,7 @@ const CropDetailsPage: React.FC<CropDetailsPageProps> = async ({ params }) => {
         </div>
 
         {/* Related Resources */}
-        <RelatedResources crop={crop} />
+        {/* <RelatedResources crop={crop} /> */}
       </main>
     </div>
   );

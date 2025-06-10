@@ -145,6 +145,7 @@ export default function FarmDetailsForm({
                 <Input
                   type="number"
                   placeholder="Enter farm size"
+                  min={0}
                   className="border-green-200 focus:border-green-500 focus:ring-green-500"
                   {...field}
                 />

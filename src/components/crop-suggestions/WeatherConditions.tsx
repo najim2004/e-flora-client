@@ -1,9 +1,10 @@
 import {
   Cloud,
   Droplets,
-  MapPin,
   Thermometer,
 } from "lucide-react";
+import { GiWindsock } from "react-icons/gi";
+
 
 interface WeatherConditionsProps {
   weatherData: {
@@ -50,7 +51,7 @@ export default function WeatherConditions({ weatherData }: WeatherConditionsProp
           </div>
         </div>
         <div className="flex items-center">
-          <MapPin className="h-5 w-5 text-green-600 mr-2" />
+          <GiWindsock className="h-5 w-5 text-green-600 mr-2" />
           <div>
             <p className="text-sm text-green-700">Wind Direction</p>
             <p className="font-medium text-green-800">

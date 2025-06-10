@@ -1,11 +1,35 @@
-import { apiSlice } from '@/redux/apiSlice';
+import { apiSlice } from "@/redux/apiSlice";
 
 export const diseaseDetectionApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getDiseaseDetectionResults: builder.query({
-      query: (image) => `/api/disease-detection?image=${image}`,
+    requestDiseaseDetection: builder.mutation({
+      query: ({ image, description }) => {
+        const formData = new FormData();
+        formData.append("image", image);
+        formData.append("description", description);
+
+        return {
+          url: "/api/v1/crops/disease-detection",
+          method: "POST",
+          body: formData,
+        };
+      },
+    }),
+    diseaseDetectionResults: builder.query({
+      query: (id) => `/api/disease-detection/result/${id}`,
+    }),
+    cropSuggestionHistory: builder.query({
+      query: (params: Record<string, unknown>) => ({
+        url: `/api/v1/crops/disease-detection/histories`,
+        method: "POST",
+        params,
+      }),
     }),
   }),
 });
 
-export const { useGetDiseaseDetectionResultsQuery } = diseaseDetectionApiSlice;
+export const {
+  useDiseaseDetectionResultsQuery,
+  useCropSuggestionHistoryQuery,
+  useRequestDiseaseDetectionMutation,
+} = diseaseDetectionApiSlice;

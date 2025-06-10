@@ -53,7 +53,7 @@ export default function CropRecommendationCard({
             <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
           ) : cropDetails.status === "success" ? (
             <Link
-              href={`/crop-details/${cropDetails?.slug}`}
+              href={`/crop-details/${cropDetails?.slug}?match=${matchPercentage}`}
               className="size-fit flex justify-center items-center"
             >
               Details <ArrowRight className="ml-1 h-4 w-4" />
