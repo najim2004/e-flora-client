@@ -63,7 +63,6 @@ export type CropSuggestionStatus =
   | "failed";
 
 export interface CropSuggestionProgress {
-  userId: string;
   status: CropSuggestionStatus;
   progress: number;
   message?: string;

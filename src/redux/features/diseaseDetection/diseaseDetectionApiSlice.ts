@@ -3,7 +3,7 @@ import { apiSlice } from "@/redux/apiSlice";
 export const diseaseDetectionApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     requestDiseaseDetection: builder.mutation({
-      query: ({ image, description }) => {
+      query: ({ image, description }: { image: File; description: string }) => {
         const formData = new FormData();
         formData.append("image", image);
         formData.append("description", description);
