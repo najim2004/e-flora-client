@@ -90,17 +90,17 @@ export default function FarmDetailsForm({
           name="location"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Location (Latitude, Longitude)</FormLabel>
+              <FormLabel >Location (Latitude, Longitude)</FormLabel>
               <FormControl>
                 <div className="relative">
                   <Input
                     placeholder="Enter latitude, longitude"
-                    className="pr-10 border-green-200 focus:border-green-500 focus:ring-green-500"
+                    className="pr-10"
                     {...field}
                   />
                   <MapPin
                     onClick={handleUseCurrentLocation}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-green-500 cursor-pointer"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-primary cursor-pointer"
                   />
                 </div>
               </FormControl>
@@ -117,7 +117,7 @@ export default function FarmDetailsForm({
               <FormLabel>Soil Type</FormLabel>
               <FormControl>
                 <Select onValueChange={field.onChange} value={field.value}>
-                  <SelectTrigger className="border-green-200 focus:border-green-500 focus:ring-green-500 w-full">
+                  <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select soil type" />
                   </SelectTrigger>
                   <SelectContent>
@@ -146,7 +146,7 @@ export default function FarmDetailsForm({
                   type="number"
                   placeholder="Enter farm size"
                   min={0}
-                  className="border-green-200 focus:border-green-500 focus:ring-green-500"
+                  className=""
                   {...field}
                 />
               </FormControl>
@@ -163,7 +163,7 @@ export default function FarmDetailsForm({
               <FormLabel>Irrigation Availability</FormLabel>
               <FormControl>
                 <Select onValueChange={field.onChange} value={field.value}>
-                  <SelectTrigger className="border-green-200 focus:border-green-500 focus:ring-green-500 w-full">
+                  <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select availability" />
                   </SelectTrigger>
                   <SelectContent>
@@ -179,7 +179,7 @@ export default function FarmDetailsForm({
         />
 
         <Button
-          className="w-full bg-green-600 hover:bg-green-700"
+          className="w-full bg-primary hover:bg-primary/80"
           type="submit"
           disabled={isLoading}
         >

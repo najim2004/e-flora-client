@@ -47,12 +47,12 @@ const ProgressDisplay = ({
 
       <div className="space-y-2">
         <div className="flex justify-between text-sm">
-          <span className="text-green-700 font-medium">Progress</span>
+          <span className="text-primary/80 font-medium">Progress</span>
           <span className="text-green-600">{progress}%</span>
         </div>
         <Progress
           value={progress}
-          className="h-2 bg-green-100"
+          className="h-2 bg-secondary/10"
         />
       </div>
 

@@ -20,10 +20,10 @@ const CropManagement: React.FC<CropManagementProps> = ({ crop }) => {
   return (
     <Card className="border-green-100 shadow-sm">
       <CardHeader>
-        <CardTitle className="text-green-800">
+        <CardTitle className="text-primary">
           Crop Management
         </CardTitle>
-        <CardDescription className="text-green-700">
+        <CardDescription className="text-primary/80">
           Fertilizer application, weed control, and pest management
         </CardDescription>
       </CardHeader>

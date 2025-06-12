@@ -110,10 +110,10 @@ export default function DiseaseDetectionPage() {
       <div className="max-w-7xl w-full mx-auto px-4 py-8">
         <Card className="border-green-100 shadow-sm max-w-2xl mx-auto w-full">
           <CardHeader>
-            <CardTitle className="text-green-800 text-xl md:text-2xl">
+            <CardTitle className="text-primary text-xl md:text-2xl">
               Upload Image
             </CardTitle>
-            <CardDescription className="text-green-700">
+            <CardDescription className="text-primary/80">
               Please upload a clear, well-lit photo of the affected plant part.
             </CardDescription>
           </CardHeader>
@@ -156,7 +156,7 @@ export default function DiseaseDetectionPage() {
                   <button
                     type="button"
                     onClick={handleRemoveImage}
-                    className="absolute top-2 right-2 bg-green-600 text-white p-1 rounded-full hover:bg-green-700"
+                    className="absolute top-2 right-2 bg-green-600 text-white p-1 rounded-full hover:bg-primary/80"
                     aria-label="Remove Image"
                   >
                     <X className="h-4 w-4" />
@@ -165,7 +165,7 @@ export default function DiseaseDetectionPage() {
               ) : (
                 <>
                   <Upload className="h-12 w-12 text-green-500 mx-auto mb-4" />
-                  <p className="text-green-700 mb-2">
+                  <p className="text-primary/80 mb-2">
                     Drag & drop image here or click to browse
                   </p>
                   <p className="text-sm text-green-600">
@@ -173,7 +173,7 @@ export default function DiseaseDetectionPage() {
                   </p>
                   <Button
                     type="button"
-                    className="mt-6 bg-green-600 hover:bg-green-700"
+                    className="mt-6 bg-green-600 hover:bg-primary/80"
                   >
                     Select Image
                   </Button>
@@ -190,7 +190,7 @@ export default function DiseaseDetectionPage() {
 
             {/* Crop Name Field */}
             <div className="mt-6 space-y-2">
-              <label className="text-sm font-medium text-green-700">
+              <label className="text-sm font-medium text-primary/80">
                 Crop Name <span className="text-red-500">*</span>
               </label>
               <input
@@ -205,7 +205,7 @@ export default function DiseaseDetectionPage() {
 
             {/* Description Field */}
             <div className="mt-6 space-y-2">
-              <label className="text-sm font-medium text-green-700">
+              <label className="text-sm font-medium text-primary/80">
                 Additional Description (Optional)
               </label>
               <Textarea
@@ -220,7 +220,7 @@ export default function DiseaseDetectionPage() {
             <div className="mt-6">
               <Button
                 onClick={handleSubmit}
-                className="bg-green-600 hover:bg-green-700 w-full"
+                className="bg-green-600 hover:bg-primary/80 w-full"
                 disabled={isLoading}
               >
                 {isLoading ? (
@@ -236,10 +236,10 @@ export default function DiseaseDetectionPage() {
 
             {/* Guidelines */}
             <div className="mt-8">
-              <h3 className="font-medium text-green-800 mb-2">
+              <h3 className="font-medium text-primary mb-2">
                 Guidelines for best results:
               </h3>
-              <ul className="space-y-2 text-green-700 text-sm">
+              <ul className="space-y-2 text-primary/80 text-sm">
                 <li className="flex items-start">
                   <Check className="h-4 w-4 text-green-500 mr-2 mt-0.5" />
                   Take close-up photos of the affected area

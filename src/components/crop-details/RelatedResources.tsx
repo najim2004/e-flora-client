@@ -22,8 +22,8 @@ const RelatedResources: React.FC<RelatedResourcesProps> = ({ crop }) => {
   return (
     <Card className="border-green-100 shadow-sm mt-8">
       <CardHeader>
-        <CardTitle className="text-green-800">Related Resources</CardTitle>
-        <CardDescription className="text-green-700">
+        <CardTitle className="text-primary">Related Resources</CardTitle>
+        <CardDescription className="text-primary/80">
           Additional information and resources for {crop.name} cultivation
         </CardDescription>
       </CardHeader>
@@ -33,11 +33,11 @@ const RelatedResources: React.FC<RelatedResourcesProps> = ({ crop }) => {
             <CardContent className="p-4">
               <div className="flex items-center mb-3">
                 <AlertTriangle className="h-5 w-5 text-amber-500 mr-2" />
-                <h3 className="font-medium text-green-800">
+                <h3 className="font-medium text-primary">
                   Common Problems
                 </h3>
               </div>
-              <p className="text-sm text-green-700 mb-3">
+              <p className="text-sm text-primary/80 mb-3">
                 Learn about common problems faced during {crop.name} cultivation
                 and how to address them.
               </p>
@@ -51,11 +51,11 @@ const RelatedResources: React.FC<RelatedResourcesProps> = ({ crop }) => {
             <CardContent className="p-4">
               <div className="flex items-center mb-3">
                 <TrendingUp className="h-5 w-5 text-green-600 mr-2" />
-                <h3 className="font-medium text-green-800">
+                <h3 className="font-medium text-primary">
                   Success Stories
                 </h3>
               </div>
-              <p className="text-sm text-green-700 mb-3">
+              <p className="text-sm text-primary/80 mb-3">
                 Read success stories from farmers who have achieved high yields
                 with {crop.name}.
               </p>
@@ -69,11 +69,11 @@ const RelatedResources: React.FC<RelatedResourcesProps> = ({ crop }) => {
             <CardContent className="p-4">
               <div className="flex items-center mb-3">
                 <Scissors className="h-5 w-5 text-green-600 mr-2" />
-                <h3 className="font-medium text-green-800">
+                <h3 className="font-medium text-primary">
                   Variety Selection
                 </h3>
               </div>
-              <p className="text-sm text-green-700 mb-3">
+              <p className="text-sm text-primary/80 mb-3">
                 Compare different varieties of {crop.name} and choose the best
                 one for your conditions.
               </p>

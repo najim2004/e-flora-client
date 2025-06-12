@@ -107,7 +107,7 @@ export default function ConversationPage({ params }: { params: { conversationId:
             {/* Conversation Header */}
             <div className="p-4 border-b border-green-100 flex justify-between items-center">
               <div className="flex items-center gap-3">
-                <Link href="/community/messages" className="text-green-700 hover:text-green-600">
+                <Link href="/community/messages" className="text-primary/80 hover:text-green-600">
                   <ArrowLeft className="h-5 w-5" />
                 </Link>
                 <Avatar>
@@ -115,7 +115,7 @@ export default function ConversationPage({ params }: { params: { conversationId:
                     src={conversationData.user.avatar || "/placeholder.svg"}
                     alt={conversationData.user.name}
                   />
-                  <AvatarFallback className="bg-green-200 text-green-700">
+                  <AvatarFallback className="bg-green-200 text-primary/80">
                     {conversationData.user.name
                       .split(" ")
                       .map((n) => n[0])
@@ -126,7 +126,7 @@ export default function ConversationPage({ params }: { params: { conversationId:
                   <div className="flex items-center gap-2">
                     <Link
                       href={`/community/profile/${conversationData.user.id}`}
-                      className="font-medium text-green-800 hover:underline"
+                      className="font-medium text-primary hover:underline"
                     >
                       {conversationData.user.name}
                     </Link>
@@ -136,13 +136,13 @@ export default function ConversationPage({ params }: { params: { conversationId:
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <Button size="icon" variant="ghost" className="text-green-700 hover:bg-green-100">
+                <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-green-100">
                   <Phone className="h-5 w-5" />
                 </Button>
-                <Button size="icon" variant="ghost" className="text-green-700 hover:bg-green-100">
+                <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-green-100">
                   <Video className="h-5 w-5" />
                 </Button>
-                <Button size="icon" variant="ghost" className="text-green-700 hover:bg-green-100">
+                <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-green-100">
                   <Info className="h-5 w-5" />
                 </Button>
               </div>
@@ -162,7 +162,7 @@ export default function ConversationPage({ params }: { params: { conversationId:
                           src={conversationData.user.avatar || "/placeholder.svg"}
                           alt={conversationData.user.name}
                         />
-                        <AvatarFallback className="bg-green-200 text-green-700 text-xs">
+                        <AvatarFallback className="bg-green-200 text-primary/80 text-xs">
                           {conversationData.user.name
                             .split(" ")
                             .map((n) => n[0])
@@ -172,7 +172,7 @@ export default function ConversationPage({ params }: { params: { conversationId:
                     )}
                     <div
                       className={`max-w-[70%] rounded-lg px-4 py-2 ${
-                        message.sender === "user1" ? "bg-green-600 text-white" : "bg-green-100 text-green-800"
+                        message.sender === "user1" ? "bg-green-600 text-white" : "bg-green-100 text-primary"
                       }`}
                     >
                       <p className="text-sm">{message.content}</p>
@@ -192,10 +192,10 @@ export default function ConversationPage({ params }: { params: { conversationId:
             {/* Message Input */}
             <div className="p-4 border-t border-green-100">
               <div className="flex items-center gap-2">
-                <Button size="icon" variant="ghost" className="text-green-700 hover:bg-green-100">
+                <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-green-100">
                   <Paperclip className="h-5 w-5" />
                 </Button>
-                <Button size="icon" variant="ghost" className="text-green-700 hover:bg-green-100">
+                <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-green-100">
                   <ImageIcon className="h-5 w-5" />
                 </Button>
                 <Input
@@ -210,12 +210,12 @@ export default function ConversationPage({ params }: { params: { conversationId:
                     }
                   }}
                 />
-                <Button size="icon" variant="ghost" className="text-green-700 hover:bg-green-100">
+                <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-green-100">
                   <Smile className="h-5 w-5" />
                 </Button>
                 <Button
                   size="icon"
-                  className="bg-green-600 hover:bg-green-700"
+                  className="bg-green-600 hover:bg-primary/80"
                   onClick={handleSendMessage}
                   disabled={!newMessage.trim()}
                 >

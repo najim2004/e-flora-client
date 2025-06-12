@@ -52,7 +52,7 @@ const Navbar: React.FC = () => {
             height={40}
             className="w-10 h-10"
           />
-          <h1 className="text-xl font-bold text-[#2E7D32]">
+          <h1 className="text-xl font-bold text-primary">
             Mati&apos;r Sathi
           </h1>
         </div>
@@ -62,8 +62,8 @@ const Navbar: React.FC = () => {
             <NavLink
               key={item.id}
               href={item.href || "/"}
-              className={`text-base font-medium text-gray-600 cursor-pointer !rounded-button whitespace-nowrap`}
-              activeClass="text-[#2E7D32]"
+              className={`text-base font-medium text-muted-foreground cursor-pointer !rounded-button whitespace-nowrap`}
+              activeClass="text-primary"
             >
               {item.label}
             </NavLink>
@@ -73,7 +73,7 @@ const Navbar: React.FC = () => {
         <div className="flex items-center gap-x-4">
           <Button
             variant="outline"
-            className="hidden md:flex items-center space-x-2 border-[#2E7D32] text-[#2E7D32] hover:bg-[#E8F5E9] cursor-pointer !rounded-button whitespace-nowrap"
+            className="hidden md:flex items-center space-x-2 border-primary text-primary hover:bg-primary/10 cursor-pointer !rounded-button whitespace-nowrap"
           >
             <FontAwesomeIcon icon={faGlobe} className="text-sm" />
             <span>English</span>
@@ -84,7 +84,7 @@ const Navbar: React.FC = () => {
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
-                  className="relative size-8 rounded-full border data-[state=open]:bg-secondary"
+                  className="relative size-8 rounded-full border data-[state=open]:bg-muted"
                 >
                   <Avatar.Avatar className="size-8">
                     <Avatar.AvatarImage
@@ -110,7 +110,7 @@ const Navbar: React.FC = () => {
           ) : (
             <Button
               asChild
-              className="bg-[#2E7D32] hover:bg-[#1B5E20] text-white cursor-pointer !rounded-button whitespace-nowrap"
+              className="bg-primary hover:bg-primary/80 text-white cursor-pointer !rounded-button whitespace-nowrap"
             >
               <Link href="/signin">Sign In</Link>
             </Button>

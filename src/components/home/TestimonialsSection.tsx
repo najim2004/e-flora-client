@@ -53,7 +53,7 @@ const TestimonialsSection = () => {
         <div className="max-w-3xl mx-auto mb-16 text-center">
           <Badge
             variant="secondary"
-            className="mb-4 bg-[#E8F5E9] text-[#2E7D32] hover:bg-[#E8F5E9]/90 cursor-pointer whitespace-nowrap"
+            className="mb-4 bg-primary/10 text-primary hover:bg-primary/20 cursor-pointer whitespace-nowrap"
           >
             Success Stories
           </Badge>
@@ -84,12 +84,12 @@ const TestimonialsSection = () => {
               <Card className="h-full border-none m-1">
                 <CardContent className="p-8">
                   <div className="flex items-center mb-6 space-x-4">
-                    <Avatar className="w-12 h-12 border-2 border-[#2E7D32]">
+                    <Avatar className="w-12 h-12 border-2 border-primary">
                       <AvatarImage
                         src={testimonial.image}
                         alt={testimonial.name}
                       />
-                      <AvatarFallback className="bg-[#E8F5E9] text-[#2E7D32]">
+                      <AvatarFallback className="bg-primary/10 text-primary">
                         {testimonial.name
                           .split(" ")
                           .map((n) => n[0])

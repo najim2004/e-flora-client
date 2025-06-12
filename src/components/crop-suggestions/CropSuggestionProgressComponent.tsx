@@ -5,7 +5,6 @@ import { Progress } from "@/components/ui/progress";
 
 interface CropSuggestionProgressComponentProps {
   progress: {
-    userId: string;
     status: string;
     progress: number;
     message?: string;
@@ -22,10 +21,10 @@ export default function CropSuggestionProgressComponent({
         <Card className="border-green-100 shadow-sm">
           <CardContent className="p-4">
             <div className="mb-4">
-              <p className="text-sm font-medium text-green-700">
+              <p className="text-sm font-medium text-primary/80">
                 {progress.message || "Processing..."}
               </p>
-              <Progress value={progress.progress} className="h-2 bg-green-200 text-green-700" />
+              <Progress value={progress.progress} className="h-2 bg-green-200 text-primary/80" />
               <p className="text-xs text-green-500 mt-1">
                 {progress.progress}% Completed
               </p>

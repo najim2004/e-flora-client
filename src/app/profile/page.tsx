@@ -43,28 +43,28 @@ export default function ProfilePage() {
                   <div className="relative mb-4">
                     <Avatar className="h-24 w-24 border-4 border-white shadow-md">
                       <AvatarImage src="/placeholder.svg?height=96&width=96" alt="Profile picture" />
-                      <AvatarFallback className="bg-green-200 text-green-700 text-xl">RA</AvatarFallback>
+                      <AvatarFallback className="bg-green-200 text-primary/80 text-xl">RA</AvatarFallback>
                     </Avatar>
                     <Button
                       size="icon"
                       variant="secondary"
-                      className="absolute bottom-0 right-0 h-8 w-8 rounded-full bg-green-600 text-white hover:bg-green-700"
+                      className="absolute bottom-0 right-0 h-8 w-8 rounded-full bg-green-600 text-white hover:bg-primary/80"
                     >
                       <Camera className="h-4 w-4" />
                       <span className="sr-only">Change profile picture</span>
                     </Button>
                   </div>
-                  <h2 className="text-xl font-bold text-green-800">Rahim Ahmed</h2>
+                  <h2 className="text-xl font-bold text-primary">Rahim Ahmed</h2>
                   <p className="text-green-600 mb-4">Rice Farmer</p>
-                  <div className="flex items-center text-green-700 mb-1">
+                  <div className="flex items-center text-primary/80 mb-1">
                     <MapPin className="h-4 w-4 mr-2" />
                     <span className="text-sm">Dhaka, Bangladesh</span>
                   </div>
-                  <div className="flex items-center text-green-700 mb-1">
+                  <div className="flex items-center text-primary/80 mb-1">
                     <Mail className="h-4 w-4 mr-2" />
                     <span className="text-sm">rahim.ahmed@example.com</span>
                   </div>
-                  <div className="flex items-center text-green-700 mb-4">
+                  <div className="flex items-center text-primary/80 mb-4">
                     <Phone className="h-4 w-4 mr-2" />
                     <span className="text-sm">+880 1234 567890</span>
                   </div>
@@ -79,25 +79,25 @@ export default function ProfilePage() {
                 </div>
 
                 <div className="mt-8">
-                  <h3 className="font-medium text-green-800 mb-3">Account Navigation</h3>
+                  <h3 className="font-medium text-primary mb-3">Account Navigation</h3>
                   <nav className="space-y-1">
                     <Link
                       href="/profile"
-                      className="flex items-center px-3 py-2 text-green-700 bg-green-100 rounded-md"
+                      className="flex items-center px-3 py-2 text-primary/80 bg-green-100 rounded-md"
                     >
                       <User className="h-4 w-4 mr-3" />
                       Profile Information
                     </Link>
                     <Link
                       href="/profile/activity"
-                      className="flex items-center px-3 py-2 text-green-700 hover:bg-green-100 rounded-md"
+                      className="flex items-center px-3 py-2 text-primary/80 hover:bg-green-100 rounded-md"
                     >
                       <Calendar className="h-4 w-4 mr-3" />
                       Activity History
                     </Link>
                     <Link
                       href="/profile/settings"
-                      className="flex items-center px-3 py-2 text-green-700 hover:bg-green-100 rounded-md"
+                      className="flex items-center px-3 py-2 text-primary/80 hover:bg-green-100 rounded-md"
                     >
                       <Settings className="h-4 w-4 mr-3" />
                       Account Settings
@@ -137,8 +137,8 @@ export default function ProfilePage() {
               <TabsContent value="personal">
                 <Card className="border-green-100 shadow-sm">
                   <CardHeader>
-                    <CardTitle className="text-green-800">Personal Information</CardTitle>
-                    <CardDescription className="text-green-700">
+                    <CardTitle className="text-primary">Personal Information</CardTitle>
+                    <CardDescription className="text-primary/80">
                       Manage your personal details and contact information
                     </CardDescription>
                   </CardHeader>
@@ -147,7 +147,7 @@ export default function ProfilePage() {
                       <form className="space-y-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           <div className="space-y-2">
-                            <Label htmlFor="fullName" className="text-green-700">
+                            <Label htmlFor="fullName" className="text-primary/80">
                               Full Name
                             </Label>
                             <Input
@@ -157,7 +157,7 @@ export default function ProfilePage() {
                             />
                           </div>
                           <div className="space-y-2">
-                            <Label htmlFor="occupation" className="text-green-700">
+                            <Label htmlFor="occupation" className="text-primary/80">
                               Occupation
                             </Label>
                             <Input
@@ -167,7 +167,7 @@ export default function ProfilePage() {
                             />
                           </div>
                           <div className="space-y-2">
-                            <Label htmlFor="email" className="text-green-700">
+                            <Label htmlFor="email" className="text-primary/80">
                               Email Address
                             </Label>
                             <Input
@@ -178,7 +178,7 @@ export default function ProfilePage() {
                             />
                           </div>
                           <div className="space-y-2">
-                            <Label htmlFor="phone" className="text-green-700">
+                            <Label htmlFor="phone" className="text-primary/80">
                               Phone Number
                             </Label>
                             <Input
@@ -188,7 +188,7 @@ export default function ProfilePage() {
                             />
                           </div>
                           <div className="space-y-2 md:col-span-2">
-                            <Label htmlFor="address" className="text-green-700">
+                            <Label htmlFor="address" className="text-primary/80">
                               Address
                             </Label>
                             <Textarea
@@ -198,7 +198,7 @@ export default function ProfilePage() {
                             />
                           </div>
                           <div className="space-y-2">
-                            <Label htmlFor="dateOfBirth" className="text-green-700">
+                            <Label htmlFor="dateOfBirth" className="text-primary/80">
                               Date of Birth
                             </Label>
                             <Input
@@ -209,7 +209,7 @@ export default function ProfilePage() {
                             />
                           </div>
                           <div className="space-y-2">
-                            <Label htmlFor="gender" className="text-green-700">
+                            <Label htmlFor="gender" className="text-primary/80">
                               Gender
                             </Label>
                             <Select defaultValue="male">
@@ -235,7 +235,7 @@ export default function ProfilePage() {
                           </Button>
                           <Button
                             type="button"
-                            className="bg-green-600 hover:bg-green-700"
+                            className="bg-green-600 hover:bg-primary/80"
                             onClick={() => setIsEditing(false)}
                           >
                             Save Changes
@@ -247,31 +247,31 @@ export default function ProfilePage() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           <div>
                             <h3 className="text-sm font-medium text-green-600">Full Name</h3>
-                            <p className="mt-1 text-green-800">Rahim Ahmed</p>
+                            <p className="mt-1 text-primary">Rahim Ahmed</p>
                           </div>
                           <div>
                             <h3 className="text-sm font-medium text-green-600">Occupation</h3>
-                            <p className="mt-1 text-green-800">Rice Farmer</p>
+                            <p className="mt-1 text-primary">Rice Farmer</p>
                           </div>
                           <div>
                             <h3 className="text-sm font-medium text-green-600">Email Address</h3>
-                            <p className="mt-1 text-green-800">rahim.ahmed@example.com</p>
+                            <p className="mt-1 text-primary">rahim.ahmed@example.com</p>
                           </div>
                           <div>
                             <h3 className="text-sm font-medium text-green-600">Phone Number</h3>
-                            <p className="mt-1 text-green-800">+880 1234 567890</p>
+                            <p className="mt-1 text-primary">+880 1234 567890</p>
                           </div>
                           <div className="md:col-span-2">
                             <h3 className="text-sm font-medium text-green-600">Address</h3>
-                            <p className="mt-1 text-green-800">123 Farmer's Lane, Dhaka, Bangladesh</p>
+                            <p className="mt-1 text-primary">123 Farmer's Lane, Dhaka, Bangladesh</p>
                           </div>
                           <div>
                             <h3 className="text-sm font-medium text-green-600">Date of Birth</h3>
-                            <p className="mt-1 text-green-800">June 15, 1985</p>
+                            <p className="mt-1 text-primary">June 15, 1985</p>
                           </div>
                           <div>
                             <h3 className="text-sm font-medium text-green-600">Gender</h3>
-                            <p className="mt-1 text-green-800">Male</p>
+                            <p className="mt-1 text-primary">Male</p>
                           </div>
                         </div>
                       </div>
@@ -281,8 +281,8 @@ export default function ProfilePage() {
 
                 <Card className="border-green-100 shadow-sm mt-6">
                   <CardHeader>
-                    <CardTitle className="text-green-800">Account Security</CardTitle>
-                    <CardDescription className="text-green-700">
+                    <CardTitle className="text-primary">Account Security</CardTitle>
+                    <CardDescription className="text-primary/80">
                       Manage your password and account security settings
                     </CardDescription>
                   </CardHeader>
@@ -290,7 +290,7 @@ export default function ProfilePage() {
                     <div className="space-y-6">
                       <div className="flex items-center justify-between">
                         <div>
-                          <h3 className="font-medium text-green-800">Password</h3>
+                          <h3 className="font-medium text-primary">Password</h3>
                           <p className="text-sm text-green-600">Last changed 3 months ago</p>
                         </div>
                         <Button variant="outline" className="border-green-600 text-green-600 hover:bg-green-50">
@@ -299,14 +299,14 @@ export default function ProfilePage() {
                       </div>
                       <div className="flex items-center justify-between">
                         <div>
-                          <h3 className="font-medium text-green-800">Two-Factor Authentication</h3>
+                          <h3 className="font-medium text-primary">Two-Factor Authentication</h3>
                           <p className="text-sm text-green-600">Add an extra layer of security to your account</p>
                         </div>
                         <Switch />
                       </div>
                       <div className="flex items-center justify-between">
                         <div>
-                          <h3 className="font-medium text-green-800">Login Notifications</h3>
+                          <h3 className="font-medium text-primary">Login Notifications</h3>
                           <p className="text-sm text-green-600">Receive alerts when someone logs into your account</p>
                         </div>
                         <Switch defaultChecked />
@@ -320,8 +320,8 @@ export default function ProfilePage() {
               <TabsContent value="farm">
                 <Card className="border-green-100 shadow-sm">
                   <CardHeader>
-                    <CardTitle className="text-green-800">Farm Information</CardTitle>
-                    <CardDescription className="text-green-700">
+                    <CardTitle className="text-primary">Farm Information</CardTitle>
+                    <CardDescription className="text-primary/80">
                       Manage details about your farm and agricultural practices
                     </CardDescription>
                   </CardHeader>
@@ -330,7 +330,7 @@ export default function ProfilePage() {
                       <form className="space-y-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           <div className="space-y-2">
-                            <Label htmlFor="farmName" className="text-green-700">
+                            <Label htmlFor="farmName" className="text-primary/80">
                               Farm Name
                             </Label>
                             <Input
@@ -340,7 +340,7 @@ export default function ProfilePage() {
                             />
                           </div>
                           <div className="space-y-2">
-                            <Label htmlFor="farmSize" className="text-green-700">
+                            <Label htmlFor="farmSize" className="text-primary/80">
                               Farm Size (Acres)
                             </Label>
                             <Input
@@ -351,7 +351,7 @@ export default function ProfilePage() {
                             />
                           </div>
                           <div className="space-y-2">
-                            <Label htmlFor="location" className="text-green-700">
+                            <Label htmlFor="location" className="text-primary/80">
                               Location
                             </Label>
                             <Input
@@ -361,7 +361,7 @@ export default function ProfilePage() {
                             />
                           </div>
                           <div className="space-y-2">
-                            <Label htmlFor="soilType" className="text-green-700">
+                            <Label htmlFor="soilType" className="text-primary/80">
                               Primary Soil Type
                             </Label>
                             <Select defaultValue="clay">
@@ -379,7 +379,7 @@ export default function ProfilePage() {
                             </Select>
                           </div>
                           <div className="space-y-2">
-                            <Label htmlFor="irrigation" className="text-green-700">
+                            <Label htmlFor="irrigation" className="text-primary/80">
                               Irrigation Type
                             </Label>
                             <Select defaultValue="flood">
@@ -395,7 +395,7 @@ export default function ProfilePage() {
                             </Select>
                           </div>
                           <div className="space-y-2">
-                            <Label htmlFor="farmingType" className="text-green-700">
+                            <Label htmlFor="farmingType" className="text-primary/80">
                               Farming Type
                             </Label>
                             <Select defaultValue="conventional">
@@ -411,7 +411,7 @@ export default function ProfilePage() {
                           </div>
                         </div>
                         <div className="space-y-2">
-                          <Label htmlFor="primaryCrops" className="text-green-700">
+                          <Label htmlFor="primaryCrops" className="text-primary/80">
                             Primary Crops
                           </Label>
                           <Textarea
@@ -431,7 +431,7 @@ export default function ProfilePage() {
                           </Button>
                           <Button
                             type="button"
-                            className="bg-green-600 hover:bg-green-700"
+                            className="bg-green-600 hover:bg-primary/80"
                             onClick={() => setIsEditing(false)}
                           >
                             Save Changes
@@ -443,32 +443,32 @@ export default function ProfilePage() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           <div>
                             <h3 className="text-sm font-medium text-green-600">Farm Name</h3>
-                            <p className="mt-1 text-green-800">Green Harvest Farm</p>
+                            <p className="mt-1 text-primary">Green Harvest Farm</p>
                           </div>
                           <div>
                             <h3 className="text-sm font-medium text-green-600">Farm Size</h3>
-                            <p className="mt-1 text-green-800">5.5 Acres</p>
+                            <p className="mt-1 text-primary">5.5 Acres</p>
                           </div>
                           <div>
                             <h3 className="text-sm font-medium text-green-600">Location</h3>
-                            <p className="mt-1 text-green-800">Savar, Dhaka</p>
+                            <p className="mt-1 text-primary">Savar, Dhaka</p>
                           </div>
                           <div>
                             <h3 className="text-sm font-medium text-green-600">Primary Soil Type</h3>
-                            <p className="mt-1 text-green-800">Clay Soil</p>
+                            <p className="mt-1 text-primary">Clay Soil</p>
                           </div>
                           <div>
                             <h3 className="text-sm font-medium text-green-600">Irrigation Type</h3>
-                            <p className="mt-1 text-green-800">Flood Irrigation</p>
+                            <p className="mt-1 text-primary">Flood Irrigation</p>
                           </div>
                           <div>
                             <h3 className="text-sm font-medium text-green-600">Farming Type</h3>
-                            <p className="mt-1 text-green-800">Conventional</p>
+                            <p className="mt-1 text-primary">Conventional</p>
                           </div>
                         </div>
                         <div>
                           <h3 className="text-sm font-medium text-green-600">Primary Crops</h3>
-                          <p className="mt-1 text-green-800">Rice (Boro, Aman), Jute, Wheat</p>
+                          <p className="mt-1 text-primary">Rice (Boro, Aman), Jute, Wheat</p>
                         </div>
                       </div>
                     )}
@@ -477,33 +477,33 @@ export default function ProfilePage() {
 
                 <Card className="border-green-100 shadow-sm mt-6">
                   <CardHeader>
-                    <CardTitle className="text-green-800">Equipment & Resources</CardTitle>
-                    <CardDescription className="text-green-700">
+                    <CardTitle className="text-primary">Equipment & Resources</CardTitle>
+                    <CardDescription className="text-primary/80">
                       Information about your farming equipment and resources
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-6">
                       <div>
-                        <h3 className="font-medium text-green-800 mb-3">Available Equipment</h3>
+                        <h3 className="font-medium text-primary mb-3">Available Equipment</h3>
                         <div className="flex flex-wrap gap-2">
-                          <Badge className="bg-green-100 text-green-700 hover:bg-green-200">Tractor</Badge>
-                          <Badge className="bg-green-100 text-green-700 hover:bg-green-200">Power Tiller</Badge>
-                          <Badge className="bg-green-100 text-green-700 hover:bg-green-200">Water Pump</Badge>
-                          <Badge className="bg-green-100 text-green-700 hover:bg-green-200">Sprayer</Badge>
-                          <Badge className="bg-green-100 text-green-700 hover:bg-green-200">Harvester</Badge>
+                          <Badge className="bg-green-100 text-primary/80 hover:bg-green-200">Tractor</Badge>
+                          <Badge className="bg-green-100 text-primary/80 hover:bg-green-200">Power Tiller</Badge>
+                          <Badge className="bg-green-100 text-primary/80 hover:bg-green-200">Water Pump</Badge>
+                          <Badge className="bg-green-100 text-primary/80 hover:bg-green-200">Sprayer</Badge>
+                          <Badge className="bg-green-100 text-primary/80 hover:bg-green-200">Harvester</Badge>
                         </div>
                       </div>
                       <div>
-                        <h3 className="font-medium text-green-800 mb-3">Labor Resources</h3>
+                        <h3 className="font-medium text-primary mb-3">Labor Resources</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div>
                             <h4 className="text-sm font-medium text-green-600">Family Workers</h4>
-                            <p className="mt-1 text-green-800">3 people</p>
+                            <p className="mt-1 text-primary">3 people</p>
                           </div>
                           <div>
                             <h4 className="text-sm font-medium text-green-600">Hired Workers (Seasonal)</h4>
-                            <p className="mt-1 text-green-800">8-10 people</p>
+                            <p className="mt-1 text-primary">8-10 people</p>
                           </div>
                         </div>
                       </div>
@@ -516,8 +516,8 @@ export default function ProfilePage() {
               <TabsContent value="preferences">
                 <Card className="border-green-100 shadow-sm">
                   <CardHeader>
-                    <CardTitle className="text-green-800">Notification Preferences</CardTitle>
-                    <CardDescription className="text-green-700">
+                    <CardTitle className="text-primary">Notification Preferences</CardTitle>
+                    <CardDescription className="text-primary/80">
                       Manage how and when you receive notifications
                     </CardDescription>
                   </CardHeader>
@@ -525,35 +525,35 @@ export default function ProfilePage() {
                     <div className="space-y-6">
                       <div className="flex items-center justify-between">
                         <div>
-                          <h3 className="font-medium text-green-800">Email Notifications</h3>
+                          <h3 className="font-medium text-primary">Email Notifications</h3>
                           <p className="text-sm text-green-600">Receive updates and alerts via email</p>
                         </div>
                         <Switch defaultChecked />
                       </div>
                       <div className="flex items-center justify-between">
                         <div>
-                          <h3 className="font-medium text-green-800">SMS Notifications</h3>
+                          <h3 className="font-medium text-primary">SMS Notifications</h3>
                           <p className="text-sm text-green-600">Receive updates and alerts via SMS</p>
                         </div>
                         <Switch defaultChecked />
                       </div>
                       <div className="flex items-center justify-between">
                         <div>
-                          <h3 className="font-medium text-green-800">Weather Alerts</h3>
+                          <h3 className="font-medium text-primary">Weather Alerts</h3>
                           <p className="text-sm text-green-600">Receive alerts about weather conditions</p>
                         </div>
                         <Switch defaultChecked />
                       </div>
                       <div className="flex items-center justify-between">
                         <div>
-                          <h3 className="font-medium text-green-800">Crop Price Updates</h3>
+                          <h3 className="font-medium text-primary">Crop Price Updates</h3>
                           <p className="text-sm text-green-600">Receive updates about market prices</p>
                         </div>
                         <Switch defaultChecked />
                       </div>
                       <div className="flex items-center justify-between">
                         <div>
-                          <h3 className="font-medium text-green-800">Disease Outbreak Alerts</h3>
+                          <h3 className="font-medium text-primary">Disease Outbreak Alerts</h3>
                           <p className="text-sm text-green-600">
                             Receive alerts about crop disease outbreaks in your area
                           </p>
@@ -566,13 +566,13 @@ export default function ProfilePage() {
 
                 <Card className="border-green-100 shadow-sm mt-6">
                   <CardHeader>
-                    <CardTitle className="text-green-800">App Preferences</CardTitle>
-                    <CardDescription className="text-green-700">Customize your app experience</CardDescription>
+                    <CardTitle className="text-primary">App Preferences</CardTitle>
+                    <CardDescription className="text-primary/80">Customize your app experience</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-6">
                       <div className="space-y-2">
-                        <Label htmlFor="language" className="text-green-700">
+                        <Label htmlFor="language" className="text-primary/80">
                           Preferred Language
                         </Label>
                         <Select defaultValue="bn">
@@ -586,7 +586,7 @@ export default function ProfilePage() {
                         </Select>
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="units" className="text-green-700">
+                        <Label htmlFor="units" className="text-primary/80">
                           Measurement Units
                         </Label>
                         <Select defaultValue="metric">
@@ -601,7 +601,7 @@ export default function ProfilePage() {
                       </div>
                       <div className="flex items-center justify-between">
                         <div>
-                          <h3 className="font-medium text-green-800">Data Saving Mode</h3>
+                          <h3 className="font-medium text-primary">Data Saving Mode</h3>
                           <p className="text-sm text-green-600">Reduce data usage by loading lower quality images</p>
                         </div>
                         <Switch />
@@ -615,8 +615,8 @@ export default function ProfilePage() {
             {/* Recent Activity Section */}
             <Card className="border-green-100 shadow-sm mt-8">
               <CardHeader>
-                <CardTitle className="text-green-800">Recent Activity</CardTitle>
-                <CardDescription className="text-green-700">Your recent interactions with the platform</CardDescription>
+                <CardTitle className="text-primary">Recent Activity</CardTitle>
+                <CardDescription className="text-primary/80">Your recent interactions with the platform</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -625,8 +625,8 @@ export default function ProfilePage() {
                       <Leaf className="h-5 w-5 text-green-600" />
                     </div>
                     <div>
-                      <h3 className="font-medium text-green-800">Disease Detection</h3>
-                      <p className="text-sm text-green-700">You detected Rice Blast disease in your crop</p>
+                      <h3 className="font-medium text-primary">Disease Detection</h3>
+                      <p className="text-sm text-primary/80">You detected Rice Blast disease in your crop</p>
                       <p className="text-xs text-green-500 mt-1">2 days ago</p>
                     </div>
                   </div>
@@ -635,8 +635,8 @@ export default function ProfilePage() {
                       <Sprout className="h-5 w-5 text-green-600" />
                     </div>
                     <div>
-                      <h3 className="font-medium text-green-800">Crop Suggestion</h3>
-                      <p className="text-sm text-green-700">
+                      <h3 className="font-medium text-primary">Crop Suggestion</h3>
+                      <p className="text-sm text-primary/80">
                         You received recommendations for your next planting season
                       </p>
                       <p className="text-xs text-green-500 mt-1">1 week ago</p>
@@ -647,8 +647,8 @@ export default function ProfilePage() {
                       <MessageSquare className="h-5 w-5 text-green-600" />
                     </div>
                     <div>
-                      <h3 className="font-medium text-green-800">AI Chatbot Conversation</h3>
-                      <p className="text-sm text-green-700">You asked about fertilizer recommendations for rice</p>
+                      <h3 className="font-medium text-primary">AI Chatbot Conversation</h3>
+                      <p className="text-sm text-primary/80">You asked about fertilizer recommendations for rice</p>
                       <p className="text-xs text-green-500 mt-1">1 week ago</p>
                     </div>
                   </div>

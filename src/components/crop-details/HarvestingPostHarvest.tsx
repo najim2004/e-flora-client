@@ -17,10 +17,10 @@ const HarvestingPostHarvest: React.FC<HarvestingPostHarvestProps> = ({ crop }) =
   return (
     <Card className="border-green-100 shadow-sm">
       <CardHeader>
-        <CardTitle className="text-green-800">
+        <CardTitle className="text-primary">
           Harvesting & Post-Harvest
         </CardTitle>
-        <CardDescription className="text-green-700">
+        <CardDescription className="text-primary/80">
           When and how to harvest, plus post-harvest handling
         </CardDescription>
       </CardHeader>
@@ -28,10 +28,10 @@ const HarvestingPostHarvest: React.FC<HarvestingPostHarvestProps> = ({ crop }) =
         <div className="space-y-6">
           {crop.harvesting && crop.harvesting.map((harvest: CultivationGuide, index: number) => (
             <div key={index}>
-              <h3 className="font-medium text-green-800 mb-3">
+              <h3 className="font-medium text-primary mb-3">
                 {harvest.title}
               </h3>
-              <ul className="space-y-2 text-green-700">
+              <ul className="space-y-2 text-primary/80">
                 {harvest.guides && harvest.guides.map((guide: string, guideIndex: number) => (
                   <ListItem key={guideIndex}>{guide}</ListItem>
                 ))}

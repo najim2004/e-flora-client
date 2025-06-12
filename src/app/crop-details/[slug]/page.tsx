@@ -47,7 +47,7 @@ const CropDetailsPage: React.FC<CropDetailsPageProps> = async ({
         <div className="flex flex-wrap justify-between items-center mb-6">
           <Link
             href="/crop-suggestions"
-            className="inline-flex items-center text-green-600 hover:text-green-700"
+            className="inline-flex items-center text-primary hover:text-primary/80"
           >
             <ArrowLeft className="mr-2 h-4 w-4" /> Back
           </Link>
@@ -56,7 +56,7 @@ const CropDetailsPage: React.FC<CropDetailsPageProps> = async ({
             <Button
               variant="outline"
               size="sm"
-              className="border-green-600 text-green-600 hover:bg-green-50"
+              className="border-primary text-primary hover:bg-secondary"
             >
               <Bookmark className="h-4 w-4 mr-2" />
               Save
@@ -64,7 +64,7 @@ const CropDetailsPage: React.FC<CropDetailsPageProps> = async ({
             <Button
               variant="outline"
               size="sm"
-              className="border-green-600 text-green-600 hover:bg-green-50"
+              className="border-primary text-primary hover:bg-secondary"
             >
               <Share2 className="h-4 w-4 mr-2" />
               Share
@@ -72,7 +72,7 @@ const CropDetailsPage: React.FC<CropDetailsPageProps> = async ({
             <Button
               variant="outline"
               size="sm"
-              className="border-green-600 text-green-600 hover:bg-green-50"
+              className="border-primary text-primary hover:bg-secondary"
             >
               <Download className="h-4 w-4 mr-2" />
               Download
@@ -93,25 +93,25 @@ const CropDetailsPage: React.FC<CropDetailsPageProps> = async ({
               <TabsList className="grid grid-cols-4 mb-6 h-max p-1.5 rounded-sm w-full">
                 <TabsTrigger
                   value="cultivation"
-                  className="data-[state=active]:bg-green-600 data-[state=active]:text-white py-1.5 rounded-sm text-gray-400"
+                  className="data-[state=active]:bg-primary data-[state=active]:text-white py-1.5 rounded-sm text-gray-400"
                 >
                   Cultivation
                 </TabsTrigger>
                 <TabsTrigger
                   value="management"
-                  className="data-[state=active]:bg-green-600 data-[state=active]:text-white py-1.5 rounded-sm text-gray-400"
+                  className="data-[state=active]:bg-primary data-[state=active]:text-white py-1.5 rounded-sm text-gray-400"
                 >
                   Management
                 </TabsTrigger>
                 <TabsTrigger
                   value="harvesting"
-                  className="data-[state=active]:bg-green-600 data-[state=active]:text-white py-1.5 rounded-sm text-gray-400"
+                  className="data-[state=active]:bg-primary data-[state=active]:text-white py-1.5 rounded-sm text-gray-400"
                 >
                   Harvesting
                 </TabsTrigger>
                 <TabsTrigger
                   value="economics"
-                  className="data-[state=active]:bg-green-600 data-[state=active]:text-white py-1.5 rounded-sm text-gray-400"
+                  className="data-[state=active]:bg-primary data-[state=active]:text-white py-1.5 rounded-sm text-gray-400"
                 >
                   Economics
                 </TabsTrigger>

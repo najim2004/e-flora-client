@@ -339,7 +339,7 @@ export default function CommunityPage() {
                       src={currentUser.avatar || "/placeholder.svg"}
                       alt={currentUser.name}
                     />
-                    <AvatarFallback className="bg-green-200 text-green-700">
+                    <AvatarFallback className="bg-green-200 text-primary/80">
                       {currentUser.name
                         .split(" ")
                         .map((n) => n[0])
@@ -347,7 +347,7 @@ export default function CommunityPage() {
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <h3 className="font-medium text-green-800">
+                    <h3 className="font-medium text-primary">
                       {currentUser.name}
                     </h3>
                     <p className="text-sm text-green-600">
@@ -359,7 +359,7 @@ export default function CommunityPage() {
                 <div className="space-y-4">
                   <Link
                     href="/profile"
-                    className="flex items-center gap-2 text-green-700 hover:text-green-600 text-sm"
+                    className="flex items-center gap-2 text-primary/80 hover:text-green-600 text-sm"
                   >
                     <span className="w-7 h-7 rounded-full bg-green-100 flex items-center justify-center">
                       <Users className="h-4 w-4 text-green-600" />
@@ -368,19 +368,19 @@ export default function CommunityPage() {
                   </Link>
                   <Link
                     href="/community/messages"
-                    className="flex items-center gap-2 text-green-700 hover:text-green-600 text-sm"
+                    className="flex items-center gap-2 text-primary/80 hover:text-green-600 text-sm"
                   >
                     <span className="w-7 h-7 rounded-full bg-green-100 flex items-center justify-center">
                       <MessageSquare className="h-4 w-4 text-green-600" />
                     </span>
                     <span>Messages</span>
-                    <Badge className="ml-auto bg-green-600 hover:bg-green-700">
+                    <Badge className="ml-auto bg-green-600 hover:bg-primary/80">
                       3
                     </Badge>
                   </Link>
                   <Link
                     href="/community/saved"
-                    className="flex items-center gap-2 text-green-700 hover:text-green-600 text-sm"
+                    className="flex items-center gap-2 text-primary/80 hover:text-green-600 text-sm"
                   >
                     <span className="w-7 h-7 rounded-full bg-green-100 flex items-center justify-center">
                       <Bookmark className="h-4 w-4 text-green-600" />
@@ -395,7 +395,7 @@ export default function CommunityPage() {
               <CardContent className="p-6">
                 <div className="flex items-center gap-2 mb-4">
                   <TrendingUp className="h-5 w-5 text-green-600" />
-                  <h3 className="font-medium text-green-800">
+                  <h3 className="font-medium text-primary">
                     Trending Topics
                   </h3>
                 </div>
@@ -407,7 +407,7 @@ export default function CommunityPage() {
                     >
                       <Link
                         href={`/community/topics/${topic.id}`}
-                        className="text-green-700 hover:text-green-600 text-sm"
+                        className="text-primary/80 hover:text-green-600 text-sm"
                       >
                         #{topic.name}
                       </Link>
@@ -424,7 +424,7 @@ export default function CommunityPage() {
               <CardContent className="p-6">
                 <div className="flex items-center gap-2 mb-4">
                   <Calendar className="h-5 w-5 text-green-600" />
-                  <h3 className="font-medium text-green-800">
+                  <h3 className="font-medium text-primary">
                     Upcoming Events
                   </h3>
                 </div>
@@ -436,7 +436,7 @@ export default function CommunityPage() {
                     >
                       <Link
                         href={`/community/events/${event.id}`}
-                        className="font-medium text-green-700 hover:text-green-600 text-sm"
+                        className="font-medium text-primary/80 hover:text-green-600 text-sm"
                       >
                         {event.title}
                       </Link>
@@ -481,7 +481,7 @@ export default function CommunityPage() {
                       src={currentUser.avatar || "/placeholder.svg"}
                       alt={currentUser.name}
                     />
-                    <AvatarFallback className="bg-green-200 text-green-700">
+                    <AvatarFallback className="bg-green-200 text-primary/80">
                       {currentUser.name
                         .split(" ")
                         .map((n) => n[0])
@@ -523,7 +523,7 @@ export default function CommunityPage() {
                         <Button
                           variant="outline"
                           size="sm"
-                          className="border-green-200 text-green-700 hover:bg-green-50"
+                          className="border-green-200 text-primary/80 hover:bg-green-50"
                           onClick={() =>
                             document.getElementById("image-upload")?.click()
                           }
@@ -542,7 +542,7 @@ export default function CommunityPage() {
                         <Button
                           variant="outline"
                           size="sm"
-                          className="border-green-200 text-green-700 hover:bg-green-50"
+                          className="border-green-200 text-primary/80 hover:bg-green-50"
                         >
                           <Smile className="h-4 w-4 mr-1" />
                           Feeling
@@ -550,7 +550,7 @@ export default function CommunityPage() {
                       </div>
                       <Button
                         size="sm"
-                        className="bg-green-600 hover:bg-green-700"
+                        className="bg-green-600 hover:bg-primary/80"
                         onClick={handleCreatePost}
                         disabled={!postContent.trim()}
                       >
@@ -569,21 +569,21 @@ export default function CommunityPage() {
                 <TabsList className="bg-green-100">
                   <TabsTrigger
                     value="latest"
-                    className="data-[state=active]:bg-white data-[state=active]:text-green-800"
+                    className="data-[state=active]:bg-white data-[state=active]:text-primary"
                   >
                     <Clock className="h-4 w-4 mr-1" />
                     Latest
                   </TabsTrigger>
                   <TabsTrigger
                     value="popular"
-                    className="data-[state=active]:bg-white data-[state=active]:text-green-800"
+                    className="data-[state=active]:bg-white data-[state=active]:text-primary"
                   >
                     <TrendingUp className="h-4 w-4 mr-1" />
                     Popular
                   </TabsTrigger>
                   <TabsTrigger
                     value="following"
-                    className="data-[state=active]:bg-white data-[state=active]:text-green-800"
+                    className="data-[state=active]:bg-white data-[state=active]:text-primary"
                   >
                     <Users className="h-4 w-4 mr-1" />
                     Following
@@ -593,7 +593,7 @@ export default function CommunityPage() {
               <Button
                 variant="outline"
                 size="sm"
-                className="border-green-200 text-green-700 hover:bg-green-50 ml-2"
+                className="border-green-200 text-primary/80 hover:bg-green-50 ml-2"
               >
                 <Filter className="h-4 w-4 mr-1" />
                 Filter
@@ -614,7 +614,7 @@ export default function CommunityPage() {
               ) : (
                 <Card className="border-green-100 shadow-sm">
                   <CardContent className="p-6 text-center">
-                    <p className="text-green-700">
+                    <p className="text-primary/80">
                       No posts found. Be the first to post!
                     </p>
                   </CardContent>
@@ -653,7 +653,7 @@ export default function CommunityPage() {
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-2">
                     <Users className="h-5 w-5 text-green-600" />
-                    <h3 className="font-medium text-green-800">Active Users</h3>
+                    <h3 className="font-medium text-primary">Active Users</h3>
                   </div>
                   <Button
                     variant="link"
@@ -675,7 +675,7 @@ export default function CommunityPage() {
                           src={user.avatar || "/placeholder.svg"}
                           alt={user.name}
                         />
-                        <AvatarFallback className="bg-green-200 text-green-700 text-xs">
+                        <AvatarFallback className="bg-green-200 text-primary/80 text-xs">
                           {user.name
                             .split(" ")
                             .map((n) => n[0])
@@ -683,7 +683,7 @@ export default function CommunityPage() {
                         </AvatarFallback>
                       </Avatar>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-green-800 truncate">
+                        <p className="text-sm font-medium text-primary truncate">
                           {user.name}
                         </p>
                         <p className="text-xs text-green-600 truncate">
@@ -701,7 +701,7 @@ export default function CommunityPage() {
               <CardContent className="p-6">
                 <div className="flex items-center gap-2 mb-4">
                   <MessageSquare className="h-5 w-5 text-green-600" />
-                  <h3 className="font-medium text-green-800">
+                  <h3 className="font-medium text-primary">
                     Recent Messages
                   </h3>
                 </div>
@@ -718,7 +718,7 @@ export default function CommunityPage() {
                             src={user.avatar || "/placeholder.svg"}
                             alt={user.name}
                           />
-                          <AvatarFallback className="bg-green-200 text-green-700 text-xs">
+                          <AvatarFallback className="bg-green-200 text-primary/80 text-xs">
                             {user.name
                               .split(" ")
                               .map((n) => n[0])
@@ -727,7 +727,7 @@ export default function CommunityPage() {
                         </Avatar>
                         <div className="flex-1">
                           <div className="flex justify-between items-center">
-                            <p className="text-sm font-medium text-green-800">
+                            <p className="text-sm font-medium text-primary">
                               {user.name}
                             </p>
                             <p className="text-xs text-green-500">2h ago</p>
@@ -744,7 +744,7 @@ export default function CommunityPage() {
                 </ScrollArea>
                 <Separator className="my-4 bg-green-100" />
                 <Button
-                  className="w-full bg-green-600 hover:bg-green-700"
+                  className="w-full bg-green-600 hover:bg-primary/80"
                   asChild
                 >
                   <Link href="/community/messages">
@@ -757,10 +757,10 @@ export default function CommunityPage() {
 
             <Card className="border-green-100 shadow-sm">
               <CardContent className="p-6">
-                <h3 className="font-medium text-green-800 mb-4">
+                <h3 className="font-medium text-primary mb-4">
                   Community Guidelines
                 </h3>
-                <ul className="space-y-2 text-sm text-green-700">
+                <ul className="space-y-2 text-sm text-primary/80">
                   <li>• Be respectful to other community members</li>
                   <li>• Share accurate and helpful information</li>
                   <li>• Do not spam or post promotional content</li>

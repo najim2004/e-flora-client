@@ -8,8 +8,8 @@ export const Icons = {
       className={cn("w-10 h-10", className)}
       {...props}
     >
-      <path d="M25 5 L45 25 L25 45 L5 25 Z" fill="#2E7D32" />
-      <path d="M25 15 L35 25 L25 35 L15 25 Z" fill="#4CAF50" />
+      <path d="M25 5 L45 25 L25 45 L5 25 Z" fill="var(--color-primary)" />
+      <path d="M25 15 L35 25 L25 35 L15 25 Z" fill="var(--color-primary)" />
     </svg>
   ),
 };

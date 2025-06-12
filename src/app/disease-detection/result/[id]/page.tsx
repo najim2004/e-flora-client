@@ -76,7 +76,7 @@ export default async function DiseaseDetectionResultPage({
       <div className="flex justify-between items-center mb-6">
         <Link
           href="/disease-detection"
-          className="inline-flex items-center text-green-600 hover:text-green-700"
+          className="inline-flex items-center text-green-600 hover:text-primary/80"
         >
           <ArrowLeft className="mr-2 h-4 w-4" /> Back
         </Link>
@@ -112,8 +112,8 @@ export default async function DiseaseDetectionResultPage({
         <div className="md:col-span-2 md:relative">
           <Card className="border-green-100 shadow-sm md:sticky md:top-24.5">
             <CardHeader>
-              <CardTitle className="text-green-800">Detected Disease</CardTitle>
-              <CardDescription className="text-green-700">
+              <CardTitle className="text-primary">Detected Disease</CardTitle>
+              <CardDescription className="text-primary/80">
                 Analysis of your uploaded image
               </CardDescription>
             </CardHeader>
@@ -121,10 +121,10 @@ export default async function DiseaseDetectionResultPage({
               <div className="mb-6">
                 <ImagePreview imageUrl={image.url || "/placeholder.svg"} />
                 <div className="mt-6">
-                  <p className="text-green-700 text-sm italic">
+                  <p className="text-primary/80 text-sm italic">
                     <em>Crop:</em> {result.data.cropName}
                   </p>
-                  <p className="text-green-700 text-sm italic">
+                  <p className="text-primary/80 text-sm italic">
                     <em>Description:</em> {result.data.description}
                   </p>
                 </div>
@@ -136,13 +136,13 @@ export default async function DiseaseDetectionResultPage({
         <div className="md:col-span-4">
           <Card className="border-green-100 shadow-sm">
             <CardHeader>
-              <CardTitle className="text-green-800">Disease Details</CardTitle>
-              <CardDescription className="text-green-700">
+              <CardTitle className="text-primary">Disease Details</CardTitle>
+              <CardDescription className="text-primary/80">
                 Details of the detected disease
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <ul className="space-y-4 text-green-700">
+              <ul className="space-y-4 text-primary/80">
                 <li>
                   <strong>Crop Name:</strong> {disease.cropName}
                 </li>
@@ -199,7 +199,7 @@ export default async function DiseaseDetectionResultPage({
               </ul>
 
               <div className="mt-8 flex flex-col sm:flex-row gap-4">
-                <Button className="bg-green-600 hover:bg-green-700">
+                <Button className="bg-green-600 hover:bg-primary/80">
                   <Download className="h-4 w-4 mr-2" />
                   Download Full Report
                 </Button>

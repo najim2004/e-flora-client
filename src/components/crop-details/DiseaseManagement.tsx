@@ -14,25 +14,25 @@ interface DiseaseManagementProps {
 const DiseaseManagement: React.FC<DiseaseManagementProps> = ({ crop }) => {
   return (
     <div>
-      <h3 className="font-medium text-green-800 mb-3">
+      <h3 className="font-medium text-primary mb-3">
         Disease Management
       </h3>
       <Accordion type="single" collapsible className="w-full">
         {crop.management.diseaseManagement.map((disease: DiseaseManagementType, index: number) => (
           <AccordionItem key={index} value={`disease-${index}`}>
-            <AccordionTrigger className="text-green-800 hover:text-green-600">
+            <AccordionTrigger className="text-primary hover:text-green-600">
               {disease.name}
             </AccordionTrigger>
-            <AccordionContent className="text-green-700">
+            <AccordionContent className="text-primary/80">
               <div className="space-y-2">
                 <div>
-                  <p className="font-medium text-green-700">
+                  <p className="font-medium text-primary/80">
                     Symptoms:
                   </p>
                   <p>{disease.symptoms}</p>
                 </div>
                 <div>
-                  <p className="font-medium text-green-700">
+                  <p className="font-medium text-primary/80">
                     Management:
                   </p>
                   <p>{disease.managements}</p>

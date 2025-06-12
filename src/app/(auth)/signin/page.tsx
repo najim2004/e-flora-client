@@ -75,10 +75,10 @@ export default function LoginPage() {
     <div className="min-h-screen bg-green-50 flex flex-col items-center justify-center p-4">
       <Card className="w-full max-w-md border-green-100 shadow-md rounded-sm">
         <CardHeader className="text-center">
-          <CardTitle className="text-green-800 text-2xl">
+          <CardTitle className="text-primary text-2xl">
             Welcome Back
           </CardTitle>
-          <CardDescription className="text-green-700">
+          <CardDescription className="text-primary/80">
             Sign in to your account to continue
           </CardDescription>
         </CardHeader>
@@ -107,7 +107,7 @@ export default function LoginPage() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="!text-green-700">Email</FormLabel>
+                    <FormLabel className="!text-primary/80">Email</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="Enter your email"
@@ -126,12 +126,12 @@ export default function LoginPage() {
                 render={({ field }) => (
                   <FormItem>
                     <div className="flex items-center justify-between">
-                      <FormLabel className="!text-green-700">
+                      <FormLabel className="!text-primary/80">
                         Password
                       </FormLabel>
                       <Link
                         href="/forgot-password"
-                        className="text-xs text-green-600 hover:text-green-700"
+                        className="text-xs text-green-600 hover:text-primary/80"
                       >
                         Forgot Password?
                       </Link>
@@ -151,7 +151,7 @@ export default function LoginPage() {
 
               <Button
                 type="submit"
-                className="w-full bg-green-600 hover:bg-green-700"
+                className="w-full bg-green-600 hover:bg-primary/80"
               >
                 Sign In
               </Button>
@@ -189,7 +189,7 @@ export default function LoginPage() {
         </CardContent>
       </Card>
 
-      <p className="mt-6 text-sm text-green-700 text-center">
+      <p className="mt-6 text-sm text-primary/80 text-center">
         By signing in, you agree to our{" "}
         <Link href="/terms" className="text-green-600 hover:underline">
           Terms of Service

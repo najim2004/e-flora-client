@@ -79,10 +79,10 @@ export default function SignUpPage() {
     <div className="min-h-screen bg-green-50 flex flex-col items-center justify-center p-4">
       <Card className="w-full max-w-md border-green-100 shadow-md rounded-sm">
         <CardHeader className="text-center">
-          <CardTitle className="text-green-800 text-2xl">
+          <CardTitle className="text-primary text-2xl">
             Create a New Account
           </CardTitle>
-          <CardDescription className="text-green-700">
+          <CardDescription className="text-primary/80">
             Sign up to create a new account
           </CardDescription>
         </CardHeader>
@@ -111,7 +111,7 @@ export default function SignUpPage() {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="!text-green-700">Full Name</FormLabel>
+                    <FormLabel className="!text-primary/80">Full Name</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="Enter your full name"
@@ -129,7 +129,7 @@ export default function SignUpPage() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="!text-green-700">Email</FormLabel>
+                    <FormLabel className="!text-primary/80">Email</FormLabel>
                     <FormControl>
                       <Input
                         type="email"
@@ -148,7 +148,7 @@ export default function SignUpPage() {
                 name="phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="!text-green-700">
+                    <FormLabel className="!text-primary/80">
                       Phone Number
                     </FormLabel>
                     <FormControl>
@@ -168,7 +168,7 @@ export default function SignUpPage() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="!text-green-700">Password</FormLabel>
+                    <FormLabel className="!text-primary/80">Password</FormLabel>
                     <FormControl>
                       <Input
                         type="password"
@@ -187,7 +187,7 @@ export default function SignUpPage() {
                 name="confirmPassword"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="!text-green-700">
+                    <FormLabel className="!text-primary/80">
                       Confirm Password
                     </FormLabel>
                     <FormControl>
@@ -206,7 +206,7 @@ export default function SignUpPage() {
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-green-600 hover:bg-green-700"
+                className="w-full bg-green-600 hover:bg-primary/80"
               >
                 Create Account
               </Button>
@@ -215,7 +215,7 @@ export default function SignUpPage() {
         </CardContent>
       </Card>
 
-      <p className="mt-6 text-sm text-green-700 text-center">
+      <p className="mt-6 text-sm text-primary/80 text-center">
         By signing up, you agree to our{" "}
         <Link href="/terms" className="text-green-600 hover:underline">
           Terms of Service

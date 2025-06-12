@@ -4,10 +4,10 @@ import ListItem from "./ListItem";
 const WeedManagement: React.FC = () => {
   return (
     <div>
-      <h3 className="font-medium text-green-800 mb-3">
+      <h3 className="font-medium text-primary mb-3">
         Weed Management
       </h3>
-      <ul className="space-y-2 text-green-700">
+      <ul className="space-y-2 text-primary/80">
         <ListItem>
           Manual weeding at 20 and 40 days after transplanting
         </ListItem>

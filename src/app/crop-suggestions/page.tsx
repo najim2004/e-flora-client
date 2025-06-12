@@ -166,12 +166,12 @@ export default function CropSuggestionsPage() {
     <div className="min-h-screen bg-green-50">
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="grid md:grid-cols-3 gap-8 md:relative">
-          <Card className="border-green-100 shadow-sm md:col-span-1 h-min md:sticky md:top-24.5">
+          <Card className="shadow-sm md:col-span-1 h-min md:sticky md:top-24.5">
             <CardHeader>
-              <CardTitle className="text-green-800">
+              <CardTitle className="text-primary">
                 Enter Your Details
               </CardTitle>
-              <CardDescription className="text-green-700">
+              <CardDescription className="text-primary/80">
                 Provide your farm&#39;s location, soil and irrigation info
               </CardDescription>
             </CardHeader>
@@ -201,16 +201,16 @@ export default function CropSuggestionsPage() {
             </CardContent>
           </Card>
 
-          <Card className="border-green-100 shadow-sm md:col-span-2">
+          <Card className="shadow-sm md:col-span-2">
             {progress ? (
               <CropSuggestionProgressComponent progress={progress} />
             ) : (
               <>
                 <CardHeader>
-                  <CardTitle className="text-green-800">
+                  <CardTitle className="text-primary">
                     Crop Recommendations
                   </CardTitle>
-                  <CardDescription className="text-green-700">
+                  <CardDescription className="text-primary/80">
                     Based on your farm&#39;s location and soil conditions and
                     weather
                   </CardDescription>

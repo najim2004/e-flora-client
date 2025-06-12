@@ -21,7 +21,7 @@ export const HeroSection: FC = () => {
       <div className="absolute inset-0 flex items-center z-20">
         <div className="container px-4 mx-auto max-w-7xl">
           <div className="max-w-xl text-white">
-            <Badge className="mb-4 bg-white text-[#2E7D32] hover:bg-white/90 cursor-pointer whitespace-nowrap">
+            <Badge className="mb-4 bg-white text-primary hover:bg-white/90 cursor-pointer whitespace-nowrap">
               Agriculture Support Platform
             </Badge>
             <h1 className="mb-4 text-5xl font-bold leading-tight">
@@ -35,7 +35,7 @@ export const HeroSection: FC = () => {
             <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
               <Button
                 size="lg"
-                className="text-base bg-white text-[#2E7D32] hover:bg-white/90 cursor-pointer whitespace-nowrap rounded-[3px]"
+                className="text-base bg-white text-primary hover:bg-white/90 cursor-pointer whitespace-nowrap rounded-[3px]"
               >
                 Get Started
               </Button>

@@ -16,12 +16,12 @@ const MatchPercentage: React.FC = () => {
 
   return (
     <div className="flex items-center mb-4">
-      <div className="mr-2 text-sm font-medium text-green-700">
+      <div className="mr-2 text-sm font-medium text-primary/80">
         Match for your farm:
       </div>
       <div className="flex-1 flex items-center">
         <Progress value={matchPercentage} className="h-2 bg-green-100" />
-        <span className="ml-2 text-sm font-medium text-green-700">
+        <span className="ml-2 text-sm font-medium text-primary/80">
           {matchPercentage}%
         </span>
       </div>

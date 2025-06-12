@@ -37,7 +37,7 @@ export default function AccountSettingsPage() {
           <div className="w-full md:w-3/4">
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h1 className="text-2xl font-bold text-green-800">Account Settings</h1>
+                <h1 className="text-2xl font-bold text-primary">Account Settings</h1>
                 <p className="text-green-600">Manage your account settings and preferences</p>
               </div>
             </div>
@@ -47,17 +47,17 @@ export default function AccountSettingsPage() {
               <CardHeader className="pb-3">
                 <div className="flex items-center">
                   <Lock className="h-5 w-5 text-green-600 mr-2" />
-                  <CardTitle className="text-green-800">Security Settings</CardTitle>
+                  <CardTitle className="text-primary">Security Settings</CardTitle>
                 </div>
-                <CardDescription className="text-green-700">Manage your password and account security</CardDescription>
+                <CardDescription className="text-primary/80">Manage your password and account security</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-6">
                   <div>
-                    <h3 className="text-sm font-medium text-green-800 mb-3">Change Password</h3>
+                    <h3 className="text-sm font-medium text-primary mb-3">Change Password</h3>
                     <div className="grid gap-4">
                       <div className="grid gap-2">
-                        <Label htmlFor="current-password" className="text-green-700">
+                        <Label htmlFor="current-password" className="text-primary/80">
                           Current Password
                         </Label>
                         <Input
@@ -67,7 +67,7 @@ export default function AccountSettingsPage() {
                         />
                       </div>
                       <div className="grid gap-2">
-                        <Label htmlFor="new-password" className="text-green-700">
+                        <Label htmlFor="new-password" className="text-primary/80">
                           New Password
                         </Label>
                         <Input
@@ -77,7 +77,7 @@ export default function AccountSettingsPage() {
                         />
                       </div>
                       <div className="grid gap-2">
-                        <Label htmlFor="confirm-password" className="text-green-700">
+                        <Label htmlFor="confirm-password" className="text-primary/80">
                           Confirm New Password
                         </Label>
                         <Input
@@ -86,17 +86,17 @@ export default function AccountSettingsPage() {
                           className="border-green-200 focus:border-green-500 focus:ring-green-500"
                         />
                       </div>
-                      <Button className="w-fit bg-green-600 hover:bg-green-700">Update Password</Button>
+                      <Button className="w-fit bg-green-600 hover:bg-primary/80">Update Password</Button>
                     </div>
                   </div>
 
                   <Separator className="bg-green-100" />
 
                   <div className="space-y-4">
-                    <h3 className="text-sm font-medium text-green-800">Two-Factor Authentication</h3>
+                    <h3 className="text-sm font-medium text-primary">Two-Factor Authentication</h3>
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-green-700">Secure your account with two-factor authentication</p>
+                        <p className="text-primary/80">Secure your account with two-factor authentication</p>
                         <p className="text-sm text-green-600 mt-1">
                           Add an extra layer of security by requiring a verification code
                         </p>
@@ -108,10 +108,10 @@ export default function AccountSettingsPage() {
                   <Separator className="bg-green-100" />
 
                   <div className="space-y-4">
-                    <h3 className="text-sm font-medium text-green-800">Login Notifications</h3>
+                    <h3 className="text-sm font-medium text-primary">Login Notifications</h3>
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-green-700">Get notified when someone logs into your account</p>
+                        <p className="text-primary/80">Get notified when someone logs into your account</p>
                         <p className="text-sm text-green-600 mt-1">
                           We'll send you an alert when your account is accessed from a new device
                         </p>
@@ -123,16 +123,16 @@ export default function AccountSettingsPage() {
                   <Separator className="bg-green-100" />
 
                   <div className="space-y-4">
-                    <h3 className="text-sm font-medium text-green-800">Active Sessions</h3>
+                    <h3 className="text-sm font-medium text-primary">Active Sessions</h3>
                     <div className="space-y-3">
                       <div className="bg-green-50 p-3 rounded-md border border-green-100">
                         <div className="flex justify-between items-start">
                           <div>
-                            <p className="font-medium text-green-800">Current Device</p>
+                            <p className="font-medium text-primary">Current Device</p>
                             <p className="text-sm text-green-600">Chrome on Android • Dhaka, Bangladesh</p>
                             <p className="text-xs text-green-500 mt-1">Active now</p>
                           </div>
-                          <Button variant="outline" size="sm" className="border-green-200 text-green-700">
+                          <Button variant="outline" size="sm" className="border-green-200 text-primary/80">
                             Current
                           </Button>
                         </div>
@@ -140,7 +140,7 @@ export default function AccountSettingsPage() {
                       <div className="bg-white p-3 rounded-md border border-green-100">
                         <div className="flex justify-between items-start">
                           <div>
-                            <p className="font-medium text-green-800">Windows PC</p>
+                            <p className="font-medium text-primary">Windows PC</p>
                             <p className="text-sm text-green-600">Firefox • Dhaka, Bangladesh</p>
                             <p className="text-xs text-green-500 mt-1">Last active: 2 days ago</p>
                           </div>
@@ -160,34 +160,34 @@ export default function AccountSettingsPage() {
               <CardHeader className="pb-3">
                 <div className="flex items-center">
                   <Bell className="h-5 w-5 text-green-600 mr-2" />
-                  <CardTitle className="text-green-800">Notification Settings</CardTitle>
+                  <CardTitle className="text-primary">Notification Settings</CardTitle>
                 </div>
-                <CardDescription className="text-green-700">
+                <CardDescription className="text-primary/80">
                   Control how and when you receive notifications
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-6">
                   <div className="space-y-4">
-                    <h3 className="text-sm font-medium text-green-800">Notification Channels</h3>
+                    <h3 className="text-sm font-medium text-primary">Notification Channels</h3>
                     <div className="grid gap-4">
                       <div className="flex items-center justify-between">
                         <div>
-                          <p className="text-green-700">Email Notifications</p>
+                          <p className="text-primary/80">Email Notifications</p>
                           <p className="text-sm text-green-600">Receive notifications via email</p>
                         </div>
                         <Switch defaultChecked />
                       </div>
                       <div className="flex items-center justify-between">
                         <div>
-                          <p className="text-green-700">SMS Notifications</p>
+                          <p className="text-primary/80">SMS Notifications</p>
                           <p className="text-sm text-green-600">Receive notifications via SMS</p>
                         </div>
                         <Switch defaultChecked />
                       </div>
                       <div className="flex items-center justify-between">
                         <div>
-                          <p className="text-green-700">Push Notifications</p>
+                          <p className="text-primary/80">Push Notifications</p>
                           <p className="text-sm text-green-600">Receive notifications on your device</p>
                         </div>
                         <Switch defaultChecked />
@@ -198,39 +198,39 @@ export default function AccountSettingsPage() {
                   <Separator className="bg-green-100" />
 
                   <div className="space-y-4">
-                    <h3 className="text-sm font-medium text-green-800">Notification Types</h3>
+                    <h3 className="text-sm font-medium text-primary">Notification Types</h3>
                     <div className="grid gap-4">
                       <div className="flex items-center justify-between">
                         <div>
-                          <p className="text-green-700">Weather Alerts</p>
+                          <p className="text-primary/80">Weather Alerts</p>
                           <p className="text-sm text-green-600">Important weather updates for your farm</p>
                         </div>
                         <Switch defaultChecked />
                       </div>
                       <div className="flex items-center justify-between">
                         <div>
-                          <p className="text-green-700">Disease Outbreaks</p>
+                          <p className="text-primary/80">Disease Outbreaks</p>
                           <p className="text-sm text-green-600">Alerts about crop disease outbreaks in your area</p>
                         </div>
                         <Switch defaultChecked />
                       </div>
                       <div className="flex items-center justify-between">
                         <div>
-                          <p className="text-green-700">Market Prices</p>
+                          <p className="text-primary/80">Market Prices</p>
                           <p className="text-sm text-green-600">Updates on crop prices in your local market</p>
                         </div>
                         <Switch defaultChecked />
                       </div>
                       <div className="flex items-center justify-between">
                         <div>
-                          <p className="text-green-700">System Updates</p>
+                          <p className="text-primary/80">System Updates</p>
                           <p className="text-sm text-green-600">Information about new features and improvements</p>
                         </div>
                         <Switch defaultChecked />
                       </div>
                       <div className="flex items-center justify-between">
                         <div>
-                          <p className="text-green-700">Tips & Recommendations</p>
+                          <p className="text-primary/80">Tips & Recommendations</p>
                           <p className="text-sm text-green-600">Farming tips and personalized recommendations</p>
                         </div>
                         <Switch defaultChecked />
@@ -246,20 +246,20 @@ export default function AccountSettingsPage() {
               <CardHeader className="pb-3">
                 <div className="flex items-center">
                   <Eye className="h-5 w-5 text-green-600 mr-2" />
-                  <CardTitle className="text-green-800">Privacy Settings</CardTitle>
+                  <CardTitle className="text-primary">Privacy Settings</CardTitle>
                 </div>
-                <CardDescription className="text-green-700">
+                <CardDescription className="text-primary/80">
                   Control your privacy and data sharing preferences
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-6">
                   <div className="space-y-4">
-                    <h3 className="text-sm font-medium text-green-800">Profile Visibility</h3>
+                    <h3 className="text-sm font-medium text-primary">Profile Visibility</h3>
                     <div className="grid gap-4">
                       <div className="flex items-center justify-between">
                         <div>
-                          <p className="text-green-700">Show my profile to other farmers</p>
+                          <p className="text-primary/80">Show my profile to other farmers</p>
                           <p className="text-sm text-green-600">
                             Allow other farmers to see your profile and farming details
                           </p>
@@ -268,7 +268,7 @@ export default function AccountSettingsPage() {
                       </div>
                       <div className="flex items-center justify-between">
                         <div>
-                          <p className="text-green-700">Show my location on public maps</p>
+                          <p className="text-primary/80">Show my location on public maps</p>
                           <p className="text-sm text-green-600">Display your farm location on community maps</p>
                         </div>
                         <Switch />
@@ -279,11 +279,11 @@ export default function AccountSettingsPage() {
                   <Separator className="bg-green-100" />
 
                   <div className="space-y-4">
-                    <h3 className="text-sm font-medium text-green-800">Data Usage</h3>
+                    <h3 className="text-sm font-medium text-primary">Data Usage</h3>
                     <div className="grid gap-4">
                       <div className="flex items-center justify-between">
                         <div>
-                          <p className="text-green-700">Share anonymous farming data for research</p>
+                          <p className="text-primary/80">Share anonymous farming data for research</p>
                           <p className="text-sm text-green-600">
                             Help improve agricultural practices by sharing anonymized data
                           </p>
@@ -292,7 +292,7 @@ export default function AccountSettingsPage() {
                       </div>
                       <div className="flex items-center justify-between">
                         <div>
-                          <p className="text-green-700">Personalized recommendations</p>
+                          <p className="text-primary/80">Personalized recommendations</p>
                           <p className="text-sm text-green-600">
                             Receive tailored suggestions based on your farming data
                           </p>
@@ -310,9 +310,9 @@ export default function AccountSettingsPage() {
               <CardHeader className="pb-3">
                 <div className="flex items-center">
                   <Globe className="h-5 w-5 text-green-600 mr-2" />
-                  <CardTitle className="text-green-800">Connected Accounts</CardTitle>
+                  <CardTitle className="text-primary">Connected Accounts</CardTitle>
                 </div>
-                <CardDescription className="text-green-700">
+                <CardDescription className="text-primary/80">
                   Manage accounts connected to your Mati'r Sathi profile
                 </CardDescription>
               </CardHeader>
@@ -322,7 +322,7 @@ export default function AccountSettingsPage() {
                     <div className="flex items-center">
                       <Facebook className="h-5 w-5 text-blue-600 mr-3" />
                       <div>
-                        <p className="text-green-800 font-medium">Facebook</p>
+                        <p className="text-primary font-medium">Facebook</p>
                         <p className="text-sm text-green-600">Connected as Rahim Ahmed</p>
                       </div>
                     </div>
@@ -334,11 +334,11 @@ export default function AccountSettingsPage() {
                     <div className="flex items-center">
                       <Phone className="h-5 w-5 text-green-600 mr-3" />
                       <div>
-                        <p className="text-green-800 font-medium">Phone Number</p>
+                        <p className="text-primary font-medium">Phone Number</p>
                         <p className="text-sm text-green-600">Connected as +880 1234 567890</p>
                       </div>
                     </div>
-                    <Button variant="outline" size="sm" className="border-green-200 text-green-700">
+                    <Button variant="outline" size="sm" className="border-green-200 text-primary/80">
                       Verified
                     </Button>
                   </div>
@@ -346,7 +346,7 @@ export default function AccountSettingsPage() {
                     <div className="flex items-center">
                       <Mail className="h-5 w-5 text-red-500 mr-3" />
                       <div>
-                        <p className="text-green-800 font-medium">Google</p>
+                        <p className="text-primary font-medium">Google</p>
                         <p className="text-sm text-green-600">Not connected</p>
                       </div>
                     </div>
@@ -363,15 +363,15 @@ export default function AccountSettingsPage() {
               <CardHeader className="pb-3">
                 <div className="flex items-center">
                   <Download className="h-5 w-5 text-green-600 mr-2" />
-                  <CardTitle className="text-green-800">Data Management</CardTitle>
+                  <CardTitle className="text-primary">Data Management</CardTitle>
                 </div>
-                <CardDescription className="text-green-700">Download your data or delete your account</CardDescription>
+                <CardDescription className="text-primary/80">Download your data or delete your account</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-6">
                   <div>
-                    <h3 className="text-sm font-medium text-green-800 mb-2">Download Your Data</h3>
-                    <p className="text-green-700 mb-4">
+                    <h3 className="text-sm font-medium text-primary mb-2">Download Your Data</h3>
+                    <p className="text-primary/80 mb-4">
                       You can download a copy of all the data we have stored for your account.
                     </p>
                     <Button

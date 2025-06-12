@@ -220,8 +220,8 @@ export default function MessagesPage() {
             <div className="w-full md:w-1/3 border-r border-green-100 flex flex-col">
               <div className="p-4 border-b border-green-100">
                 <div className="flex justify-between items-center mb-4">
-                  <h2 className="text-xl font-bold text-green-800">Messages</h2>
-                  <Button size="icon" variant="ghost" className="text-green-700 hover:bg-green-100">
+                  <h2 className="text-xl font-bold text-primary">Messages</h2>
+                  <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-green-100">
                     <Edit className="h-5 w-5" />
                   </Button>
                 </div>
@@ -252,7 +252,7 @@ export default function MessagesPage() {
                             src={conversation.user.avatar || "/placeholder.svg"}
                             alt={conversation.user.name}
                           />
-                          <AvatarFallback className="bg-green-200 text-green-700">
+                          <AvatarFallback className="bg-green-200 text-primary/80">
                             {conversation.user.name
                               .split(" ")
                               .map((n) => n[0])
@@ -265,7 +265,7 @@ export default function MessagesPage() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex justify-between items-center">
-                          <h3 className="font-medium text-green-800 truncate">{conversation.user.name}</h3>
+                          <h3 className="font-medium text-primary truncate">{conversation.user.name}</h3>
                           <span className="text-xs text-green-600">
                             {formatDate(conversation.lastMessage.timestamp) === "Today"
                               ? formatTime(conversation.lastMessage.timestamp)
@@ -274,7 +274,7 @@ export default function MessagesPage() {
                         </div>
                         <p
                           className={`text-sm truncate ${
-                            conversation.unreadCount > 0 ? "font-medium text-green-800" : "text-green-600"
+                            conversation.unreadCount > 0 ? "font-medium text-primary" : "text-green-600"
                           }`}
                         >
                           {conversation.lastMessage.sender === "user1" ? "You: " : ""}
@@ -305,7 +305,7 @@ export default function MessagesPage() {
                           src={selectedConversation.user.avatar || "/placeholder.svg"}
                           alt={selectedConversation.user.name}
                         />
-                        <AvatarFallback className="bg-green-200 text-green-700">
+                        <AvatarFallback className="bg-green-200 text-primary/80">
                           {selectedConversation.user.name
                             .split(" ")
                             .map((n) => n[0])
@@ -316,7 +316,7 @@ export default function MessagesPage() {
                         <div className="flex items-center gap-2">
                           <Link
                             href={`/community/profile/${selectedConversation.user.id}`}
-                            className="font-medium text-green-800 hover:underline"
+                            className="font-medium text-primary hover:underline"
                           >
                             {selectedConversation.user.name}
                           </Link>
@@ -326,13 +326,13 @@ export default function MessagesPage() {
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Button size="icon" variant="ghost" className="text-green-700 hover:bg-green-100">
+                      <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-green-100">
                         <Phone className="h-5 w-5" />
                       </Button>
-                      <Button size="icon" variant="ghost" className="text-green-700 hover:bg-green-100">
+                      <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-green-100">
                         <Video className="h-5 w-5" />
                       </Button>
-                      <Button size="icon" variant="ghost" className="text-green-700 hover:bg-green-100">
+                      <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-green-100">
                         <Info className="h-5 w-5" />
                       </Button>
                     </div>
@@ -352,7 +352,7 @@ export default function MessagesPage() {
                                 src={selectedConversation.user.avatar || "/placeholder.svg"}
                                 alt={selectedConversation.user.name}
                               />
-                              <AvatarFallback className="bg-green-200 text-green-700 text-xs">
+                              <AvatarFallback className="bg-green-200 text-primary/80 text-xs">
                                 {selectedConversation.user.name
                                   .split(" ")
                                   .map((n) => n[0])
@@ -362,7 +362,7 @@ export default function MessagesPage() {
                           )}
                           <div
                             className={`max-w-[70%] rounded-lg px-4 py-2 ${
-                              message.sender === "user1" ? "bg-green-600 text-white" : "bg-green-100 text-green-800"
+                              message.sender === "user1" ? "bg-green-600 text-white" : "bg-green-100 text-primary"
                             }`}
                           >
                             <p className="text-sm">{message.content}</p>
@@ -382,10 +382,10 @@ export default function MessagesPage() {
                   {/* Message Input */}
                   <div className="p-4 border-t border-green-100">
                     <div className="flex items-center gap-2">
-                      <Button size="icon" variant="ghost" className="text-green-700 hover:bg-green-100">
+                      <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-green-100">
                         <Paperclip className="h-5 w-5" />
                       </Button>
-                      <Button size="icon" variant="ghost" className="text-green-700 hover:bg-green-100">
+                      <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-green-100">
                         <ImageIcon className="h-5 w-5" /> {/* Updated Image to ImageIcon */}
                       </Button>
                       <Input
@@ -400,12 +400,12 @@ export default function MessagesPage() {
                           }
                         }}
                       />
-                      <Button size="icon" variant="ghost" className="text-green-700 hover:bg-green-100">
+                      <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-green-100">
                         <Smile className="h-5 w-5" />
                       </Button>
                       <Button
                         size="icon"
-                        className="bg-green-600 hover:bg-green-700"
+                        className="bg-green-600 hover:bg-primary/80"
                         onClick={handleSendMessage}
                         disabled={!newMessage.trim()}
                       >
@@ -418,7 +418,7 @@ export default function MessagesPage() {
                 <div className="flex-1 flex items-center justify-center">
                   <div className="text-center">
                     <MessageSquare className="h-12 w-12 text-green-500 mx-auto mb-4" /> {/* Used MessageSquare */}
-                    <h3 className="text-lg font-medium text-green-800 mb-2">No conversation selected</h3>
+                    <h3 className="text-lg font-medium text-primary mb-2">No conversation selected</h3>
                     <p className="text-green-600">Select a conversation from the list to start messaging</p>
                   </div>
                 </div>

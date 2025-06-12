@@ -23,11 +23,11 @@ export default function ChatbotPage() {
                   <Bot className="h-5 w-5 text-green-600" />
                 </div>
                 <div className="bg-white rounded-lg rounded-tl-none p-3 shadow-sm max-w-[80%]">
-                  <p className="text-green-800">
+                  <p className="text-primary">
                     স্বাগতম! আমি মাটি&#39;র সাথী AI সহকারী। আপনার কৃষি সম্পর্কিত
                     যেকোনো প্রশ্ন জিজ্ঞাসা করুন।
                   </p>
-                  <p className="text-green-800 mt-2">
+                  <p className="text-primary mt-2">
                     Welcome! I am Mati&#39;r Sathi AI Assistant. Ask me any
                     questions about farming.
                   </p>
@@ -39,7 +39,7 @@ export default function ChatbotPage() {
                 <div className="bg-green-600 text-white rounded-lg rounded-tr-none p-3 shadow-sm max-w-[80%]">
                   <p>আমার ধান গাছে কালো দাগ দেখা যাচ্ছে। এটা কি রোগ?</p>
                 </div>
-                <div className="w-8 h-8 rounded-full bg-green-700 flex items-center justify-center ml-3 flex-shrink-0">
+                <div className="w-8 h-8 rounded-full bg-primary/80 flex items-center justify-center ml-3 flex-shrink-0">
                   <User className="h-5 w-5 text-white" />
                 </div>
               </div>
@@ -50,12 +50,12 @@ export default function ChatbotPage() {
                   <Bot className="h-5 w-5 text-green-600" />
                 </div>
                 <div className="bg-white rounded-lg rounded-tl-none p-3 shadow-sm max-w-[80%]">
-                  <p className="text-green-800">
+                  <p className="text-primary">
                     আপনার বর্ণনা অনুযায়ী, এটি ব্লাস্ট রোগ হতে পারে। এটি একটি
                     ছত্রাকজনিত রোগ যা ধান গাছে কালো দাগ তৈরি করে।
                   </p>
-                  <p className="text-green-800 mt-2">চিকিৎসার জন্য:</p>
-                  <ul className="list-disc pl-5 text-green-800 mt-1">
+                  <p className="text-primary mt-2">চিকিৎসার জন্য:</p>
+                  <ul className="list-disc pl-5 text-primary mt-1">
                     <li>
                       ট্রাইসাইক্লাজোল বা আইসোপ্রোথিওলেন যুক্ত ছত্রাকনাশক প্রয়োগ
                       করুন
@@ -63,7 +63,7 @@ export default function ChatbotPage() {
                     <li>জমিতে সঠিক জল নিষ্কাশন নিশ্চিত করুন</li>
                     <li>অতিরিক্ত নাইট্রোজেন সার ব্যবহার এড়িয়ে চলুন</li>
                   </ul>
-                  <p className="text-green-800 mt-2">
+                  <p className="text-primary mt-2">
                     আপনি কি আক্রান্ত গাছের ছবি আপলোড করতে পারেন? তাহলে আমি আরও
                     নির্ভুলভাবে রোগ নির্ণয় করতে পারব।
                   </p>
@@ -74,11 +74,11 @@ export default function ChatbotPage() {
                   <Bot className="h-5 w-5 text-green-600" />
                 </div>
                 <div className="bg-white rounded-lg rounded-tl-none p-3 shadow-sm max-w-[80%]">
-                  <p className="text-green-800">
+                  <p className="text-primary">
                     স্বাগতম! আমি মাটি&#39;র সাথী AI সহকারী। আপনার কৃষি সম্পর্কিত
                     যেকোনো প্রশ্ন জিজ্ঞাসা করুন।
                   </p>
-                  <p className="text-green-800 mt-2">
+                  <p className="text-primary mt-2">
                     Welcome! I am Mati&#39;r Sathi AI Assistant. Ask me any
                     questions about farming.
                   </p>
@@ -90,7 +90,7 @@ export default function ChatbotPage() {
                 <div className="bg-green-600 text-white rounded-lg rounded-tr-none p-3 shadow-sm max-w-[80%]">
                   <p>আমার ধান গাছে কালো দাগ দেখা যাচ্ছে। এটা কি রোগ?</p>
                 </div>
-                <div className="w-8 h-8 rounded-full bg-green-700 flex items-center justify-center ml-3 flex-shrink-0">
+                <div className="w-8 h-8 rounded-full bg-primary/80 flex items-center justify-center ml-3 flex-shrink-0">
                   <User className="h-5 w-5 text-white" />
                 </div>
               </div>
@@ -101,12 +101,12 @@ export default function ChatbotPage() {
                   <Bot className="h-5 w-5 text-green-600" />
                 </div>
                 <div className="bg-white rounded-lg rounded-tl-none p-3 shadow-sm max-w-[80%]">
-                  <p className="text-green-800">
+                  <p className="text-primary">
                     আপনার বর্ণনা অনুযায়ী, এটি ব্লাস্ট রোগ হতে পারে। এটি একটি
                     ছত্রাকজনিত রোগ যা ধান গাছে কালো দাগ তৈরি করে।
                   </p>
-                  <p className="text-green-800 mt-2">চিকিৎসার জন্য:</p>
-                  <ul className="list-disc pl-5 text-green-800 mt-1">
+                  <p className="text-primary mt-2">চিকিৎসার জন্য:</p>
+                  <ul className="list-disc pl-5 text-primary mt-1">
                     <li>
                       ট্রাইসাইক্লাজোল বা আইসোপ্রোথিওলেন যুক্ত ছত্রাকনাশক প্রয়োগ
                       করুন
@@ -114,7 +114,7 @@ export default function ChatbotPage() {
                     <li>জমিতে সঠিক জল নিষ্কাশন নিশ্চিত করুন</li>
                     <li>অতিরিক্ত নাইট্রোজেন সার ব্যবহার এড়িয়ে চলুন</li>
                   </ul>
-                  <p className="text-green-800 mt-2">
+                  <p className="text-primary mt-2">
                     আপনি কি আক্রান্ত গাছের ছবি আপলোড করতে পারেন? তাহলে আমি আরও
                     নির্ভুলভাবে রোগ নির্ণয় করতে পারব।
                   </p>
@@ -143,7 +143,7 @@ export default function ChatbotPage() {
               >
                 <Mic className="h-5 w-5" />
               </Button>
-              <Button className="bg-green-600 hover:bg-green-700 rounded-full px-4">
+              <Button className="bg-green-600 hover:bg-primary/80 rounded-full px-4">
                 <Send className="h-5 w-5" />
               </Button>
             </div>

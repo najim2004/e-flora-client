@@ -8,6 +8,6 @@ export const errorToast = (message: string) =>
 
 export const successToast = (message: string) =>
   toast.success(message, {
-    className: "!bg-green-500 border !border-green-600 !text-white",
+    className: "!bg-primary border !border-primary/80 !text-primary-foreground",
     position: "top-center",
   });

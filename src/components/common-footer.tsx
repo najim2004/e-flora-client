@@ -112,7 +112,7 @@ export default function CommonFooter() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#1B5E20] py-12 text-white hidden md:block">
+    <footer className="bg-primary py-12 text-white hidden md:block">
       <div className="container mx-auto max-w-7xl px-4">
         <div className="mb-8 grid gap-8 md:grid-cols-4">
           {/* Brand Section */}

@@ -25,29 +25,29 @@ export default function CropRecommendationCard({
   cropDetails,
 }: CropRecommendationCardProps) {
   return (
-    <Card className="border-green-100">
+    <Card className="border-border">
       <CardContent className="p-4 flex items-center">
-        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mr-4">
+        <div className="w-16 h-16 bg-secondary/60 rounded-full flex items-center justify-center mr-4">
           <Image src={imageSrc} alt={imageAlt} width={64} height={64} />
         </div>
         <div className="flex-1">
-          <h4 className="font-medium text-green-800">{name}</h4>
-          <p className="text-sm text-green-700">{description}</p>
+          <h4 className="font-medium text-primary">{name}</h4>
+          <p className="text-sm text-primary/80">{description}</p>
           <div className="flex items-center mt-1">
-            <div className="h-1.5 w-full max-w-[100px] bg-gray-200 rounded-full overflow-hidden">
+            <div className="h-1.5 w-full max-w-[100px] bg-secondary/60 rounded-full overflow-hidden">
               <div
-                className="h-full bg-green-600 rounded-full"
+                className="h-full bg-primary rounded-full"
                 style={{ width: `${matchPercentage}%` }}
               ></div>
             </div>
-            <span className="ml-2 text-xs text-green-700">
+            <span className="ml-2 text-xs text-primary/80">
               {matchPercentage}% match
             </span>
           </div>
         </div>
         <Button
           variant="outline"
-          className="ml-4 border-green-600 text-green-600 hover:bg-green-50"
+          className="ml-4 border-border text-primary hover:bg-secondary"
         >
           {cropDetails.status === "pending" ? (
             <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />

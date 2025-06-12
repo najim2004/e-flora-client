@@ -1,9 +1,9 @@
 export const theme = {
   colors: {
     primary: {
-      DEFAULT: '#2E7D32',
-      dark: '#1B5E20',
-      light: '#81C784',
+      DEFAULT: 'var(--primary)',
+      dark: 'var(--primary-foreground)',
+      light: 'var(--color-primary)',
       surface: '#E8F5E9',
     },
     text: {

@@ -144,7 +144,7 @@ export default function SearchPage() {
 
       <main className="flex-1 container mx-auto px-4 py-8">
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-2xl font-bold text-green-800 mb-6">Search Community</h1>
+          <h1 className="text-2xl font-bold text-primary mb-6">Search Community</h1>
 
           <div className="flex gap-2 mb-6">
             <div className="relative flex-1">
@@ -166,34 +166,34 @@ export default function SearchPage() {
             <TabsList className="bg-green-100 w-full">
               <TabsTrigger
                 value="all"
-                className="flex-1 data-[state=active]:bg-white data-[state=active]:text-green-800"
+                className="flex-1 data-[state=active]:bg-white data-[state=active]:text-primary"
               >
                 All Results
               </TabsTrigger>
               <TabsTrigger
                 value="posts"
-                className="flex-1 data-[state=active]:bg-white data-[state=active]:text-green-800"
+                className="flex-1 data-[state=active]:bg-white data-[state=active]:text-primary"
               >
                 <MessageSquare className="h-4 w-4 mr-1" />
                 Posts
               </TabsTrigger>
               <TabsTrigger
                 value="users"
-                className="flex-1 data-[state=active]:bg-white data-[state=active]:text-green-800"
+                className="flex-1 data-[state=active]:bg-white data-[state=active]:text-primary"
               >
                 <Users className="h-4 w-4 mr-1" />
                 Users
               </TabsTrigger>
               <TabsTrigger
                 value="topics"
-                className="flex-1 data-[state=active]:bg-white data-[state=active]:text-green-800"
+                className="flex-1 data-[state=active]:bg-white data-[state=active]:text-primary"
               >
                 <Hash className="h-4 w-4 mr-1" />
                 Topics
               </TabsTrigger>
               <TabsTrigger
                 value="events"
-                className="flex-1 data-[state=active]:bg-white data-[state=active]:text-green-800"
+                className="flex-1 data-[state=active]:bg-white data-[state=active]:text-primary"
               >
                 <Calendar className="h-4 w-4 mr-1" />
                 Events
@@ -204,7 +204,7 @@ export default function SearchPage() {
               {/* Posts */}
               <div>
                 <div className="flex justify-between items-center mb-4">
-                  <h2 className="text-xl font-bold text-green-800">Posts</h2>
+                  <h2 className="text-xl font-bold text-primary">Posts</h2>
                   <Button variant="link" className="text-green-600 p-0" asChild>
                     <Link href="/community/search?tab=posts">See All</Link>
                   </Button>
@@ -224,7 +224,7 @@ export default function SearchPage() {
               {/* Users */}
               <div>
                 <div className="flex justify-between items-center mb-4">
-                  <h2 className="text-xl font-bold text-green-800">Users</h2>
+                  <h2 className="text-xl font-bold text-primary">Users</h2>
                   <Button variant="link" className="text-green-600 p-0" asChild>
                     <Link href="/community/search?tab=users">See All</Link>
                   </Button>
@@ -236,7 +236,7 @@ export default function SearchPage() {
                         <CardContent className="p-4 flex items-center gap-3">
                           <Avatar className="h-12 w-12">
                             <AvatarImage src={user.avatar || "/placeholder.svg"} alt={user.name} />
-                            <AvatarFallback className="bg-green-200 text-green-700">
+                            <AvatarFallback className="bg-green-200 text-primary/80">
                               {user.name
                                 .split(" ")
                                 .map((n) => n[0])
@@ -244,10 +244,10 @@ export default function SearchPage() {
                             </AvatarFallback>
                           </Avatar>
                           <div className="flex-1">
-                            <h3 className="font-medium text-green-800">{user.name}</h3>
+                            <h3 className="font-medium text-primary">{user.name}</h3>
                             <p className="text-sm text-green-600">@{user.username}</p>
                             <div className="flex items-center gap-2 mt-1">
-                              <Badge className="bg-green-100 text-green-700 hover:bg-green-200">
+                              <Badge className="bg-green-100 text-primary/80 hover:bg-green-200">
                                 {user.occupation}
                               </Badge>
                               <span className="text-xs text-green-600">{user.followers} followers</span>
@@ -263,7 +263,7 @@ export default function SearchPage() {
               {/* Topics */}
               <div>
                 <div className="flex justify-between items-center mb-4">
-                  <h2 className="text-xl font-bold text-green-800">Topics</h2>
+                  <h2 className="text-xl font-bold text-primary">Topics</h2>
                   <Button variant="link" className="text-green-600 p-0" asChild>
                     <Link href="/community/search?tab=topics">See All</Link>
                   </Button>
@@ -275,7 +275,7 @@ export default function SearchPage() {
                         <CardContent className="p-4">
                           <div className="flex items-center gap-2 mb-1">
                             <Hash className="h-5 w-5 text-green-600" />
-                            <h3 className="font-medium text-green-800">{topic.name}</h3>
+                            <h3 className="font-medium text-primary">{topic.name}</h3>
                           </div>
                           <p className="text-sm text-green-600">{topic.posts} posts</p>
                         </CardContent>
@@ -288,7 +288,7 @@ export default function SearchPage() {
               {/* Events */}
               <div>
                 <div className="flex justify-between items-center mb-4">
-                  <h2 className="text-xl font-bold text-green-800">Events</h2>
+                  <h2 className="text-xl font-bold text-primary">Events</h2>
                   <Button variant="link" className="text-green-600 p-0" asChild>
                     <Link href="/community/search?tab=events">See All</Link>
                   </Button>
@@ -298,7 +298,7 @@ export default function SearchPage() {
                     <Link href={`/community/events/${event.id}`} key={event.id}>
                       <Card className="border-green-100 shadow-sm hover:shadow-md transition-shadow">
                         <CardContent className="p-4">
-                          <h3 className="font-medium text-green-800">{event.title}</h3>
+                          <h3 className="font-medium text-primary">{event.title}</h3>
                           <div className="flex items-center gap-1 mt-2">
                             <Calendar className="h-4 w-4 text-green-600" />
                             <span className="text-sm text-green-600">{formatDate(event.date)}</span>
@@ -336,7 +336,7 @@ export default function SearchPage() {
                       <CardContent className="p-4 flex items-center gap-3">
                         <Avatar className="h-12 w-12">
                           <AvatarImage src={user.avatar || "/placeholder.svg"} alt={user.name} />
-                          <AvatarFallback className="bg-green-200 text-green-700">
+                          <AvatarFallback className="bg-green-200 text-primary/80">
                             {user.name
                               .split(" ")
                               .map((n) => n[0])
@@ -344,10 +344,10 @@ export default function SearchPage() {
                           </AvatarFallback>
                         </Avatar>
                         <div className="flex-1">
-                          <h3 className="font-medium text-green-800">{user.name}</h3>
+                          <h3 className="font-medium text-primary">{user.name}</h3>
                           <p className="text-sm text-green-600">@{user.username}</p>
                           <div className="flex items-center gap-2 mt-1">
-                            <Badge className="bg-green-100 text-green-700 hover:bg-green-200">{user.occupation}</Badge>
+                            <Badge className="bg-green-100 text-primary/80 hover:bg-green-200">{user.occupation}</Badge>
                             <span className="text-xs text-green-600">{user.followers} followers</span>
                           </div>
                         </div>
@@ -366,7 +366,7 @@ export default function SearchPage() {
                       <CardContent className="p-4">
                         <div className="flex items-center gap-2 mb-1">
                           <Hash className="h-5 w-5 text-green-600" />
-                          <h3 className="font-medium text-green-800">{topic.name}</h3>
+                          <h3 className="font-medium text-primary">{topic.name}</h3>
                         </div>
                         <p className="text-sm text-green-600">{topic.posts} posts</p>
                       </CardContent>
@@ -382,7 +382,7 @@ export default function SearchPage() {
                   <Link href={`/community/events/${event.id}`} key={event.id}>
                     <Card className="border-green-100 shadow-sm hover:shadow-md transition-shadow">
                       <CardContent className="p-4">
-                        <h3 className="font-medium text-green-800">{event.title}</h3>
+                        <h3 className="font-medium text-primary">{event.title}</h3>
                         <div className="flex items-center gap-1 mt-2">
                           <Calendar className="h-4 w-4 text-green-600" />
                           <span className="text-sm text-green-600">{formatDate(event.date)}</span>

@@ -206,7 +206,7 @@ export default function ActivityHistoryPage() {
       case "disease-detection":
         return <Badge className="bg-amber-100 text-amber-700 hover:bg-amber-200">Disease Detection</Badge>
       case "crop-suggestion":
-        return <Badge className="bg-green-100 text-green-700 hover:bg-green-200">Crop Suggestion</Badge>
+        return <Badge className="bg-green-100 text-primary/80 hover:bg-green-200">Crop Suggestion</Badge>
       case "chatbot":
         return <Badge className="bg-blue-100 text-blue-700 hover:bg-blue-200">AI Chatbot</Badge>
       case "account":
@@ -230,7 +230,7 @@ export default function ActivityHistoryPage() {
           <div className="w-full md:w-3/4">
             <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
               <div>
-                <h1 className="text-2xl font-bold text-green-800">Activity History</h1>
+                <h1 className="text-2xl font-bold text-primary">Activity History</h1>
                 <p className="text-green-600">Track all your activities on Mati'r Sathi</p>
               </div>
               <div className="flex gap-2">
@@ -284,7 +284,7 @@ export default function ActivityHistoryPage() {
 
                 {showFilters && (
                   <div className="mt-4 pt-4 border-t border-green-100">
-                    <h3 className="text-sm font-medium text-green-800 mb-3">Filter by Activity Type</h3>
+                    <h3 className="text-sm font-medium text-primary mb-3">Filter by Activity Type</h3>
                     <div className="flex flex-wrap gap-3">
                       <div className="flex items-center space-x-2">
                         <Checkbox
@@ -379,7 +379,7 @@ export default function ActivityHistoryPage() {
                   .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
                   .map((dateKey) => (
                     <div key={dateKey}>
-                      <h2 className="text-lg font-medium text-green-800 mb-4">{formatDate(dateKey)}</h2>
+                      <h2 className="text-lg font-medium text-primary mb-4">{formatDate(dateKey)}</h2>
                       <div className="space-y-4">
                         {groupedActivities[dateKey].map((activity) => (
                           <Card key={activity.id} className="border-green-100 shadow-sm overflow-hidden">
@@ -390,7 +390,7 @@ export default function ActivityHistoryPage() {
                                     {activity.icon}
                                   </div>
                                   <div>
-                                    <h3 className="font-medium text-green-800">{activity.title}</h3>
+                                    <h3 className="font-medium text-primary">{activity.title}</h3>
                                     <p className="text-sm text-green-600">{activity.description}</p>
                                   </div>
                                 </div>
@@ -408,20 +408,20 @@ export default function ActivityHistoryPage() {
                                 <TabsList className="grid w-full max-w-[400px] grid-cols-2">
                                   <TabsTrigger
                                     value="summary"
-                                    className="data-[state=active]:bg-white data-[state=active]:text-green-800 data-[state=active]:shadow-none"
+                                    className="data-[state=active]:bg-white data-[state=active]:text-primary data-[state=active]:shadow-none"
                                   >
                                     Summary
                                   </TabsTrigger>
                                   <TabsTrigger
                                     value="details"
-                                    className="data-[state=active]:bg-white data-[state=active]:text-green-800 data-[state=active]:shadow-none"
+                                    className="data-[state=active]:bg-white data-[state=active]:text-primary data-[state=active]:shadow-none"
                                   >
                                     Details
                                   </TabsTrigger>
                                 </TabsList>
                               </div>
                               <TabsContent value="summary" className="p-4 m-0">
-                                <div className="text-sm text-green-700">
+                                <div className="text-sm text-primary/80">
                                   <p>{activity.description}</p>
                                   <p className="mt-2 text-green-600">
                                     {new Date(activity.date).toLocaleString("en-US", {
@@ -440,17 +440,17 @@ export default function ActivityHistoryPage() {
                                     <div className="space-y-2">
                                       <div className="flex justify-between">
                                         <span className="text-green-600">Confidence:</span>
-                                        <span className="text-green-800 font-medium">
+                                        <span className="text-primary font-medium">
                                           {activity.details.confidence}
                                         </span>
                                       </div>
                                       <div className="flex justify-between">
                                         <span className="text-green-600">Treatment:</span>
-                                        <span className="text-green-800">{activity.details.treatment}</span>
+                                        <span className="text-primary">{activity.details.treatment}</span>
                                       </div>
                                       <div className="flex justify-between">
                                         <span className="text-green-600">Location:</span>
-                                        <span className="text-green-800">{activity.details.location}</span>
+                                        <span className="text-primary">{activity.details.location}</span>
                                       </div>
                                     </div>
                                   )}
@@ -458,17 +458,17 @@ export default function ActivityHistoryPage() {
                                     <div className="space-y-2">
                                       <div className="flex justify-between">
                                         <span className="text-green-600">Top Recommendation:</span>
-                                        <span className="text-green-800 font-medium">
+                                        <span className="text-primary font-medium">
                                           {activity.details.topRecommendation}
                                         </span>
                                       </div>
                                       <div className="flex justify-between">
                                         <span className="text-green-600">Match Percentage:</span>
-                                        <span className="text-green-800">{activity.details.matchPercentage}</span>
+                                        <span className="text-primary">{activity.details.matchPercentage}</span>
                                       </div>
                                       <div className="flex justify-between">
                                         <span className="text-green-600">Other Options:</span>
-                                        <span className="text-green-800">
+                                        <span className="text-primary">
                                           {activity.details.otherOptions?.join(", ")}
                                         </span>
                                       </div>
@@ -478,11 +478,11 @@ export default function ActivityHistoryPage() {
                                     <div className="space-y-2">
                                       <div>
                                         <span className="text-green-600">Question:</span>
-                                        <p className="text-green-800 mt-1">{activity.details.question}</p>
+                                        <p className="text-primary mt-1">{activity.details.question}</p>
                                       </div>
                                       <div className="mt-3">
                                         <span className="text-green-600">Answer:</span>
-                                        <p className="text-green-800 mt-1">{activity.details.answer}</p>
+                                        <p className="text-primary mt-1">{activity.details.answer}</p>
                                       </div>
                                     </div>
                                   )}
@@ -491,7 +491,7 @@ export default function ActivityHistoryPage() {
                                       {activity.details.changedFields && (
                                         <div className="flex justify-between">
                                           <span className="text-green-600">Changed Fields:</span>
-                                          <span className="text-green-800">
+                                          <span className="text-primary">
                                             {activity.details.changedFields?.join(", ")}
                                           </span>
                                         </div>
@@ -499,19 +499,19 @@ export default function ActivityHistoryPage() {
                                       {activity.details.method && (
                                         <div className="flex justify-between">
                                           <span className="text-green-600">Method:</span>
-                                          <span className="text-green-800">{activity.details.method}</span>
+                                          <span className="text-primary">{activity.details.method}</span>
                                         </div>
                                       )}
                                       {activity.details.device && (
                                         <div className="flex justify-between">
                                           <span className="text-green-600">Device:</span>
-                                          <span className="text-green-800">{activity.details.device}</span>
+                                          <span className="text-primary">{activity.details.device}</span>
                                         </div>
                                       )}
                                       {activity.details.location && (
                                         <div className="flex justify-between">
                                           <span className="text-green-600">Location:</span>
-                                          <span className="text-green-800">{activity.details.location}</span>
+                                          <span className="text-primary">{activity.details.location}</span>
                                         </div>
                                       )}
                                     </div>
@@ -528,7 +528,7 @@ export default function ActivityHistoryPage() {
                 <Card className="border-green-100 shadow-sm">
                   <CardContent className="p-6 text-center">
                     <Info className="h-12 w-12 text-green-500 mx-auto mb-4" />
-                    <h3 className="text-lg font-medium text-green-800 mb-2">No activities found</h3>
+                    <h3 className="text-lg font-medium text-primary mb-2">No activities found</h3>
                     <p className="text-green-600">
                       No activities match your current filters. Try adjusting your search or filters.
                     </p>
