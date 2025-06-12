@@ -8,17 +8,18 @@ import {
 } from "@/components/ui/card";
 import {
   ArrowLeft,
+  Bookmark,
   Check,
   Download,
-  Share2,
   Printer,
-  Bookmark,
+  Share2,
 } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { DiseaseDetectionResult } from "@/types/diseaseDetection";
-import Image from "next/image";
 import { cookies } from "next/headers";
+import ImagePreview from "@/components/ImagePreview";
+import React from "react";
 
 const fetchDetails = async (
   id: string
@@ -106,76 +107,74 @@ export default async function DiseaseDetectionResultPage({
           </Button>
         </div>
       </div>
-      <div className="grid md:grid-cols-2 gap-8">
-        <Card className="border-green-100 shadow-sm">
-          <CardHeader>
-            <CardTitle className="text-green-800">Detected Disease</CardTitle>
-            <CardDescription className="text-green-700">
-              Analysis of your uploaded image
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="mb-6">
-              <Image
-                src={image.url || "/placeholder.svg"}
-                alt="Uploaded crop for analysis"
-                width={600}
-                height={400}
-                className="w-full h-auto rounded-lg object-cover mb-4 border border-green-100"
-              />
-              <h3 className="text-xl font-bold text-green-800 mb-2">
-                {disease.diseaseName}
-              </h3>
-              <div className="mt-4 flex flex-wrap gap-2">
-                <Badge className="bg-green-100 text-green-700">
-                  Crop: {disease.cropName}
-                </Badge>
+      <div className="md:grid md:grid-cols-2 md:gap-8">
+        <div className="md:col-span-1">
+          <Card className="border-green-100 shadow-sm">
+            <CardHeader>
+              <CardTitle className="text-green-800">Detected Disease</CardTitle>
+              <CardDescription className="text-green-700">
+                Analysis of your uploaded image
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="mb-6">
+                <ImagePreview imageUrl={image.url || "/placeholder.svg"} />
+                <h3 className="text-xl font-bold text-green-800 mb-2">
+                  {disease.diseaseName}
+                </h3>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <Badge className="bg-green-100 text-green-700">
+                    Crop: {disease.cropName}
+                  </Badge>
+                </div>
               </div>
-            </div>
 
-            <div className="mt-6">
-              <h3 className="font-medium text-green-800 mb-2">Description:</h3>
-              <p className="text-green-700 text-sm">{disease.description}</p>
-            </div>
-          </CardContent>
-        </Card>
+              <div className="mt-6">
+                <h3 className="font-medium text-green-800 mb-2">Description:</h3>
+                <p className="text-green-700 text-sm">{disease.description}</p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
 
-        <Card className="border-green-100 shadow-sm">
-          <CardHeader>
-            <CardTitle className="text-green-800">
-              Treatment Recommendations
-            </CardTitle>
-            <CardDescription className="text-green-700">
-              Steps to manage and treat the detected disease
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-4 text-green-700">
-              {disease.treatment.map((rec, index) => (
-                <li key={index} className="flex items-start">
-                  <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                  <span>{rec}</span>
-                </li>
-              ))}
-            </ul>
+        <div className="md:col-span-1">
+          <Card className="border-green-100 shadow-sm">
+            <CardHeader>
+              <CardTitle className="text-green-800">
+                Treatment Recommendations
+              </CardTitle>
+              <CardDescription className="text-green-700">
+                Steps to manage and treat the detected disease
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-4 text-green-700">
+                {disease.treatment.map((rec, index) => (
+                  <li key={index} className="flex items-start">
+                    <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                    <span>{rec}</span>
+                  </li>
+                ))}
+              </ul>
 
-            <div className="mt-8 flex flex-col sm:flex-row gap-4">
-              <Button className="bg-green-600 hover:bg-green-700">
-                <Download className="h-4 w-4 mr-2" />
-                Download Full Report
-              </Button>
-              <Link href="/disease-detection">
-                <Button
-                  variant="outline"
-                  className="border-green-600 text-green-600 hover:bg-green-50"
-                >
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Upload Another Image
+              <div className="mt-8 flex flex-col sm:flex-row gap-4">
+                <Button className="bg-green-600 hover:bg-green-700">
+                  <Download className="h-4 w-4 mr-2" />
+                  Download Full Report
                 </Button>
-              </Link>
-            </div>
-          </CardContent>
-        </Card>
+                <Link href="/disease-detection">
+                  <Button
+                    variant="outline"
+                    className="border-green-600 text-green-600 hover:bg-green-50"
+                  >
+                    <ArrowLeft className="h-4 w-4 mr-2" />
+                    Upload Another Image
+                  </Button>
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </main>
   );
