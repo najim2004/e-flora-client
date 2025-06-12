@@ -24,6 +24,7 @@ export default function DiseaseDetectionPage() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [cropName, setCropName] = useState("");
   const [description, setDescription] = useState("");
   const [progress, setProgress] = useState<CropSuggestionProgress | null>(null);
   const [dragOver, setDragOver] = useState(false);
@@ -36,11 +37,9 @@ export default function DiseaseDetectionPage() {
     socket.emit("joinDiseaseDetectionRoom");
 
     const handleProgress = (data: CropSuggestionProgress) => setProgress(data);
-
     const handleResult = (payload: { resultId: string }) =>
       router.push(`/disease-detection/result/${payload.resultId}`);
-
-    const handleError = (error) => {
+    const handleError = (error: any) => {
       console.log(error);
       errorToast("Disease detection failed!");
       setProgress(null);
@@ -59,6 +58,10 @@ export default function DiseaseDetectionPage() {
   }, [router]);
 
   const handleFileChange = (file: File) => {
+    if (file.size > 5 * 1024 * 1024) {
+      errorToast("File size should not exceed 5MB");
+      return;
+    }
     setImageFile(file);
     setPreviewUrl(URL.createObjectURL(file));
   };
@@ -78,19 +81,25 @@ export default function DiseaseDetectionPage() {
 
   const handleUploadClick = () => inputRef.current?.click();
 
-  const handleRemoveImage = () => {
+  const handleRemoveImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
     setImageFile(null);
     setPreviewUrl(null);
+    if (inputRef.current) {
+      inputRef.current.value = "";
+    }
   };
 
   const handleSubmit = async () => {
     if (!imageFile) return errorToast("Please select an image first.");
-    const formData = new FormData();
-    formData.append("image", imageFile);
-    if (description) formData.append("description", description);
+    if (!cropName.trim()) return errorToast("Crop name is required.");
 
     try {
-      await requestDetection({ image: imageFile, description }).unwrap();
+      await requestDetection({
+        image: imageFile,
+        cropName: cropName.trim(),
+        description,
+      }).unwrap();
     } catch {
       errorToast("Failed to request disease detection.");
     }
@@ -111,7 +120,7 @@ export default function DiseaseDetectionPage() {
 
           <CardContent>
             <div
-              onClick={!previewUrl ? handleUploadClick : undefined}
+              onClick={handleUploadClick}
               onDrop={handleDrop}
               onDragOver={(e) => {
                 e.preventDefault();
@@ -134,6 +143,18 @@ export default function DiseaseDetectionPage() {
                     height={400}
                     className="mx-auto rounded-md object-contain max-h-72 w-full"
                   />
+                  {progress !== null && (
+                    <div className="absolute inset-0 bg-black/30 rounded-md flex items-center justify-center">
+                      <div className="bg-white p-4 rounded-lg">
+                        <ProgressDisplay
+                          status={progress.status}
+                          progress={progress.progress}
+                          message={progress.message}
+                          timestamp={progress.timestamp}
+                        />
+                      </div>
+                    </div>
+                  )}
                   <button
                     type="button"
                     onClick={handleRemoveImage}
@@ -169,6 +190,22 @@ export default function DiseaseDetectionPage() {
               />
             </div>
 
+            {/* Crop Name Field */}
+            <div className="mt-6 space-y-2">
+              <label className="text-sm font-medium text-green-700">
+                Crop Name <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                value={cropName}
+                onChange={(e) => setCropName(e.target.value)}
+                placeholder="e.g., Tomato, Rice, Wheat"
+                className="w-full border border-green-200 focus:border-green-500 rounded-md px-3 py-2 text-sm text-green-900"
+                required
+              />
+            </div>
+
+            {/* Description Field */}
             <div className="mt-6 space-y-2">
               <label className="text-sm font-medium text-green-700">
                 Additional Description (Optional)
@@ -181,7 +218,8 @@ export default function DiseaseDetectionPage() {
               />
             </div>
 
-            <div className="mt-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            {/* Submit Button */}
+            <div className="mt-6">
               <Button
                 onClick={handleSubmit}
                 className="bg-green-600 hover:bg-green-700 w-full"
@@ -196,16 +234,9 @@ export default function DiseaseDetectionPage() {
                   "Start Detection"
                 )}
               </Button>
-              {progress !== null && (
-                <ProgressDisplay
-                  status={progress.status}
-                  progress={progress.progress}
-                  message={progress.message}
-                  timestamp={progress.timestamp}
-                />
-              )}
             </div>
 
+            {/* Guidelines */}
             <div className="mt-8">
               <h3 className="font-medium text-green-800 mb-2">
                 Guidelines for best results:

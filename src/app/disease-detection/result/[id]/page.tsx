@@ -1,6 +1,3 @@
-"use client";
-
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -19,33 +16,58 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
+import { DiseaseDetectionResult } from "@/types/diseaseDetection";
+import Image from "next/image";
+import { cookies } from "next/headers";
 
-export default function DiseaseDetectionResultPage({
+const fetchDetails = async (
+  id: string
+): Promise<DiseaseDetectionResult | undefined> => {
+  try {
+    const res = await fetch(
+      `http://localhost:5000/api/v1/crops/disease-detection/result/${id}`,
+      {
+        headers: {
+          Cookie: (await cookies()).toString() || "", // client cookie pass kora holo
+        },
+        credentials: "include",
+      }
+    );
+    if (!res.ok) {
+      console.error("Failed to fetch details:", res.status, res.statusText);
+      return undefined;
+    }
+    const data = await res.json();
+    if (!data?.success || !data?.data) {
+      console.warn("Data not successful or data missing:", data);
+      return undefined;
+    }
+    return data as DiseaseDetectionResult;
+  } catch (error) {
+    console.error("Error fetching details:", error);
+    return undefined;
+  }
+};
+
+export default async function DiseaseDetectionResultPage({
   params,
 }: {
-  params: { resultId: string };
+  params: Promise<{ id: string }>;
 }) {
-  // In a real application, you would fetch the result data based on params.resultId
-  // For this example, we'll use hardcoded data.
-  const result = {
-    id: params.resultId,
-    detectedDisease: "Rice Blast (Magnaporthe oryzae)",
-    confidence: 85,
-    uploadedImage: "/placeholder.svg?height=400&width=600", // Placeholder for the uploaded image
-    recommendations: [
-      "Apply fungicide containing tricyclazole or isoprothiolane",
-      "Ensure proper drainage in the field",
-      "Avoid excessive nitrogen fertilization",
-      "Remove and destroy infected plant debris",
-    ],
-    severity: "Moderate",
-    dateDetected: "2023-05-15",
-    location: "North Field, Dhaka",
-    notes:
-      "Early detection is crucial for effective management. Monitor surrounding plants closely.",
-  };
+  const id = (await params).id;
+  const result = await fetchDetails(id);
+  console.log(result);
 
-  const [saved, setSaved] = useState(false);
+  if (!result?.data) {
+    return (
+      <main className="flex-1 container mx-auto px-4 py-8">
+        <p>Loading...</p>
+      </main>
+    );
+  }
+
+  const { image, detectedDisease } = result.data;
+  const disease = detectedDisease.id;
 
   return (
     <main className="flex-1 container mx-auto px-4 py-8">
@@ -62,14 +84,9 @@ export default function DiseaseDetectionResultPage({
             variant="outline"
             size="sm"
             className="border-green-600 text-green-600 hover:bg-green-50"
-            onClick={() => setSaved(!saved)}
           >
-            {saved ? (
-              <Bookmark className="h-4 w-4 mr-2 fill-green-600" />
-            ) : (
-              <Bookmark className="h-4 w-4 mr-2" />
-            )}
-            {saved ? "Saved" : "Save"}
+            <Bookmark className="h-4 w-4 mr-2" />
+            Save
           </Button>
           <Button
             variant="outline"
@@ -89,15 +106,6 @@ export default function DiseaseDetectionResultPage({
           </Button>
         </div>
       </div>
-
-      <h1 className="text-3xl md:text-4xl font-bold text-green-800 mb-4">
-        Disease Detection Result
-      </h1>
-      <p className="text-lg text-green-700 mb-8">
-        Here are the detailed results and recommendations for your uploaded crop
-        image.
-      </p>
-
       <div className="grid md:grid-cols-2 gap-8">
         <Card className="border-green-100 shadow-sm">
           <CardHeader>
@@ -108,43 +116,26 @@ export default function DiseaseDetectionResultPage({
           </CardHeader>
           <CardContent>
             <div className="mb-6">
-              <img
-                src={result.uploadedImage || "/placeholder.svg"}
+              <Image
+                src={image.url || "/placeholder.svg"}
                 alt="Uploaded crop for analysis"
+                width={600}
+                height={400}
                 className="w-full h-auto rounded-lg object-cover mb-4 border border-green-100"
               />
               <h3 className="text-xl font-bold text-green-800 mb-2">
-                {result.detectedDisease}
+                {disease.diseaseName}
               </h3>
-              <div className="flex items-center">
-                <div className="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-green-600 rounded-full"
-                    style={{ width: `${result.confidence}%` }}
-                  ></div>
-                </div>
-                <span className="ml-2 text-green-700 font-medium">
-                  {result.confidence}% confidence
-                </span>
-              </div>
               <div className="mt-4 flex flex-wrap gap-2">
                 <Badge className="bg-green-100 text-green-700">
-                  Severity: {result.severity}
-                </Badge>
-                <Badge className="bg-green-100 text-green-700">
-                  Detected On: {result.dateDetected}
-                </Badge>
-                <Badge className="bg-green-100 text-green-700">
-                  Location: {result.location}
+                  Crop: {disease.cropName}
                 </Badge>
               </div>
             </div>
 
             <div className="mt-6">
-              <h3 className="font-medium text-green-800 mb-2">
-                Additional Notes:
-              </h3>
-              <p className="text-green-700 text-sm">{result.notes}</p>
+              <h3 className="font-medium text-green-800 mb-2">Description:</h3>
+              <p className="text-green-700 text-sm">{disease.description}</p>
             </div>
           </CardContent>
         </Card>
@@ -160,7 +151,7 @@ export default function DiseaseDetectionResultPage({
           </CardHeader>
           <CardContent>
             <ul className="space-y-4 text-green-700">
-              {result.recommendations.map((rec, index) => (
+              {disease.treatment.map((rec, index) => (
                 <li key={index} className="flex items-start">
                   <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
                   <span>{rec}</span>
