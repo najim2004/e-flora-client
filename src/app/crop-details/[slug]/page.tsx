@@ -5,15 +5,16 @@ import CropOverview from "@/components/crop-details/CropOverview";
 import CultivationGuidelines from "@/components/crop-details/CultivationGuidelines";
 import EconomicsMarketInformation from "@/components/crop-details/EconomicsMarketInformation";
 import HarvestingPostHarvest from "@/components/crop-details/HarvestingPostHarvest";
-import RelatedResources from "@/components/crop-details/RelatedResources";
+// import RelatedResources from "@/components/crop-details/RelatedResources";
 import { ArrowLeft, Bookmark, Download, Share2 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
 
 interface CropDetailsPageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 async function getCropDetails(slug: string): Promise<Crop> {
@@ -21,6 +22,10 @@ async function getCropDetails(slug: string): Promise<Crop> {
     `http://localhost:5000/api/v1/crops/crop-details/${slug}`,
     {
       cache: "force-cache",
+      headers: {
+        Cookie: (await cookies()).toString() || "", // client cookie pass kora holo
+      },
+      credentials: "include",
     }
   ); // Replace with your actual API endpoint
   if (!res.ok) {
@@ -31,9 +36,11 @@ async function getCropDetails(slug: string): Promise<Crop> {
   return data.data;
 }
 
-const CropDetailsPage: React.FC<CropDetailsPageProps> = async ({ params }) => {
-  const crop = await getCropDetails(params.slug);
-  if(!crop) notFound()
+const CropDetailsPage: React.FC<CropDetailsPageProps> = async ({
+  params,
+}: CropDetailsPageProps) => {
+  const crop = await getCropDetails((await params).slug);
+  if (!crop) notFound();
   return (
     <div className="flex flex-col min-h-screen bg-green-50">
       <main className="flex-1 max-w-7xl mx-auto px-4 py-8">
@@ -42,7 +49,7 @@ const CropDetailsPage: React.FC<CropDetailsPageProps> = async ({ params }) => {
             href="/crop-suggestions"
             className="inline-flex items-center text-green-600 hover:text-green-700"
           >
-            <ArrowLeft className="mr-2 h-4 w-4" /> Backa
+            <ArrowLeft className="mr-2 h-4 w-4" /> Back
           </Link>
 
           <div className="flex items-center gap-2">

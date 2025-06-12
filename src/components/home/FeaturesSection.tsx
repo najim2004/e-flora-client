@@ -16,6 +16,7 @@ import {
   faArrowRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { JSX } from "react";
+import Link from "next/link";
 
 interface Feature {
   title: string;
@@ -23,6 +24,7 @@ interface Feature {
   iconColor: string;
   description: string;
   image: string;
+  href: string;
 }
 
 const features: Feature[] = [
@@ -32,8 +34,8 @@ const features: Feature[] = [
     iconColor: "#81C784",
     description:
       "Upload photos of your crops to instantly identify diseases and get treatment recommendations tailored to your specific conditions.",
-    image:
-      "https://readdy.ai/api/search-image?query=Close-up%20of%20a%20farmer%20using%20smartphone%20to%20scan%20crop%20leaves%20for%20disease%20detection%2C%20showing%20technology%20in%20agriculture%2C%20with%20soft%20natural%20lighting%2C%20earthy%20tones%2C%20clean%20background%20highlighting%20the%20scanning%20process%2C%20professional%20photography%20style&width=400&height=200&seq=3&orientation=landscape",
+    image: "/f-disease-detection.jpg",
+    href: "/disease-detection",
   },
   {
     title: "Smart Crop Suggestions",
@@ -41,8 +43,8 @@ const features: Feature[] = [
     iconColor: "#81C784",
     description:
       "Receive AI-powered recommendations on which crops to plant based on your soil type, climate conditions, and market demand.",
-    image:
-      "https://readdy.ai/api/search-image?query=Aerial%20view%20of%20a%20diverse%20farm%20with%20different%20crop%20sections%20showing%20smart%20crop%20rotation%20and%20planning%2C%20vibrant%20colors%20of%20various%20crops%2C%20with%20soft%20natural%20lighting%2C%20earthy%20tones%2C%20clean%20background%20highlighting%20the%20farming%20patterns%2C%20professional%20photography%20style&width=400&height=200&seq=4&orientation=landscape",
+    image: "/f-crop-suggestion.jpg",
+    href: "/crop-suggestions",
   },
   {
     title: "Bengali AI Chatbot",
@@ -50,8 +52,8 @@ const features: Feature[] = [
     iconColor: "#81C784",
     description:
       "Access agricultural knowledge in Bengali through our conversational AI assistant, designed to understand local farming terminology.",
-    image:
-      "https://readdy.ai/api/search-image?query=Farmer%20using%20smartphone%20with%20chatbot%20interface%20in%20Bengali%20language%20while%20standing%20in%20a%20field%2C%20showing%20technology%20bridging%20language%20barriers%20in%20agriculture%2C%20with%20soft%20natural%20lighting%2C%20earthy%20tones%2C%20clean%20background%20highlighting%20the%20mobile%20interface%2C%20professional%20photography%20style&width=400&height=200&seq=5&orientation=landscape",
+    image: "/f-chat-bot.jpg",
+    href: "/chat-bot",
   },
 ];
 
@@ -106,8 +108,10 @@ export const FeaturesSection = (): JSX.Element => {
                   variant="outline"
                   className="w-full border-[#2E7D32] text-[#2E7D32] hover:bg-[#E8F5E9] cursor-pointer !rounded-button whitespace-nowrap"
                 >
-                  Learn More
-                  <FontAwesomeIcon icon={faArrowRight} className="ml-2" />
+                  <Link href={feature.href || "/"} className="size-fit">
+                    Try Now
+                    <FontAwesomeIcon icon={faArrowRight} className="ml-2" />
+                  </Link>
                 </Button>
               </CardFooter>
             </Card>

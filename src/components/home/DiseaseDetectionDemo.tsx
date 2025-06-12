@@ -1,6 +1,7 @@
 import React from "react";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
+import Image from "next/image";
 
 function DiseaseDetectionDemo() {
   return (
@@ -36,13 +37,13 @@ function DiseaseDetectionDemo() {
               <i className="ml-2 fas fa-arrow-right"></i>
             </Button>
           </div>
-          <div className="p-4 bg-white rounded-lg shadow-xl">
-            <img
-              src="https://readdy.ai/api/search-image?query=A%20detailed%20demonstration%20of%20a%20mobile%20app%20interface%20showing%20crop%20disease%20detection%20process%20with%20before%20and%20after%20images%2C%20AI%20analysis%20overlay%2C%20with%20soft%20natural%20lighting%2C%20clean%20interface%20design%20with%20green%20accents%2C%20professional%20UI%20mockup%20style%2C%20showing%20technology%20in%20agriculture&width=600&height=400&seq=6&orientation=landscape"
-              alt="Disease Detection Demo"
-              className="w-full rounded-lg"
-            />
-          </div>
+          <Image
+            src="/demo-disease-detection.jpg"
+            alt="Disease Detection Demo"
+            width={600}
+            height={400}
+            className="w-full rounded-lg"
+          />
         </div>
       </div>
     </section>

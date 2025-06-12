@@ -20,6 +20,7 @@ import { DiseaseDetectionResult } from "@/types/diseaseDetection";
 import { cookies } from "next/headers";
 import ImagePreview from "@/components/ImagePreview";
 import React from "react";
+import { notFound } from "next/navigation";
 
 const fetchDetails = async (
   id: string
@@ -28,6 +29,7 @@ const fetchDetails = async (
     const res = await fetch(
       `http://localhost:5000/api/v1/crops/disease-detection/result/${id}`,
       {
+        cache: "force-cache",
         headers: {
           Cookie: (await cookies()).toString() || "", // client cookie pass kora holo
         },
@@ -36,17 +38,17 @@ const fetchDetails = async (
     );
     if (!res.ok) {
       console.error("Failed to fetch details:", res.status, res.statusText);
-      return undefined;
+      return notFound();
     }
     const data = await res.json();
     if (!data?.success || !data?.data) {
       console.warn("Data not successful or data missing:", data);
-      return undefined;
+      return notFound();
     }
     return data as DiseaseDetectionResult;
   } catch (error) {
     console.error("Error fetching details:", error);
-    return undefined;
+    return notFound();
   }
 };
 
@@ -57,7 +59,6 @@ export default async function DiseaseDetectionResultPage({
 }) {
   const id = (await params).id;
   const result = await fetchDetails(id);
-  console.log(result);
 
   if (!result?.data) {
     return (
@@ -71,7 +72,7 @@ export default async function DiseaseDetectionResultPage({
   const disease = detectedDisease.id;
 
   return (
-    <main className="flex-1 container mx-auto px-4 py-8">
+    <main className="flex-1 max-w-7xl mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-6">
         <Link
           href="/disease-detection"
@@ -107,9 +108,9 @@ export default async function DiseaseDetectionResultPage({
           </Button>
         </div>
       </div>
-      <div className="md:grid md:grid-cols-2 md:gap-8">
-        <div className="md:col-span-1">
-          <Card className="border-green-100 shadow-sm">
+      <div className="md:grid md:grid-cols-6 md:gap-8">
+        <div className="md:col-span-2 md:relative">
+          <Card className="border-green-100 shadow-sm md:sticky md:top-24.5">
             <CardHeader>
               <CardTitle className="text-green-800">Detected Disease</CardTitle>
               <CardDescription className="text-green-700">
@@ -119,42 +120,82 @@ export default async function DiseaseDetectionResultPage({
             <CardContent>
               <div className="mb-6">
                 <ImagePreview imageUrl={image.url || "/placeholder.svg"} />
-                <h3 className="text-xl font-bold text-green-800 mb-2">
-                  {disease.diseaseName}
-                </h3>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  <Badge className="bg-green-100 text-green-700">
-                    Crop: {disease.cropName}
-                  </Badge>
+                <div className="mt-6">
+                  <p className="text-green-700 text-sm italic">
+                    <em>Crop:</em> {result.data.cropName}
+                  </p>
+                  <p className="text-green-700 text-sm italic">
+                    <em>Description:</em> {result.data.description}
+                  </p>
                 </div>
-              </div>
-
-              <div className="mt-6">
-                <h3 className="font-medium text-green-800 mb-2">Description:</h3>
-                <p className="text-green-700 text-sm">{disease.description}</p>
               </div>
             </CardContent>
           </Card>
         </div>
 
-        <div className="md:col-span-1">
+        <div className="md:col-span-4">
           <Card className="border-green-100 shadow-sm">
             <CardHeader>
-              <CardTitle className="text-green-800">
-                Treatment Recommendations
-              </CardTitle>
+              <CardTitle className="text-green-800">Disease Details</CardTitle>
               <CardDescription className="text-green-700">
-                Steps to manage and treat the detected disease
+                Details of the detected disease
               </CardDescription>
             </CardHeader>
             <CardContent>
               <ul className="space-y-4 text-green-700">
-                {disease.treatment.map((rec, index) => (
-                  <li key={index} className="flex items-start">
-                    <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>{rec}</span>
-                  </li>
-                ))}
+                <li>
+                  <strong>Crop Name:</strong> {disease.cropName}
+                </li>
+                <li>
+                  <strong>Disease Name:</strong> {disease.diseaseName}
+                </li>
+                <li>
+                  <strong>Description:</strong> {disease.description}
+                </li>
+                <li>
+                  <strong>Symptoms:</strong>
+                  <ul>
+                    {disease.symptoms?.map((symptom, index) => (
+                      <li key={index} className="flex items-start">
+                        <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                        <span>{symptom}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+                <li>
+                  <strong>Causes:</strong>
+                  <ul>
+                    {disease.causes?.map((cause, index) => (
+                      <li key={index} className="flex items-start">
+                        <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                        <span>{cause}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+                <li>
+                  <strong>Preventive Tips:</strong>
+                  <ul>
+                    {disease.preventiveTips?.map((tip, index) => (
+                      <li key={index} className="flex items-start">
+                        <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                        <span>{tip}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+                <li>
+                  <strong>Treatment:</strong>
+                  <ul>
+                    {disease.treatment?.map((treatment, index) => (
+                      <li key={index} className="flex items-start">
+                        <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                        <span>{treatment}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
               </ul>
 
               <div className="mt-8 flex flex-col sm:flex-row gap-4">

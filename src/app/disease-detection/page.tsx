@@ -39,7 +39,7 @@ export default function DiseaseDetectionPage() {
     const handleProgress = (data: CropSuggestionProgress) => setProgress(data);
     const handleResult = (payload: { resultId: string }) =>
       router.push(`/disease-detection/result/${payload.resultId}`);
-    const handleError = (error: any) => {
+    const handleError = (error: unknown) => {
       console.log(error);
       errorToast("Disease detection failed!");
       setProgress(null);
@@ -144,15 +144,13 @@ export default function DiseaseDetectionPage() {
                     className="mx-auto rounded-md object-contain max-h-72 w-full"
                   />
                   {progress !== null && (
-                    <div className="absolute inset-0 bg-black/30 rounded-md flex items-center justify-center">
-                      <div className="bg-white p-4 rounded-lg">
-                        <ProgressDisplay
-                          status={progress.status}
-                          progress={progress.progress}
-                          message={progress.message}
-                          timestamp={progress.timestamp}
-                        />
-                      </div>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center rounded-md bg-black/30 p-4">
+                      <ProgressDisplay
+                        status={progress.status}
+                        progress={progress.progress}
+                        message={progress.message}
+                        timestamp={progress.timestamp}
+                      />
                     </div>
                   )}
                   <button

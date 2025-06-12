@@ -11,7 +11,7 @@ export const HeroSection: FC = () => {
       <div className="absolute inset-0 bg-gradient-to-r from-[#2E7D32]/90 to-transparent z-10" />
       <div className="relative w-full h-[600px]">
         <Image
-          src="https://readdy.ai/api/search-image?query=A%20panoramic%20view%20of%20lush%20green%20agricultural%20fields%20with%20farmers%20working%20during%20golden%20hour%2C%20showing%20diverse%20crops%20and%20modern%20farming%20techniques%2C%20soft%20natural%20lighting%2C%20earthy%20tones%2C%20with%20mountains%20in%20the%20background%2C%20professional%20photography%20style%2C%20high%20resolution%2C%20showing%20the%20beauty%20of%20agriculture&width=1440&height=600&seq=2&orientation=landscape"
+          src="/hero.jpg"
           alt="Farmers in field"
           fill
           priority
