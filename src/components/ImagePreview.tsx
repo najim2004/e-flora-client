@@ -34,7 +34,7 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({
           alt="Uploaded crop for analysis"
           width={thumbnailSize.width}
           height={thumbnailSize.height}
-          className="w-full h-full rounded-lg object-contain border border-green-100 cursor-pointer hover:opacity-90 transition-opacity"
+          className="w-full h-full rounded-lg object-contain border border-border cursor-pointer hover:opacity-90 transition-opacity"
           onClick={openModal}
           priority
         />
@@ -47,7 +47,7 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({
             alt="Uploaded crop for analysis"
             width={modalSize.width}
             height={modalSize.height}
-            className="w-full h-full rounded-lg object-contain border border-green-100"
+            className="w-full h-full rounded-lg object-contain border border-border"
             quality={100}
             priority
           />

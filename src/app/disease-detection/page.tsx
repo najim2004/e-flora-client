@@ -12,7 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Upload, Check, Loader2, X } from "lucide-react";
+import { Upload, Check, Loader2, X, History, Plus } from "lucide-react";
 import { getSocket } from "@/lib/socket";
 import { useRequestDiseaseDetectionMutation } from "@/redux/features/diseaseDetection/diseaseDetectionApiSlice";
 import { errorToast } from "@/components/customToast";
@@ -108,14 +108,25 @@ export default function DiseaseDetectionPage() {
   return (
     <div className="min-h-[calc(100vh-64px)] bg-green-50 flex flex-col justify-center">
       <div className="max-w-7xl w-full mx-auto px-4 py-8">
-        <Card className="border-green-100 shadow-sm max-w-2xl mx-auto w-full">
-          <CardHeader>
-            <CardTitle className="text-primary text-xl md:text-2xl">
-              Upload Image
-            </CardTitle>
-            <CardDescription className="text-primary/80">
-              Please upload a clear, well-lit photo of the affected plant part.
-            </CardDescription>
+        <Card className="border-border shadow-sm max-w-2xl mx-auto w-full">
+          <CardHeader className="flex justify-between">
+            <div className="flex-grow">
+              <CardTitle className="text-primary text-xl md:text-2xl">
+                Upload Image
+              </CardTitle>
+              <CardDescription className="text-primary/80">
+                Please upload a clear, well-lit photo of the affected plant
+                part.
+              </CardDescription>
+            </div>
+
+            <Button
+              variant="outline"
+              size="sm"
+              className="text-primary border-none !p-0 shadow-none hover:bg-transparent"
+            >
+              <History />
+            </Button>
           </CardHeader>
 
           <CardContent>
@@ -130,8 +141,8 @@ export default function DiseaseDetectionPage() {
               className={`relative border-2 border-dashed rounded-lg p-4 sm:p-8 text-center transition-colors cursor-pointer
                 ${
                   dragOver
-                    ? "bg-green-100 border-green-500"
-                    : "bg-green-50 border-green-200"
+                    ? "bg-secondary/60 border-primary/80"
+                    : "bg-green-50 border-border"
                 }`}
             >
               {previewUrl ? (
@@ -156,7 +167,7 @@ export default function DiseaseDetectionPage() {
                   <button
                     type="button"
                     onClick={handleRemoveImage}
-                    className="absolute top-2 right-2 bg-green-600 text-white p-1 rounded-full hover:bg-primary/80"
+                    className="absolute top-2 right-2 bg-primary text-white p-1 rounded-full hover:bg-primary/80"
                     aria-label="Remove Image"
                   >
                     <X className="h-4 w-4" />
@@ -164,16 +175,16 @@ export default function DiseaseDetectionPage() {
                 </div>
               ) : (
                 <>
-                  <Upload className="h-12 w-12 text-green-500 mx-auto mb-4" />
+                  <Upload className="h-12 w-12 text-primary/80 mx-auto mb-4" />
                   <p className="text-primary/80 mb-2">
                     Drag & drop image here or click to browse
                   </p>
-                  <p className="text-sm text-green-600">
+                  <p className="text-sm text-primary">
                     Supported formats: JPG, PNG (Max size: 5MB)
                   </p>
                   <Button
                     type="button"
-                    className="mt-6 bg-green-600 hover:bg-primary/80"
+                    className="mt-6 bg-primary hover:bg-primary/80"
                   >
                     Select Image
                   </Button>
@@ -198,7 +209,7 @@ export default function DiseaseDetectionPage() {
                 value={cropName}
                 onChange={(e) => setCropName(e.target.value)}
                 placeholder="e.g., Tomato, Rice, Wheat"
-                className="w-full border border-green-200 focus:border-green-500 rounded-md px-3 py-2 text-sm text-green-900"
+                className="w-full border border-border focus:border-primary/80 rounded-md px-3 py-2 text-sm text-green-900"
                 required
               />
             </div>
@@ -212,7 +223,7 @@ export default function DiseaseDetectionPage() {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Describe any additional details about the plant condition..."
-                className="border-green-200 focus:border-green-500 resize-none"
+                className="border-border focus:border-primary/80 resize-none"
               />
             </div>
 
@@ -220,7 +231,7 @@ export default function DiseaseDetectionPage() {
             <div className="mt-6">
               <Button
                 onClick={handleSubmit}
-                className="bg-green-600 hover:bg-primary/80 w-full"
+                className="bg-primary hover:bg-primary/80 w-full"
                 disabled={isLoading}
               >
                 {isLoading ? (
@@ -241,19 +252,19 @@ export default function DiseaseDetectionPage() {
               </h3>
               <ul className="space-y-2 text-primary/80 text-sm">
                 <li className="flex items-start">
-                  <Check className="h-4 w-4 text-green-500 mr-2 mt-0.5" />
+                  <Check className="h-4 w-4 text-primary/80 mr-2 mt-0.5" />
                   Take close-up photos of the affected area
                 </li>
                 <li className="flex items-start">
-                  <Check className="h-4 w-4 text-green-500 mr-2 mt-0.5" />
+                  <Check className="h-4 w-4 text-primary/80 mr-2 mt-0.5" />
                   Ensure good lighting (natural daylight is best)
                 </li>
                 <li className="flex items-start">
-                  <Check className="h-4 w-4 text-green-500 mr-2 mt-0.5" />
+                  <Check className="h-4 w-4 text-primary/80 mr-2 mt-0.5" />
                   Include both healthy and diseased parts for comparison
                 </li>
                 <li className="flex items-start">
-                  <Check className="h-4 w-4 text-green-500 mr-2 mt-0.5" />
+                  <Check className="h-4 w-4 text-primary/80 mr-2 mt-0.5" />
                   Avoid shadows and blurry images
                 </li>
               </ul>

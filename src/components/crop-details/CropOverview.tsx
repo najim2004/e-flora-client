@@ -36,7 +36,7 @@ const CropOverview: React.FC<CropOverviewProps> = ({ crop }) => {
             <Calendar className="min-h-5 min-w-5 text-primary mr-3" />
             <div>
               <p className="text-primary font-medium">Growing Season</p>
-              <p className="text-sm text-primary/70">
+              <p className="text-sm text-primary/80">
                 {crop.season.planting} to {crop.season.harvesting}
               </p>
             </div>
@@ -45,14 +45,14 @@ const CropOverview: React.FC<CropOverviewProps> = ({ crop }) => {
             <Clock className="min-h-5 min-w-5 text-primary mr-3" />
             <div>
               <p className="text-primary font-medium">Duration</p>
-              <p className="text-sm text-primary/70">{crop.season.duration}</p>
+              <p className="text-sm text-primary/80">{crop.season.duration}</p>
             </div>
           </div>
           <div className="flex items-center">
             <Thermometer className="min-h-5 min-w-5 text-primary mr-3" />
             <div>
               <p className="text-primary font-medium">Temperature Range</p>
-              <p className="text-sm text-primary/70">
+              <p className="text-sm text-primary/80">
                 {crop.climate.temperature}
               </p>
             </div>
@@ -61,7 +61,7 @@ const CropOverview: React.FC<CropOverviewProps> = ({ crop }) => {
             <Droplets className="min-h-5 min-w-5 text-primary mr-3" />
             <div>
               <p className="text-primary font-medium">Water Requirement</p>
-              <p className="text-sm text-primary/70">
+              <p className="text-sm text-primary/80">
                 {crop.water.requirements}
               </p>
             </div>
@@ -71,7 +71,7 @@ const CropOverview: React.FC<CropOverviewProps> = ({ crop }) => {
         <div className="mt-6">
           <h3 className="text-primary font-medium mb-2">Suitable Soil Types</h3>
           <div className="flex flex-wrap gap-2">
-            <Badge className="bg-green-100 text-primary hover:bg-green-200">
+            <Badge className="bg-secondary/60 text-primary hover:bg-green-200">
               {crop.soil.types}
             </Badge>
           </div>

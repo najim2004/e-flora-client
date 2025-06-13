@@ -31,13 +31,13 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({ activeTab, setActiveTab }
             alt="Mati'r Sathi Logo"
             className="w-10 h-10"
           />
-          <h1 className="text-xl font-bold text-[#2E7D32]">Mati'r Sathi</h1>
+          <h1 className="text-xl font-bold text-primary/80">Mati'r Sathi</h1>
         </div>
         <nav className="hidden md:flex items-center space-x-8">
           <Button
             variant="link"
             className={`text-base font-medium ${
-              activeTab === "home" ? "text-[#2E7D32]" : "text-gray-600"
+              activeTab === "home" ? "text-primary/80" : "text-gray-600"
             } cursor-pointer !rounded-button whitespace-nowrap`}
             onClick={() => setActiveTab("home")}
           >
@@ -46,7 +46,7 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({ activeTab, setActiveTab }
           <Button
             variant="link"
             className={`text-base font-medium ${
-              activeTab === "features" ? "text-[#2E7D32]" : "text-gray-600"
+              activeTab === "features" ? "text-primary/80" : "text-gray-600"
             } cursor-pointer !rounded-button whitespace-nowrap`}
             onClick={() => setActiveTab("features")}
           >
@@ -55,7 +55,7 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({ activeTab, setActiveTab }
           <Button
             variant="link"
             className={`text-base font-medium ${
-              activeTab === "chatbot" ? "text-[#2E7D32]" : "text-gray-600"
+              activeTab === "chatbot" ? "text-primary/80" : "text-gray-600"
             } cursor-pointer !rounded-button whitespace-nowrap`}
             onClick={() => setActiveTab("chatbot")}
           >
@@ -64,7 +64,7 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({ activeTab, setActiveTab }
           <Button
             variant="link"
             className={`text-base font-medium ${
-              activeTab === "support" ? "text-[#2E7D32]" : "text-gray-600"
+              activeTab === "support" ? "text-primary/80" : "text-gray-600"
             } cursor-pointer !rounded-button whitespace-nowrap`}
             onClick={() => setActiveTab("support")}
           >
@@ -74,14 +74,14 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({ activeTab, setActiveTab }
         <div className="flex items-center space-x-4">
           <Button
             variant="outline"
-            className="hidden md:flex items-center space-x-2 border-[#2E7D32] text-[#2E7D32] hover:bg-[#E8F5E9] cursor-pointer !rounded-button whitespace-nowrap"
+            className="hidden md:flex items-center space-x-2 border-primary/80 text-primary/80 hover:bg-[#E8F5E9] cursor-pointer !rounded-button whitespace-nowrap"
           >
             <i className="fas fa-globe text-sm"></i>
             <span>English</span>
           </Button>
           <Button
             id="sign-in-button"
-            className="bg-[#2E7D32] hover:bg-[#1B5E20] text-white cursor-pointer !rounded-button whitespace-nowrap"
+            className="bg-primary/80 hover:bg-primary text-white cursor-pointer !rounded-button whitespace-nowrap"
             onClick={() => setIsSignInOpen(true)}
           >
             Sign In
@@ -134,7 +134,7 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({ activeTab, setActiveTab }
                       <input
                         id="remember-me"
                         type="checkbox"
-                        className="w-4 h-4 border-gray-300 rounded text-[#2E7D32] focus:ring-[#2E7D32]"
+                        className="w-4 h-4 border-gray-300 rounded text-primary/80 focus:ring-primary/80"
                       />
                       <label
                         htmlFor="remember-me"
@@ -146,7 +146,7 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({ activeTab, setActiveTab }
                     <Button
                       id="forgot-password"
                       variant="link"
-                      className="text-sm text-[#2E7D32] hover:text-[#1B5E20]"
+                      className="text-sm text-primary/80 hover:text-primary"
                     >
                       Forgot password?
                     </Button>
@@ -154,7 +154,7 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({ activeTab, setActiveTab }
                   <Button
                     id="sign-in-submit"
                     type="submit"
-                    className="w-full bg-[#2E7D32] hover:bg-[#1B5E20] text-white !rounded-button whitespace-nowrap"
+                    className="w-full bg-primary/80 hover:bg-primary text-white !rounded-button whitespace-nowrap"
                   >
                     Sign In
                   </Button>
@@ -195,7 +195,7 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({ activeTab, setActiveTab }
                   <Button
                     id="sign-up-link"
                     variant="link"
-                    className="text-sm text-[#2E7D32] hover:text-[#1B5E20]"
+                    className="text-sm text-primary/80 hover:text-primary"
                     onClick={() => {
                       setIsSignInOpen(false);
                       setIsSignUpOpen(true);
@@ -281,7 +281,7 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({ activeTab, setActiveTab }
                     <input
                       id="terms"
                       type="checkbox"
-                      className="w-4 h-4 border-gray-300 rounded text-[#2E7D32] focus:ring-[#2E7D32]"
+                      className="w-4 h-4 border-gray-300 rounded text-primary/80 focus:ring-primary/80"
                     />
                     <label
                       htmlFor="terms"
@@ -290,14 +290,14 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({ activeTab, setActiveTab }
                       I agree to the{" "}
                       <Button
                         variant="link"
-                        className="p-0 text-[#2E7D32] hover:text-[#1B5E20]"
+                        className="p-0 text-primary/80 hover:text-primary"
                       >
                         Terms of Service
                       </Button>{" "}
                       and{" "}
                       <Button
                         variant="link"
-                        className="p-0 text-[#2E7D32] hover:text-[#1B5E20]"
+                        className="p-0 text-primary/80 hover:text-primary"
                       >
                         Privacy Policy
                       </Button>
@@ -305,7 +305,7 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({ activeTab, setActiveTab }
                   </div>
                   <Button
                     type="submit"
-                    className="w-full bg-[#2E7D32] hover:bg-[#1B5E20] text-white !rounded-button whitespace-nowrap"
+                    className="w-full bg-primary/80 hover:bg-primary text-white !rounded-button whitespace-nowrap"
                   >
                     Sign Up
                   </Button>
@@ -344,7 +344,7 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({ activeTab, setActiveTab }
                   </span>
                   <Button
                     variant="link"
-                    className="text-sm text-[#2E7D32] hover:text-[#1B5E20]"
+                    className="text-sm text-primary/80 hover:text-primary"
                     onClick={() => {
                       setIsSignUpOpen(false);
                       setIsSignInOpen(true);
@@ -373,7 +373,7 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({ activeTab, setActiveTab }
               />
               <div className="fixed top-0 right-0 w-[280px] h-full bg-white z-50 shadow-xl transform transition-transform">
                 <div className="flex items-center justify-between p-4 border-b">
-                  <h2 className="text-xl font-bold text-[#2E7D32]">Menu</h2>
+                  <h2 className="text-xl font-bold text-primary/80">Menu</h2>
                   <Button
                     variant="ghost"
                     className="text-gray-500 cursor-pointer !rounded-button whitespace-nowrap"
@@ -389,7 +389,7 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({ activeTab, setActiveTab }
                       variant="ghost"
                       className={`justify-start text-base font-medium ${
                         activeTab === "home"
-                          ? "text-[#2E7D32]"
+                          ? "text-primary/80"
                           : "text-gray-600"
                       } cursor-pointer !rounded-button whitespace-nowrap`}
                       onClick={() => {
@@ -403,7 +403,7 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({ activeTab, setActiveTab }
                       variant="ghost"
                       className={`justify-start text-base font-medium ${
                         activeTab === "features"
-                          ? "text-[#2E7D32]"
+                          ? "text-primary/80"
                           : "text-gray-600"
                       } cursor-pointer !rounded-button whitespace-nowrap`}
                       onClick={() => {
@@ -417,7 +417,7 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({ activeTab, setActiveTab }
                       variant="ghost"
                       className={`justify-start text-base font-medium ${
                         activeTab === "chatbot"
-                          ? "text-[#2E7D32]"
+                          ? "text-primary/80"
                           : "text-gray-600"
                       } cursor-pointer !rounded-button whitespace-nowrap`}
                       onClick={() => {
@@ -431,7 +431,7 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({ activeTab, setActiveTab }
                       variant="ghost"
                       className={`justify-start text-base font-medium ${
                         activeTab === "support"
-                          ? "text-[#2E7D32]"
+                          ? "text-primary/80"
                           : "text-gray-600"
                       } cursor-pointer !rounded-button whitespace-nowrap`}
                       onClick={() => {
@@ -444,7 +444,7 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({ activeTab, setActiveTab }
                     <Separator className="my-4" />
                     <Button
                       variant="outline"
-                      className="justify-start border-[#2E7D32] text-[#2E7D32] hover:bg-[#E8F5E9] cursor-pointer !rounded-button whitespace-nowrap"
+                      className="justify-start border-primary/80 text-primary/80 hover:bg-[#E8F5E9] cursor-pointer !rounded-button whitespace-nowrap"
                     >
                       <i className="fas fa-globe text-sm mr-2"></i>
                       English

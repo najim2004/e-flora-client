@@ -13,7 +13,7 @@ function HowItWorks() {
     <section className="py-20 bg-[#F5F7FA]">
       <div className="container px-4 mx-auto max-w-7xl">
         <div className="max-w-3xl mx-auto mb-16 text-center">
-          <Badge className="mb-4 bg-[#E8F5E9] text-[#2E7D32] hover:bg-[#E8F5E9]/90 cursor-pointer whitespace-nowrap">
+          <Badge className="mb-4 bg-[#E8F5E9] text-primary/80 hover:bg-[#E8F5E9]/90 cursor-pointer whitespace-nowrap">
             How It Works
           </Badge>
           <h2 className="mb-4 text-3xl font-bold text-gray-900 md:text-4xl">
@@ -26,7 +26,7 @@ function HowItWorks() {
         </div>
         <div className="grid gap-8 md:grid-cols-4">
           <div className="relative p-6 text-center bg-white rounded-lg shadow-md">
-            <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 text-white bg-[#2E7D32] rounded-full">
+            <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 text-white bg-primary/80 rounded-full">
               <UserPlus className="w-8 h-8" />
             </div>
             <h3 className="mb-2 text-xl font-semibold text-gray-900">
@@ -40,7 +40,7 @@ function HowItWorks() {
             </div>
           </div>
           <div className="relative p-6 text-center bg-white rounded-lg shadow-md">
-            <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 text-white bg-[#2E7D32] rounded-full">
+            <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 text-white bg-primary/80 rounded-full">
               <Camera className="w-8 h-8" />
             </div>
             <h3 className="mb-2 text-xl font-semibold text-gray-900">
@@ -54,7 +54,7 @@ function HowItWorks() {
             </div>
           </div>
           <div className="relative p-6 text-center bg-white rounded-lg shadow-md">
-            <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 text-white bg-[#2E7D32] rounded-full">
+            <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 text-white bg-primary/80 rounded-full">
               <Brain className="w-8 h-8" />
             </div>
             <h3 className="mb-2 text-xl font-semibold text-gray-900">
@@ -68,7 +68,7 @@ function HowItWorks() {
             </div>
           </div>
           <div className="p-6 text-center bg-white rounded-lg shadow-md">
-            <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 text-white bg-[#2E7D32] rounded-full">
+            <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 text-white bg-primary/80 rounded-full">
               <CheckCircle className="w-8 h-8" />
             </div>
             <h3 className="mb-2 text-xl font-semibold text-gray-900">

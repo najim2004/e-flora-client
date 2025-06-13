@@ -17,19 +17,19 @@ const FertilizerApplication: React.FC<FertilizerApplicationProps> = ({ crop }) =
         </p>
         <ul className="space-y-2 text-primary/80">
           <li className="flex items-start">
-            <span className="text-green-500 mr-2">•</span>
+            <span className="text-primary/80 mr-2">•</span>
             <span>
               Nitrogen (N): {crop.management.fertilizer.nitrogen}
             </span>
           </li>
           <li className="flex items-start">
-            <span className="text-green-500 mr-2">•</span>
+            <span className="text-primary/80 mr-2">•</span>
             <span>
               Phosphorus (P): {crop.management.fertilizer.phosphorus}
             </span>
           </li>
           <li className="flex items-start">
-            <span className="text-green-500 mr-2">•</span>
+            <span className="text-primary/80 mr-2">•</span>
             <span>
               Potassium (K): {crop.management.fertilizer.potassium}
             </span>
@@ -43,7 +43,7 @@ const FertilizerApplication: React.FC<FertilizerApplicationProps> = ({ crop }) =
         <ul className="space-y-2 text-primary/80">
           {crop.management.fertilizer.Application.map((item: string, index: number) => (
             <li key={index} className="flex items-start">
-              <span className="text-green-500 mr-2">•</span>
+              <span className="text-primary/80 mr-2">•</span>
               <span>{item}</span>
             </li>
           ))}

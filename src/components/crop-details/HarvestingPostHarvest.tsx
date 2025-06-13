@@ -15,7 +15,7 @@ interface HarvestingPostHarvestProps {
 
 const HarvestingPostHarvest: React.FC<HarvestingPostHarvestProps> = ({ crop }) => {
   return (
-    <Card className="border-green-100 shadow-sm">
+    <Card className="border-border shadow-sm">
       <CardHeader>
         <CardTitle className="text-primary">
           Harvesting & Post-Harvest

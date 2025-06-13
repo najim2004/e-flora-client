@@ -77,7 +77,7 @@ export default function SignUpPage() {
 
   return (
     <div className="min-h-screen bg-green-50 flex flex-col items-center justify-center p-4">
-      <Card className="w-full max-w-md border-green-100 shadow-md rounded-sm">
+      <Card className="w-full max-w-md border-border shadow-md rounded-sm">
         <CardHeader className="text-center">
           <CardTitle className="text-primary text-2xl">
             Create a New Account
@@ -91,14 +91,14 @@ export default function SignUpPage() {
             <NavLink
               href="/signin"
               className="p-1.5 text-center text-gray-600 rounded-sm text-sm font-medium"
-              activeClass="bg-green-600 text-white"
+              activeClass="bg-primary text-white"
             >
               Sign In
             </NavLink>
             <NavLink
               href="/signup"
               className="p-1.5 text-center text-gray-600 rounded-sm text-sm font-medium"
-              activeClass="bg-green-600 text-white"
+              activeClass="bg-primary text-white"
             >
               Sign Up
             </NavLink>
@@ -115,7 +115,7 @@ export default function SignUpPage() {
                     <FormControl>
                       <Input
                         placeholder="Enter your full name"
-                        className="border-green-200 focus:border-green-500 focus:ring-green-500"
+                        className="border-border focus:border-primary/80 focus:ring-primary/80"
                         {...field}
                       />
                     </FormControl>
@@ -134,7 +134,7 @@ export default function SignUpPage() {
                       <Input
                         type="email"
                         placeholder="Enter your email"
-                        className="border-green-200 focus:border-green-500 focus:ring-green-500"
+                        className="border-border focus:border-primary/80 focus:ring-primary/80"
                         {...field}
                       />
                     </FormControl>
@@ -154,7 +154,7 @@ export default function SignUpPage() {
                     <FormControl>
                       <Input
                         placeholder="Enter your phone number"
-                        className="border-green-200 focus:border-green-500 focus:ring-green-500"
+                        className="border-border focus:border-primary/80 focus:ring-primary/80"
                         {...field}
                       />
                     </FormControl>
@@ -173,7 +173,7 @@ export default function SignUpPage() {
                       <Input
                         type="password"
                         placeholder="Create a password"
-                        className="border-green-200 focus:border-green-500 focus:ring-green-500"
+                        className="border-border focus:border-primary/80 focus:ring-primary/80"
                         {...field}
                       />
                     </FormControl>
@@ -194,7 +194,7 @@ export default function SignUpPage() {
                       <Input
                         type="password"
                         placeholder="Confirm your password"
-                        className="border-green-200 focus:border-green-500 focus:ring-green-500"
+                        className="border-border focus:border-primary/80 focus:ring-primary/80"
                         {...field}
                       />
                     </FormControl>
@@ -206,7 +206,7 @@ export default function SignUpPage() {
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-green-600 hover:bg-primary/80"
+                className="w-full bg-primary hover:bg-primary/80"
               >
                 Create Account
               </Button>
@@ -217,11 +217,11 @@ export default function SignUpPage() {
 
       <p className="mt-6 text-sm text-primary/80 text-center">
         By signing up, you agree to our{" "}
-        <Link href="/terms" className="text-green-600 hover:underline">
+        <Link href="/terms" className="text-primary hover:underline">
           Terms of Service
         </Link>{" "}
         and{" "}
-        <Link href="/privacy" className="text-green-600 hover:underline">
+        <Link href="/privacy" className="text-primary hover:underline">
           Privacy Policy
         </Link>
         .

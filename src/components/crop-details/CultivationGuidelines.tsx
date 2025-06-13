@@ -14,7 +14,7 @@ interface CultivationGuidelinesProps {
 
 const CultivationGuidelines: React.FC<CultivationGuidelinesProps> = ({ crop }) => {
   return (
-    <Card className="border-green-100 shadow-sm">
+    <Card className="border-border shadow-sm">
       <CardHeader>
         <CardTitle className="text-primary">
           Cultivation Guidelines

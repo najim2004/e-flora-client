@@ -230,12 +230,14 @@ export default function UserProfilePage({ params }: { params: { userId: string }
 
   return (
     <div className="flex flex-col min-h-screen bg-green-50">
-      
-
       <main className="flex-1">
         {/* Cover Image */}
-        <div className="relative h-48 md:h-64 bg-green-200 overflow-hidden">
-          <img src={userData.coverImage || "/placeholder.svg"} alt="Cover" className="w-full h-full object-cover" />
+        <div className="relative h-48 md:h-64 bg-secondary/60 overflow-hidden">
+          <img
+            src={userData.coverImage || "/placeholder.svg"}
+            alt="Cover"
+            className="w-full h-full object-cover"
+          />
           <div className="absolute top-4 left-4">
             <Link
               href="/community"
@@ -248,12 +250,15 @@ export default function UserProfilePage({ params }: { params: { userId: string }
         </div>
 
         {/* Profile Header */}
-        <div className="container mx-auto px-4">
+        <div className="max-w-7xl w-full mx-auto px-4">
           <div className="relative -mt-16 mb-4 flex flex-col md:flex-row md:items-end md:justify-between">
             <div className="flex flex-col md:flex-row md:items-end gap-4">
               <Avatar className="h-32 w-32 border-4 border-white shadow-md">
-                <AvatarImage src={userData.avatar || "/placeholder.svg"} alt={userData.name} />
-                <AvatarFallback className="bg-green-200 text-primary/80 text-4xl">
+                <AvatarImage
+                  src={userData.avatar || "/placeholder.svg"}
+                  alt={userData.name}
+                />
+                <AvatarFallback className="bg-secondary/60 text-primary/80 text-4xl">
                   {userData.name
                     .split(" ")
                     .map((n) => n[0])
@@ -261,12 +266,16 @@ export default function UserProfilePage({ params }: { params: { userId: string }
                 </AvatarFallback>
               </Avatar>
               <div className="mt-2 md:mt-0 md:mb-2">
-                <h1 className="text-2xl font-bold text-primary">{userData.name}</h1>
-                <div className="flex items-center gap-2 text-green-600">
+                <h1 className="text-2xl font-bold text-primary">
+                  {userData.name}
+                </h1>
+                <div className="flex items-center gap-2 text-primary">
                   <span>@{userData.username}</span>
-                  <Badge className="bg-green-100 text-primary/80 hover:bg-green-200">{userData.occupation}</Badge>
+                  <Badge className="bg-secondary/60 text-primary/80 hover:bg-secondary/60">
+                    {userData.occupation}
+                  </Badge>
                 </div>
-                <div className="flex items-center gap-2 mt-1 text-green-600 text-sm">
+                <div className="flex items-center gap-2 mt-1 text-primary text-sm">
                   <MapPin className="h-4 w-4" />
                   <span>{userData.location}</span>
                 </div>
@@ -275,14 +284,19 @@ export default function UserProfilePage({ params }: { params: { userId: string }
             <div className="flex gap-2 mt-4 md:mt-0">
               <Button
                 className={
-                  isFollowing ? "bg-green-100 text-primary/80 hover:bg-green-200" : "bg-green-600 hover:bg-primary/80"
+                  isFollowing
+                    ? "bg-secondary/60 text-primary/80 hover:bg-secondary/60"
+                    : "bg-primary hover:bg-primary/80"
                 }
                 onClick={() => setIsFollowing(!isFollowing)}
               >
                 <Users className="h-4 w-4 mr-2" />
                 {isFollowing ? "Following" : "Follow"}
               </Button>
-              <Button variant="outline" className="border-green-600 text-green-600 hover:bg-green-50">
+              <Button
+                variant="outline"
+                className="border-primary text-primary hover:bg-green-50"
+              >
                 <MessageSquare className="h-4 w-4 mr-2" />
                 Message
               </Button>
@@ -293,26 +307,26 @@ export default function UserProfilePage({ params }: { params: { userId: string }
             {/* Left Sidebar */}
             <div className="space-y-6">
               {/* About */}
-              <Card className="border-green-100 shadow-sm">
+              <Card className="border-border shadow-sm">
                 <CardHeader className="pb-2">
                   <CardTitle className="text-primary text-lg">About</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-primary/80">{userData.bio}</p>
                   <div className="mt-4 space-y-3">
-                    <div className="flex items-center gap-2 text-green-600 text-sm">
+                    <div className="flex items-center gap-2 text-primary text-sm">
                       <Calendar className="h-4 w-4" />
                       <span>Joined {formatDate(userData.joinedDate)}</span>
                     </div>
-                    <div className="flex items-center gap-2 text-green-600 text-sm">
+                    <div className="flex items-center gap-2 text-primary text-sm">
                       <Mail className="h-4 w-4" />
                       <span>{userData.email}</span>
                     </div>
-                    <div className="flex items-center gap-2 text-green-600 text-sm">
+                    <div className="flex items-center gap-2 text-primary text-sm">
                       <Phone className="h-4 w-4" />
                       <span>{userData.phone}</span>
                     </div>
-                    <div className="flex items-center gap-2 text-green-600 text-sm">
+                    <div className="flex items-center gap-2 text-primary text-sm">
                       <LinkIcon className="h-4 w-4" />
                       <a
                         href={`https://${userData.website}`}
@@ -329,17 +343,22 @@ export default function UserProfilePage({ params }: { params: { userId: string }
               </Card>
 
               {/* Photos */}
-              <Card className="border-green-100 shadow-sm">
+              <Card className="border-border shadow-sm">
                 <CardHeader className="pb-2 flex flex-row items-center justify-between">
                   <CardTitle className="text-primary text-lg">Photos</CardTitle>
-                  <Button variant="link" className="text-green-600 p-0" asChild>
-                    <Link href={`/community/profile/${userData.id}/photos`}>See All</Link>
+                  <Button variant="link" className="text-primary p-0" asChild>
+                    <Link href={`/community/profile/${userData.id}/photos`}>
+                      See All
+                    </Link>
                   </Button>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-3 gap-2">
                     {userPhotos.slice(0, 9).map((photo, index) => (
-                      <div key={index} className="aspect-square bg-green-100 rounded-md overflow-hidden">
+                      <div
+                        key={index}
+                        className="aspect-square bg-secondary/60 rounded-md overflow-hidden"
+                      >
                         <img
                           src={photo || "/placeholder.svg"}
                           alt={`Photo ${index + 1}`}
@@ -352,11 +371,15 @@ export default function UserProfilePage({ params }: { params: { userId: string }
               </Card>
 
               {/* Followers */}
-              <Card className="border-green-100 shadow-sm">
+              <Card className="border-border shadow-sm">
                 <CardHeader className="pb-2 flex flex-row items-center justify-between">
-                  <CardTitle className="text-primary text-lg">Followers</CardTitle>
-                  <Button variant="link" className="text-green-600 p-0" asChild>
-                    <Link href={`/community/profile/${userData.id}/followers`}>See All</Link>
+                  <CardTitle className="text-primary text-lg">
+                    Followers
+                  </CardTitle>
+                  <Button variant="link" className="text-primary p-0" asChild>
+                    <Link href={`/community/profile/${userData.id}/followers`}>
+                      See All
+                    </Link>
                   </Button>
                 </CardHeader>
                 <CardContent>
@@ -368,8 +391,11 @@ export default function UserProfilePage({ params }: { params: { userId: string }
                         className="flex items-center gap-3"
                       >
                         <Avatar className="h-10 w-10">
-                          <AvatarImage src={follower.avatar || "/placeholder.svg"} alt={follower.name} />
-                          <AvatarFallback className="bg-green-200 text-primary/80">
+                          <AvatarImage
+                            src={follower.avatar || "/placeholder.svg"}
+                            alt={follower.name}
+                          />
+                          <AvatarFallback className="bg-secondary/60 text-primary/80">
                             {follower.name
                               .split(" ")
                               .map((n) => n[0])
@@ -377,15 +403,20 @@ export default function UserProfilePage({ params }: { params: { userId: string }
                           </AvatarFallback>
                         </Avatar>
                         <div>
-                          <p className="font-medium text-primary">{follower.name}</p>
-                          <p className="text-xs text-green-600">{follower.occupation}</p>
+                          <p className="font-medium text-primary">
+                            {follower.name}
+                          </p>
+                          <p className="text-xs text-primary">
+                            {follower.occupation}
+                          </p>
                         </div>
                       </Link>
                     ))}
                   </div>
-                  <div className="mt-4 text-center text-sm text-green-600">
+                  <div className="mt-4 text-center text-sm text-primary">
                     <span>
-                      {userData.followers} followers • {userData.following} following
+                      {userData.followers} followers • {userData.following}{" "}
+                      following
                     </span>
                   </div>
                 </CardContent>
@@ -395,28 +426,28 @@ export default function UserProfilePage({ params }: { params: { userId: string }
             {/* Main Content */}
             <div className="md:col-span-2 space-y-6">
               <Tabs defaultValue="posts" className="w-full">
-                <TabsList className="bg-green-100 w-full">
+                <TabsList className="bg-secondary/60 w-full">
                   <TabsTrigger
                     value="posts"
-                    className="flex-1 data-[state=active]:bg-white data-[state=active]:text-primary"
+                    className="flex-1 data-[state=active]:bg-white data-[state=active]:text-primary text-gray-500"
                   >
                     Posts
                   </TabsTrigger>
                   <TabsTrigger
                     value="about"
-                    className="flex-1 data-[state=active]:bg-white data-[state=active]:text-primary"
+                    className="flex-1 data-[state=active]:bg-white data-[state=active]:text-primary text-gray-500"
                   >
                     About
                   </TabsTrigger>
                   <TabsTrigger
                     value="photos"
-                    className="flex-1 data-[state=active]:bg-white data-[state=active]:text-primary"
+                    className="flex-1 data-[state=active]:bg-white data-[state=active]:text-primary text-gray-500"
                   >
                     Photos
                   </TabsTrigger>
                   <TabsTrigger
                     value="followers"
-                    className="flex-1 data-[state=active]:bg-white data-[state=active]:text-primary"
+                    className="flex-1 data-[state=active]:bg-white data-[state=active]:text-primary text-gray-500"
                   >
                     Followers
                   </TabsTrigger>
@@ -434,22 +465,26 @@ export default function UserProfilePage({ params }: { params: { userId: string }
                 </TabsContent>
 
                 <TabsContent value="about" className="mt-6">
-                  <Card className="border-green-100 shadow-sm">
+                  <Card className="border-border shadow-sm">
                     <CardContent className="p-6">
-                      <h3 className="font-medium text-primary mb-3">Biography</h3>
+                      <h3 className="font-medium text-primary mb-3">
+                        Biography
+                      </h3>
                       <p className="text-primary/80 mb-6">{userData.bio}</p>
 
-                      <h3 className="font-medium text-primary mb-3">Contact Information</h3>
+                      <h3 className="font-medium text-primary mb-3">
+                        Contact Information
+                      </h3>
                       <div className="space-y-3 mb-6">
-                        <div className="flex items-center gap-2 text-green-600">
+                        <div className="flex items-center gap-2 text-primary">
                           <Mail className="h-5 w-5" />
                           <span>{userData.email}</span>
                         </div>
-                        <div className="flex items-center gap-2 text-green-600">
+                        <div className="flex items-center gap-2 text-primary">
                           <Phone className="h-5 w-5" />
                           <span>{userData.phone}</span>
                         </div>
-                        <div className="flex items-center gap-2 text-green-600">
+                        <div className="flex items-center gap-2 text-primary">
                           <LinkIcon className="h-5 w-5" />
                           <a
                             href={`https://${userData.website}`}
@@ -463,13 +498,15 @@ export default function UserProfilePage({ params }: { params: { userId: string }
                         </div>
                       </div>
 
-                      <h3 className="font-medium text-primary mb-3">Basic Information</h3>
+                      <h3 className="font-medium text-primary mb-3">
+                        Basic Information
+                      </h3>
                       <div className="space-y-3">
-                        <div className="flex items-center gap-2 text-green-600">
+                        <div className="flex items-center gap-2 text-primary">
                           <MapPin className="h-5 w-5" />
                           <span>Lives in {userData.location}</span>
                         </div>
-                        <div className="flex items-center gap-2 text-green-600">
+                        <div className="flex items-center gap-2 text-primary">
                           <Calendar className="h-5 w-5" />
                           <span>Joined {formatDate(userData.joinedDate)}</span>
                         </div>
@@ -479,11 +516,14 @@ export default function UserProfilePage({ params }: { params: { userId: string }
                 </TabsContent>
 
                 <TabsContent value="photos" className="mt-6">
-                  <Card className="border-green-100 shadow-sm">
+                  <Card className="border-border shadow-sm">
                     <CardContent className="p-6">
                       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                         {userPhotos.map((photo, index) => (
-                          <div key={index} className="aspect-square bg-green-100 rounded-md overflow-hidden">
+                          <div
+                            key={index}
+                            className="aspect-square bg-secondary/60 rounded-md overflow-hidden"
+                          >
                             <img
                               src={photo || "/placeholder.svg"}
                               alt={`Photo ${index + 1}`}
@@ -497,15 +537,21 @@ export default function UserProfilePage({ params }: { params: { userId: string }
                 </TabsContent>
 
                 <TabsContent value="followers" className="mt-6">
-                  <Card className="border-green-100 shadow-sm">
+                  <Card className="border-border shadow-sm">
                     <CardContent className="p-6">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {followers.map((follower) => (
-                          <Link href={`/community/profile/${follower.id}`} key={follower.id}>
-                            <div className="flex items-center gap-3 p-3 border border-green-100 rounded-lg hover:bg-green-50">
+                          <Link
+                            href={`/community/profile/${follower.id}`}
+                            key={follower.id}
+                          >
+                            <div className="flex items-center gap-3 p-3 border border-border rounded-lg hover:bg-green-50">
                               <Avatar className="h-12 w-12">
-                                <AvatarImage src={follower.avatar || "/placeholder.svg"} alt={follower.name} />
-                                <AvatarFallback className="bg-green-200 text-primary/80">
+                                <AvatarImage
+                                  src={follower.avatar || "/placeholder.svg"}
+                                  alt={follower.name}
+                                />
+                                <AvatarFallback className="bg-secondary/60 text-primary/80">
                                   {follower.name
                                     .split(" ")
                                     .map((n) => n[0])
@@ -513,8 +559,12 @@ export default function UserProfilePage({ params }: { params: { userId: string }
                                 </AvatarFallback>
                               </Avatar>
                               <div>
-                                <p className="font-medium text-primary">{follower.name}</p>
-                                <p className="text-sm text-green-600">{follower.occupation}</p>
+                                <p className="font-medium text-primary">
+                                  {follower.name}
+                                </p>
+                                <p className="text-sm text-primary">
+                                  {follower.occupation}
+                                </p>
                               </div>
                             </div>
                           </Link>
@@ -529,5 +579,5 @@ export default function UserProfilePage({ params }: { params: { userId: string }
         </div>
       </main>
     </div>
-  )
+  );
 }

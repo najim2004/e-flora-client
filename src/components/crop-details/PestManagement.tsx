@@ -20,7 +20,7 @@ const PestManagement: React.FC<PestManagementProps> = ({ crop }) => {
       <Accordion type="single" collapsible className="w-full">
         {crop.management.pestsManagement.map((pest: PestManagementType, index: number) => (
           <AccordionItem key={index} value={`pest-${index}`}>
-            <AccordionTrigger className="text-primary hover:text-green-600">
+            <AccordionTrigger className="text-primary hover:text-primary">
               {pest.name}
             </AccordionTrigger>
             <AccordionContent className="text-primary/80">

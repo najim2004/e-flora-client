@@ -102,12 +102,12 @@ export default function ConversationPage({ params }: { params: { conversationId:
       
 
       <main className="flex-1 container mx-auto px-4 py-8">
-        <div className="bg-white rounded-lg shadow-sm border border-green-100 overflow-hidden h-[calc(100vh-12rem)]">
+        <div className="bg-white rounded-lg shadow-sm border border-border overflow-hidden h-[calc(100vh-12rem)]">
           <div className="flex flex-col h-full">
             {/* Conversation Header */}
-            <div className="p-4 border-b border-green-100 flex justify-between items-center">
+            <div className="p-4 border-b border-border flex justify-between items-center">
               <div className="flex items-center gap-3">
-                <Link href="/community/messages" className="text-primary/80 hover:text-green-600">
+                <Link href="/community/messages" className="text-primary/80 hover:text-primary">
                   <ArrowLeft className="h-5 w-5" />
                 </Link>
                 <Avatar>
@@ -130,19 +130,19 @@ export default function ConversationPage({ params }: { params: { conversationId:
                     >
                       {conversationData.user.name}
                     </Link>
-                    {conversationData.user.online && <span className="text-xs text-green-600">Online</span>}
+                    {conversationData.user.online && <span className="text-xs text-primary">Online</span>}
                   </div>
-                  <p className="text-xs text-green-600">{conversationData.user.occupation}</p>
+                  <p className="text-xs text-primary">{conversationData.user.occupation}</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-green-100">
+                <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-secondary/60">
                   <Phone className="h-5 w-5" />
                 </Button>
-                <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-green-100">
+                <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-secondary/60">
                   <Video className="h-5 w-5" />
                 </Button>
-                <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-green-100">
+                <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-secondary/60">
                   <Info className="h-5 w-5" />
                 </Button>
               </div>
@@ -172,13 +172,13 @@ export default function ConversationPage({ params }: { params: { conversationId:
                     )}
                     <div
                       className={`max-w-[70%] rounded-lg px-4 py-2 ${
-                        message.sender === "user1" ? "bg-green-600 text-white" : "bg-green-100 text-primary"
+                        message.sender === "user1" ? "bg-primary text-white" : "bg-secondary/60 text-primary"
                       }`}
                     >
                       <p className="text-sm">{message.content}</p>
                       <p
                         className={`text-xs mt-1 text-right ${
-                          message.sender === "user1" ? "text-green-100" : "text-green-600"
+                          message.sender === "user1" ? "text-green-100" : "text-primary"
                         }`}
                       >
                         {formatTime(message.timestamp)}
@@ -190,17 +190,17 @@ export default function ConversationPage({ params }: { params: { conversationId:
             </ScrollArea>
 
             {/* Message Input */}
-            <div className="p-4 border-t border-green-100">
+            <div className="p-4 border-t border-border">
               <div className="flex items-center gap-2">
-                <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-green-100">
+                <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-secondary/60">
                   <Paperclip className="h-5 w-5" />
                 </Button>
-                <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-green-100">
+                <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-secondary/60">
                   <ImageIcon className="h-5 w-5" />
                 </Button>
                 <Input
                   placeholder="Type a message..."
-                  className="border-green-200 focus:border-green-500 focus:ring-green-500"
+                  className="border-border focus:border-primary/80 focus:ring-primary/80"
                   value={newMessage}
                   onChange={(e) => setNewMessage(e.target.value)}
                   onKeyDown={(e) => {
@@ -210,12 +210,12 @@ export default function ConversationPage({ params }: { params: { conversationId:
                     }
                   }}
                 />
-                <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-green-100">
+                <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-secondary/60">
                   <Smile className="h-5 w-5" />
                 </Button>
                 <Button
                   size="icon"
-                  className="bg-green-600 hover:bg-primary/80"
+                  className="bg-primary hover:bg-primary/80"
                   onClick={handleSendMessage}
                   disabled={!newMessage.trim()}
                 >

@@ -35,7 +35,7 @@ export const FAQSection = () => {
     <section className="py-20 bg-[#F5F7FA]">
       <div className="container px-4 mx-auto max-w-7xl">
         <div className="max-w-3xl mx-auto mb-16 text-center">
-          <Badge className="mb-4 bg-[#E8F5E9] text-[#2E7D32] hover:bg-[#E8F5E9]/90 cursor-pointer whitespace-nowrap">
+          <Badge className="mb-4 bg-[#E8F5E9] text-primary/80 hover:bg-[#E8F5E9]/90 cursor-pointer whitespace-nowrap">
             FAQ
           </Badge>
           <h2 className="mb-4 text-3xl font-bold text-gray-900 md:text-4xl">
@@ -55,7 +55,7 @@ export const FAQSection = () => {
                   <h3 className="text-xl font-medium text-gray-900">
                     {item.question}
                   </h3>
-                  <span className="flex items-center justify-center w-8 h-8 ml-2 text-[#2E7D32] bg-[#E8F5E9] rounded-full group-open:rotate-180 transition-transform">
+                  <span className="flex items-center justify-center w-8 h-8 ml-2 text-primary/80 bg-[#E8F5E9] rounded-full group-open:rotate-180 transition-transform">
                     <ChevronDown className="w-5 h-5" />
                   </span>
                 </summary>

@@ -62,7 +62,7 @@ export const FeaturesSection = (): JSX.Element => {
     <section className="py-20 bg-white">
       <div className="container px-4 mx-auto max-w-7xl">
         <div className="max-w-3xl mx-auto mb-16 text-center">
-          <Badge className="mb-4 bg-[#E8F5E9] text-[#2E7D32] hover:bg-[#E8F5E9]/90 cursor-pointer whitespace-nowrap">
+          <Badge className="mb-4 bg-[#E8F5E9] text-primary/80 hover:bg-[#E8F5E9]/90 cursor-pointer whitespace-nowrap">
             Our Features
           </Badge>
           <h2 className="mb-4 text-3xl font-bold text-gray-900 md:text-4xl">
@@ -91,7 +91,7 @@ export const FeaturesSection = (): JSX.Element => {
                 />
               </div>
               <CardHeader>
-                <CardTitle className="text-xl text-[#2E7D32] flex items-center">
+                <CardTitle className="text-xl text-primary/80 flex items-center">
                   <FontAwesomeIcon
                     icon={feature.icon}
                     className="mr-2"
@@ -106,7 +106,7 @@ export const FeaturesSection = (): JSX.Element => {
               <CardFooter>
                 <Button
                   variant="outline"
-                  className="w-full border-[#2E7D32] text-[#2E7D32] hover:bg-[#E8F5E9] cursor-pointer !rounded-button whitespace-nowrap"
+                  className="w-full border-primary/80 text-primary/80 hover:bg-[#E8F5E9] cursor-pointer !rounded-button whitespace-nowrap"
                 >
                   <Link href={feature.href || "/"} className="size-fit">
                     Try Now

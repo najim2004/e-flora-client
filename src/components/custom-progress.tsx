@@ -35,7 +35,7 @@ const ProgressDisplay = ({
   };
 
   return (
-    <div className="w-full space-y-4 rounded-lg border border-green-100 bg-white p-4">
+    <div className="w-full space-y-4 rounded-lg border border-border bg-white p-4">
       <div className="flex items-center justify-between">
         <Badge className={`${getStatusColor(status)} capitalize`}>
           {status}
@@ -48,7 +48,7 @@ const ProgressDisplay = ({
       <div className="space-y-2">
         <div className="flex justify-between text-sm">
           <span className="text-primary/80 font-medium">Progress</span>
-          <span className="text-green-600">{progress}%</span>
+          <span className="text-primary">{progress}%</span>
         </div>
         <Progress
           value={progress}
@@ -56,7 +56,7 @@ const ProgressDisplay = ({
         />
       </div>
 
-      {message && <p className="text-sm text-green-600 mt-2">{message}</p>}
+      {message && <p className="text-sm text-primary mt-2">{message}</p>}
     </div>
   );
 };

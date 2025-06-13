@@ -8,7 +8,7 @@ import { FC } from "react";
 export const HeroSection: FC = () => {
   return (
     <section className="relative">
-      <div className="absolute inset-0 bg-gradient-to-r from-[#2E7D32]/90 to-transparent z-10" />
+      <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-transparent z-10" />
       <div className="relative w-full h-[600px]">
         <Image
           src="/hero.jpg"

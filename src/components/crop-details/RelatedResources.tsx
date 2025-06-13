@@ -20,7 +20,7 @@ interface RelatedResourcesProps {
 
 const RelatedResources: React.FC<RelatedResourcesProps> = ({ crop }) => {
   return (
-    <Card className="border-green-100 shadow-sm mt-8">
+    <Card className="border-border shadow-sm mt-8">
       <CardHeader>
         <CardTitle className="text-primary">Related Resources</CardTitle>
         <CardDescription className="text-primary/80">
@@ -29,7 +29,7 @@ const RelatedResources: React.FC<RelatedResourcesProps> = ({ crop }) => {
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card className="border-green-100">
+          <Card className="border-border">
             <CardContent className="p-4">
               <div className="flex items-center mb-3">
                 <AlertTriangle className="h-5 w-5 text-amber-500 mr-2" />
@@ -41,16 +41,16 @@ const RelatedResources: React.FC<RelatedResourcesProps> = ({ crop }) => {
                 Learn about common problems faced during {crop.name} cultivation
                 and how to address them.
               </p>
-              <Button variant="link" className="text-green-600 p-0">
+              <Button variant="link" className="text-primary p-0">
                 View Problems & Solutions
               </Button>
             </CardContent>
           </Card>
 
-          <Card className="border-green-100">
+          <Card className="border-border">
             <CardContent className="p-4">
               <div className="flex items-center mb-3">
-                <TrendingUp className="h-5 w-5 text-green-600 mr-2" />
+                <TrendingUp className="h-5 w-5 text-primary mr-2" />
                 <h3 className="font-medium text-primary">
                   Success Stories
                 </h3>
@@ -59,16 +59,16 @@ const RelatedResources: React.FC<RelatedResourcesProps> = ({ crop }) => {
                 Read success stories from farmers who have achieved high yields
                 with {crop.name}.
               </p>
-              <Button variant="link" className="text-green-600 p-0">
+              <Button variant="link" className="text-primary p-0">
                 Read Success Stories
               </Button>
             </CardContent>
           </Card>
 
-          <Card className="border-green-100">
+          <Card className="border-border">
             <CardContent className="p-4">
               <div className="flex items-center mb-3">
-                <Scissors className="h-5 w-5 text-green-600 mr-2" />
+                <Scissors className="h-5 w-5 text-primary mr-2" />
                 <h3 className="font-medium text-primary">
                   Variety Selection
                 </h3>
@@ -77,7 +77,7 @@ const RelatedResources: React.FC<RelatedResourcesProps> = ({ crop }) => {
                 Compare different varieties of {crop.name} and choose the best
                 one for your conditions.
               </p>
-              <Button variant="link" className="text-green-600 p-0">
+              <Button variant="link" className="text-primary p-0">
                 Compare Varieties
               </Button>
             </CardContent>

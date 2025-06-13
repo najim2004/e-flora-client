@@ -214,22 +214,22 @@ export default function MessagesPage() {
       
 
       <main className="flex-1 container mx-auto px-4 py-8">
-        <div className="bg-white rounded-lg shadow-sm border border-green-100 overflow-hidden h-[calc(100vh-12rem)]">
+        <div className="bg-white rounded-lg shadow-sm border border-border overflow-hidden h-[calc(100vh-12rem)]">
           <div className="flex h-full">
             {/* Conversations List */}
-            <div className="w-full md:w-1/3 border-r border-green-100 flex flex-col">
-              <div className="p-4 border-b border-green-100">
+            <div className="w-full md:w-1/3 border-r border-border flex flex-col">
+              <div className="p-4 border-b border-border">
                 <div className="flex justify-between items-center mb-4">
                   <h2 className="text-xl font-bold text-primary">Messages</h2>
-                  <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-green-100">
+                  <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-secondary/60">
                     <Edit className="h-5 w-5" />
                   </Button>
                 </div>
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-green-500" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-primary/80" />
                   <Input
                     placeholder="Search messages..."
-                    className="pl-9 border-green-200 focus:border-green-500 focus:ring-green-500"
+                    className="pl-9 border-border focus:border-primary/80 focus:ring-primary/80"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                   />
@@ -242,7 +242,7 @@ export default function MessagesPage() {
                     <button
                       key={conversation.id}
                       className={`w-full text-left p-3 rounded-lg mb-1 flex items-start gap-3 ${
-                        selectedConversation.id === conversation.id ? "bg-green-100" : "hover:bg-green-50"
+                        selectedConversation.id === conversation.id ? "bg-secondary/60" : "hover:bg-green-50"
                       }`}
                       onClick={() => setSelectedConversation(conversation)}
                     >
@@ -260,13 +260,13 @@ export default function MessagesPage() {
                           </AvatarFallback>
                         </Avatar>
                         {conversation.user.online && (
-                          <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></span>
+                          <span className="absolute bottom-0 right-0 w-3 h-3 bg-primary/80 border-2 border-white rounded-full"></span>
                         )}
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex justify-between items-center">
                           <h3 className="font-medium text-primary truncate">{conversation.user.name}</h3>
-                          <span className="text-xs text-green-600">
+                          <span className="text-xs text-primary">
                             {formatDate(conversation.lastMessage.timestamp) === "Today"
                               ? formatTime(conversation.lastMessage.timestamp)
                               : formatDate(conversation.lastMessage.timestamp)}
@@ -274,16 +274,16 @@ export default function MessagesPage() {
                         </div>
                         <p
                           className={`text-sm truncate ${
-                            conversation.unreadCount > 0 ? "font-medium text-primary" : "text-green-600"
+                            conversation.unreadCount > 0 ? "font-medium text-primary" : "text-primary"
                           }`}
                         >
                           {conversation.lastMessage.sender === "user1" ? "You: " : ""}
                           {conversation.lastMessage.content}
                         </p>
                         <div className="flex justify-between items-center mt-1">
-                          <span className="text-xs text-green-600">{conversation.user.occupation}</span>
+                          <span className="text-xs text-primary">{conversation.user.occupation}</span>
                           {conversation.unreadCount > 0 && (
-                            <Badge className="bg-green-600">{conversation.unreadCount}</Badge>
+                            <Badge className="bg-primary">{conversation.unreadCount}</Badge>
                           )}
                         </div>
                       </div>
@@ -298,7 +298,7 @@ export default function MessagesPage() {
               {selectedConversation ? (
                 <>
                   {/* Conversation Header */}
-                  <div className="p-4 border-b border-green-100 flex justify-between items-center">
+                  <div className="p-4 border-b border-border flex justify-between items-center">
                     <div className="flex items-center gap-3">
                       <Avatar>
                         <AvatarImage
@@ -320,19 +320,19 @@ export default function MessagesPage() {
                           >
                             {selectedConversation.user.name}
                           </Link>
-                          {selectedConversation.user.online && <span className="text-xs text-green-600">Online</span>}
+                          {selectedConversation.user.online && <span className="text-xs text-primary">Online</span>}
                         </div>
-                        <p className="text-xs text-green-600">{selectedConversation.user.occupation}</p>
+                        <p className="text-xs text-primary">{selectedConversation.user.occupation}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-green-100">
+                      <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-secondary/60">
                         <Phone className="h-5 w-5" />
                       </Button>
-                      <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-green-100">
+                      <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-secondary/60">
                         <Video className="h-5 w-5" />
                       </Button>
-                      <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-green-100">
+                      <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-secondary/60">
                         <Info className="h-5 w-5" />
                       </Button>
                     </div>
@@ -362,13 +362,13 @@ export default function MessagesPage() {
                           )}
                           <div
                             className={`max-w-[70%] rounded-lg px-4 py-2 ${
-                              message.sender === "user1" ? "bg-green-600 text-white" : "bg-green-100 text-primary"
+                              message.sender === "user1" ? "bg-primary text-white" : "bg-secondary/60 text-primary"
                             }`}
                           >
                             <p className="text-sm">{message.content}</p>
                             <p
                               className={`text-xs mt-1 text-right ${
-                                message.sender === "user1" ? "text-green-100" : "text-green-600"
+                                message.sender === "user1" ? "text-green-100" : "text-primary"
                               }`}
                             >
                               {formatTime(message.timestamp)}
@@ -380,17 +380,17 @@ export default function MessagesPage() {
                   </ScrollArea>
 
                   {/* Message Input */}
-                  <div className="p-4 border-t border-green-100">
+                  <div className="p-4 border-t border-border">
                     <div className="flex items-center gap-2">
-                      <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-green-100">
+                      <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-secondary/60">
                         <Paperclip className="h-5 w-5" />
                       </Button>
-                      <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-green-100">
+                      <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-secondary/60">
                         <ImageIcon className="h-5 w-5" /> {/* Updated Image to ImageIcon */}
                       </Button>
                       <Input
                         placeholder="Type a message..."
-                        className="border-green-200 focus:border-green-500 focus:ring-green-500"
+                        className="border-border focus:border-primary/80 focus:ring-primary/80"
                         value={newMessage}
                         onChange={(e) => setNewMessage(e.target.value)}
                         onKeyDown={(e) => {
@@ -400,12 +400,12 @@ export default function MessagesPage() {
                           }
                         }}
                       />
-                      <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-green-100">
+                      <Button size="icon" variant="ghost" className="text-primary/80 hover:bg-secondary/60">
                         <Smile className="h-5 w-5" />
                       </Button>
                       <Button
                         size="icon"
-                        className="bg-green-600 hover:bg-primary/80"
+                        className="bg-primary hover:bg-primary/80"
                         onClick={handleSendMessage}
                         disabled={!newMessage.trim()}
                       >
@@ -417,9 +417,9 @@ export default function MessagesPage() {
               ) : (
                 <div className="flex-1 flex items-center justify-center">
                   <div className="text-center">
-                    <MessageSquare className="h-12 w-12 text-green-500 mx-auto mb-4" /> {/* Used MessageSquare */}
+                    <MessageSquare className="h-12 w-12 text-primary/80 mx-auto mb-4" /> {/* Used MessageSquare */}
                     <h3 className="text-lg font-medium text-primary mb-2">No conversation selected</h3>
-                    <p className="text-green-600">Select a conversation from the list to start messaging</p>
+                    <p className="text-primary">Select a conversation from the list to start messaging</p>
                   </div>
                 </div>
               )}

@@ -9,7 +9,7 @@ function DiseaseDetectionDemo() {
       <div className="container px-4 mx-auto max-w-7xl">
         <div className="grid items-center gap-12 md:grid-cols-2">
           <div>
-            <Badge className="mb-4 bg-[#E8F5E9] text-[#2E7D32] hover:bg-[#E8F5E9]/90 cursor-pointer whitespace-nowrap">
+            <Badge className="mb-4 bg-[#E8F5E9] text-primary/80 hover:bg-[#E8F5E9]/90 cursor-pointer whitespace-nowrap">
               Disease Detection
             </Badge>
             <h2 className="mb-6 text-3xl font-bold text-gray-900 md:text-4xl">
@@ -27,12 +27,12 @@ function DiseaseDetectionDemo() {
                 "Works offline for remote areas",
               ].map((item, index) => (
                 <li key={index} className="flex items-center">
-                  <i className="mr-3 text-[#2E7D32] fas fa-check-circle"></i>
+                  <i className="mr-3 text-primary/80 fas fa-check-circle"></i>
                   <span className="text-gray-700">{item}</span>
                 </li>
               ))}
             </ul>
-            <Button className="bg-[#2E7D32] hover:bg-[#1B5E20] text-white cursor-pointer !rounded-button whitespace-nowrap">
+            <Button className="bg-primary/80 hover:bg-primary text-white cursor-pointer !rounded-button whitespace-nowrap">
               Try Disease Detection
               <i className="ml-2 fas fa-arrow-right"></i>
             </Button>

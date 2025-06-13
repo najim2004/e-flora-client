@@ -19,7 +19,7 @@ function ChatbotPreview() {
             />
           </div>
           <div className="order-1 md:order-2">
-            <Badge className="mb-4 bg-[#E8F5E9] text-[#2E7D32] hover:bg-[#E8F5E9]/90 cursor-pointer whitespace-nowrap">
+            <Badge className="mb-4 bg-[#E8F5E9] text-primary/80 hover:bg-[#E8F5E9]/90 cursor-pointer whitespace-nowrap">
               AI Chatbot
             </Badge>
             <h2 className="mb-6 text-3xl font-bold text-gray-900 md:text-4xl">
@@ -38,12 +38,12 @@ function ChatbotPreview() {
                 "Connects to human experts when needed",
               ].map((item, index) => (
                 <li key={index} className="flex items-center">
-                  <CheckCircle2 className="w-5 h-5 mr-3 text-[#2E7D32]" />
+                  <CheckCircle2 className="w-5 h-5 mr-3 text-primary/80" />
                   <span className="text-gray-700">{item}</span>
                 </li>
               ))}
             </ul>
-            <Button className="bg-[#2E7D32] hover:bg-[#1B5E20] text-white cursor-pointer !rounded-button whitespace-nowrap">
+            <Button className="bg-primary/80 hover:bg-primary text-white cursor-pointer !rounded-button whitespace-nowrap">
               Try the Chatbot
               <MessageCircle className="w-5 h-5 ml-2" />
             </Button>

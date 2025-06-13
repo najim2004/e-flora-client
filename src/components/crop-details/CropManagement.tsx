@@ -18,7 +18,7 @@ interface CropManagementProps {
 
 const CropManagement: React.FC<CropManagementProps> = ({ crop }) => {
   return (
-    <Card className="border-green-100 shadow-sm">
+    <Card className="border-border shadow-sm">
       <CardHeader>
         <CardTitle className="text-primary">
           Crop Management

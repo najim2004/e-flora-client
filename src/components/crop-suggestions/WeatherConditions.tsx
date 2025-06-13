@@ -24,7 +24,7 @@ export default function WeatherConditions({ weatherData }: WeatherConditionsProp
       </h3>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="flex items-center">
-          <Thermometer className="h-5 w-5 text-primary/70 mr-2" />
+          <Thermometer className="h-5 w-5 text-primary/80 mr-2" />
           <div>
             <p className="text-sm text-primary/80">Temperature</p>
             <p className="font-medium text-primary">
@@ -33,7 +33,7 @@ export default function WeatherConditions({ weatherData }: WeatherConditionsProp
           </div>
         </div>
         <div className="flex items-center">
-          <Droplets className="h-5 w-5 text-primary/70 mr-2" />
+          <Droplets className="h-5 w-5 text-primary/80 mr-2" />
           <div>
             <p className="text-sm text-primary/80">Humidity</p>
             <p className="font-medium text-primary">
@@ -42,7 +42,7 @@ export default function WeatherConditions({ weatherData }: WeatherConditionsProp
           </div>
         </div>
         <div className="flex items-center">
-          <Cloud className="h-5 w-5 text-primary/70 mr-2" />
+          <Cloud className="h-5 w-5 text-primary/80 mr-2" />
           <div>
             <p className="text-sm text-primary/80">Rainfall</p>
             <p className="font-medium text-primary">
@@ -51,7 +51,7 @@ export default function WeatherConditions({ weatherData }: WeatherConditionsProp
           </div>
         </div>
         <div className="flex items-center">
-          <GiWindsock className="h-5 w-5 text-primary/70 mr-2" />
+          <GiWindsock className="h-5 w-5 text-primary/80 mr-2" />
           <div>
             <p className="text-sm text-primary/80">Wind Direction</p>
             <p className="font-medium text-primary">

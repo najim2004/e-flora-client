@@ -34,6 +34,8 @@ import {
   insertCropSuggestion,
   updateCropDetails,
 } from "@/redux/features/cropSuggestions/cropSuggestionSlice";
+import { Button } from "@/components/ui/button";
+import { History, Plus } from "lucide-react";
 
 export default function CropSuggestionsPage() {
   const isAuthenticated = useSelector(
@@ -168,9 +170,7 @@ export default function CropSuggestionsPage() {
         <div className="grid md:grid-cols-3 gap-8 md:relative">
           <Card className="shadow-sm md:col-span-1 h-min md:sticky md:top-24.5">
             <CardHeader>
-              <CardTitle className="text-primary">
-                Enter Your Details
-              </CardTitle>
+              <CardTitle className="text-primary">Enter Your Details</CardTitle>
               <CardDescription className="text-primary/80">
                 Provide your farm&#39;s location, soil and irrigation info
               </CardDescription>
@@ -206,37 +206,77 @@ export default function CropSuggestionsPage() {
               <CropSuggestionProgressComponent progress={progress} />
             ) : (
               <>
-                <CardHeader>
-                  <CardTitle className="text-primary">
-                    Crop Recommendations
-                  </CardTitle>
-                  <CardDescription className="text-primary/80">
-                    Based on your farm&#39;s location and soil conditions and
-                    weather
-                  </CardDescription>
+                <CardHeader className="flex justify-between">
+                  <div className="flex-grow">
+                    {cropSuggestionData && (
+                      <>
+                        <CardTitle className="text-primary">
+                          Crop Recommendations
+                        </CardTitle>
+                        <CardDescription className="text-primary/80">
+                          Based on your farm&#39;s location and soil conditions
+                          and weather
+                        </CardDescription>
+                      </>
+                    )}
+                  </div>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="text-primary border-none !p-0 shadow-none hover:bg-transparent"
+                    >
+                      <History />
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="text-primary border-none !p-0 shadow-none hover:bg-transparent"
+                    >
+                      <Plus />
+                    </Button>
+                  </div>
                 </CardHeader>
                 <CardContent>
-                  <WeatherConditions
-                    weatherData={
-                      cropSuggestionData?.recommendations?.weathers?.[0] ?? {
-                        avgMaxTemp: 0,
-                        avgMinTemp: 0,
-                        avgHumidity: 0,
-                        avgRainfall: 0,
-                        avgWindSpeed: 0,
-                        dominantWindDirection: "",
-                      }
-                    }
-                  />
-                  <CropRecommendations
-                    cropData={cropSuggestionData?.recommendations?.crops ?? []}
-                  />
-                  <CultivationTips
-                    cultivationTips={
-                      cropSuggestionData?.recommendations?.cultivationTips ?? []
-                    }
-                  />
+                  {cropSuggestionData && (
+                    <>
+                      <WeatherConditions
+                        weatherData={
+                          cropSuggestionData?.recommendations
+                            ?.weathers?.[0] ?? {
+                            avgMaxTemp: 0,
+                            avgMinTemp: 0,
+                            avgHumidity: 0,
+                            avgRainfall: 0,
+                            avgWindSpeed: 0,
+                            dominantWindDirection: "",
+                          }
+                        }
+                      />
+                      <CropRecommendations
+                        cropData={
+                          cropSuggestionData?.recommendations?.crops ?? []
+                        }
+                      />
+                      <CultivationTips
+                        cultivationTips={
+                          cropSuggestionData?.recommendations
+                            ?.cultivationTips ?? []
+                        }
+                      />
+                    </>
+                  )}
                 </CardContent>
+                {
+                  !cropSuggestionData&& (
+                    <div className="size-full md:-mt-20 mb-16 space-y-3 flex flex-col justify-center items-center text-center">
+                      <CardTitle className="text-primary">Full fill the form!</CardTitle>
+                      <CardDescription className="text-primary/80">
+                        To continue you should full fill the for with original
+                        information!
+                      </CardDescription>
+                    </div>)
+                }
               </>
             )}
           </Card>

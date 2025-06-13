@@ -18,14 +18,14 @@ export default function CropSuggestionProgressComponent({
   return (
     <div>
       {progress ? (
-        <Card className="border-green-100 shadow-sm">
+        <Card className="border-border shadow-sm">
           <CardContent className="p-4">
             <div className="mb-4">
               <p className="text-sm font-medium text-primary/80">
                 {progress.message || "Processing..."}
               </p>
               <Progress value={progress.progress} className="h-2 bg-green-200 text-primary/80" />
-              <p className="text-xs text-green-500 mt-1">
+              <p className="text-xs text-primary/80 mt-1">
                 {progress.progress}% Completed
               </p>
             </div>

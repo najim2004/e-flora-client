@@ -58,7 +58,7 @@ export const CropSuggestionsSection = ({
     <section className="py-12 bg-[#F5F7FA]">
       <div className="container px-4 mx-auto max-w-7xl">
         <div className="max-w-3xl mx-auto mb-12 text-center">
-          <Badge className="mb-4 bg-[#E8F5E9] text-[#2E7D32] hover:bg-[#E8F5E9]/90 cursor-pointer whitespace-nowrap">
+          <Badge className="mb-4 bg-[#E8F5E9] text-primary/80 hover:bg-[#E8F5E9]/90 cursor-pointer whitespace-nowrap">
             Smart Farming
           </Badge>
           <h2 className="mb-4 text-3xl font-bold text-gray-900 md:text-4xl">
@@ -74,7 +74,7 @@ export const CropSuggestionsSection = ({
         <div className="grid gap-8 mb-12 md:grid-cols-2">
           <Card className="p-6">
             <CardHeader>
-              <CardTitle className="text-xl text-[#2E7D32]">
+              <CardTitle className="text-xl text-primary/80">
                 Location Details
               </CardTitle>
               <CardDescription>Enter your location or use GPS</CardDescription>
@@ -91,7 +91,7 @@ export const CropSuggestionsSection = ({
                 <Button
                   onClick={onGetLocation}
                   disabled={isGpsLoading}
-                  className="bg-[#2E7D32] hover:bg-[#1B5E20] text-white cursor-pointer !rounded-button whitespace-nowrap"
+                  className="bg-primary/80 hover:bg-primary text-white cursor-pointer !rounded-button whitespace-nowrap"
                 >
                   {isGpsLoading ? (
                     <FontAwesomeIcon icon={faSpinner} spin />
@@ -104,7 +104,7 @@ export const CropSuggestionsSection = ({
                 <select
                   value={soilType}
                   onChange={(e) => onSoilTypeChange(e.target.value)}
-                  className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[#2E7D32] focus:border-transparent"
+                  className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary/80 focus:border-transparent"
                 >
                   <option value="">Select Soil Type</option>
                   {soilTypes.map((soil) => (
@@ -120,7 +120,7 @@ export const CropSuggestionsSection = ({
           {/* Weather Forecast */}
           <Card className="p-6">
             <CardHeader>
-              <CardTitle className="text-xl text-[#2E7D32]">
+              <CardTitle className="text-xl text-primary/80">
                 Weather Forecast
               </CardTitle>
               <CardDescription>
@@ -136,7 +136,7 @@ export const CropSuggestionsSection = ({
                     </p>
                     <FontAwesomeIcon
                       icon={getWeatherIcon(day.icon)}
-                      className="text-2xl text-[#2E7D32] my-2"
+                      className="text-2xl text-primary/80 my-2"
                     />
                     <p className="text-sm font-bold">{day.temp}</p>
                   </div>
@@ -146,7 +146,7 @@ export const CropSuggestionsSection = ({
                 <div className="text-center">
                   <FontAwesomeIcon
                     icon={faTemperatureHigh}
-                    className="mb-2 text-2xl text-[#2E7D32]"
+                    className="mb-2 text-2xl text-primary/80"
                   />
                   <p className="text-sm text-gray-600">Temperature</p>
                   <p className="font-bold">{weatherData.temperature}</p>
@@ -154,7 +154,7 @@ export const CropSuggestionsSection = ({
                 <div className="text-center">
                   <FontAwesomeIcon
                     icon={faDroplet}
-                    className="mb-2 text-2xl text-[#2E7D32]"
+                    className="mb-2 text-2xl text-primary/80"
                   />
                   <p className="text-sm text-gray-600">Humidity</p>
                   <p className="font-bold">{weatherData.humidity}</p>
@@ -162,7 +162,7 @@ export const CropSuggestionsSection = ({
                 <div className="text-center">
                   <FontAwesomeIcon
                     icon={faCloudRain}
-                    className="mb-2 text-2xl text-[#2E7D32]"
+                    className="mb-2 text-2xl text-primary/80"
                   />
                   <p className="text-sm text-gray-600">Rainfall</p>
                   <p className="font-bold">{weatherData.rainfall}</p>
@@ -191,10 +191,10 @@ export const CropSuggestionsSection = ({
                 </div>
                 <CardHeader>
                   <div className="flex items-center justify-between">
-                    <CardTitle className="text-xl text-[#2E7D32]">
+                    <CardTitle className="text-xl text-primary/80">
                       {crop.name}
                     </CardTitle>
-                    <Badge className="bg-[#E8F5E9] text-[#2E7D32]">
+                    <Badge className="bg-[#E8F5E9] text-primary/80">
                       {crop.confidence}% Match
                     </Badge>
                   </div>
@@ -222,7 +222,7 @@ export const CropSuggestionsSection = ({
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <Button className="w-full bg-[#2E7D32] hover:bg-[#1B5E20] text-white cursor-pointer !rounded-button whitespace-nowrap">
+                  <Button className="w-full bg-primary/80 hover:bg-primary text-white cursor-pointer !rounded-button whitespace-nowrap">
                     View Detailed Guide
                     <FontAwesomeIcon icon={faArrowRight} className="ml-2" />
                   </Button>

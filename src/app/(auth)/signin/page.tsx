@@ -73,7 +73,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-green-50 flex flex-col items-center justify-center p-4">
-      <Card className="w-full max-w-md border-green-100 shadow-md rounded-sm">
+      <Card className="w-full max-w-md border-border shadow-md rounded-sm">
         <CardHeader className="text-center">
           <CardTitle className="text-primary text-2xl">
             Welcome Back
@@ -87,14 +87,14 @@ export default function LoginPage() {
             <NavLink
               href="/signin"
               className="p-1.5 text-center text-gray-600 rounded-sm text-sm font-medium"
-              activeClass="bg-green-600 text-white"
+              activeClass="bg-primary text-white"
             >
               Sign In
             </NavLink>
             <NavLink
               href="/signup"
               className="p-1.5 text-center text-gray-600 rounded-sm text-sm font-medium"
-              activeClass="bg-green-600 text-white"
+              activeClass="bg-primary text-white"
             >
               Sign Up
             </NavLink>
@@ -111,7 +111,7 @@ export default function LoginPage() {
                     <FormControl>
                       <Input
                         placeholder="Enter your email"
-                        className="border-green-200 focus:border-green-500 focus:ring-green-500"
+                        className="border-border focus:border-primary/80 focus:ring-primary/80"
                         {...field}
                       />
                     </FormControl>
@@ -131,7 +131,7 @@ export default function LoginPage() {
                       </FormLabel>
                       <Link
                         href="/forgot-password"
-                        className="text-xs text-green-600 hover:text-primary/80"
+                        className="text-xs text-primary hover:text-primary/80"
                       >
                         Forgot Password?
                       </Link>
@@ -140,7 +140,7 @@ export default function LoginPage() {
                       <Input
                         type="password"
                         placeholder="Enter your password"
-                        className="border-green-200 focus:border-green-500 focus:ring-green-500"
+                        className="border-border focus:border-primary/80 focus:ring-primary/80"
                         {...field}
                       />
                     </FormControl>
@@ -151,7 +151,7 @@ export default function LoginPage() {
 
               <Button
                 type="submit"
-                className="w-full bg-green-600 hover:bg-primary/80"
+                className="w-full bg-primary hover:bg-primary/80"
               >
                 Sign In
               </Button>
@@ -162,10 +162,10 @@ export default function LoginPage() {
           <div className="mt-6">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-green-200"></div>
+                <div className="w-full border-t border-border"></div>
               </div>
               <div className="relative flex justify-center text-xs">
-                <span className="px-2 bg-white text-green-600">
+                <span className="px-2 bg-white text-primary">
                   Or continue with
                 </span>
               </div>
@@ -174,13 +174,13 @@ export default function LoginPage() {
             <div className="mt-4 grid grid-cols-2 gap-3">
               <Button
                 variant="outline"
-                className="border-green-200 hover:bg-green-50"
+                className="border-border hover:bg-green-50"
               >
                 Google
               </Button>
               <Button
                 variant="outline"
-                className="border-green-200 hover:bg-green-50"
+                className="border-border hover:bg-green-50"
               >
                 Facebook
               </Button>
@@ -191,11 +191,11 @@ export default function LoginPage() {
 
       <p className="mt-6 text-sm text-primary/80 text-center">
         By signing in, you agree to our{" "}
-        <Link href="/terms" className="text-green-600 hover:underline">
+        <Link href="/terms" className="text-primary hover:underline">
           Terms of Service
         </Link>{" "}
         and{" "}
-        <Link href="/privacy" className="text-green-600 hover:underline">
+        <Link href="/privacy" className="text-primary hover:underline">
           Privacy Policy
         </Link>
         .

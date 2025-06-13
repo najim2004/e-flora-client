@@ -19,7 +19,7 @@ export default function CommonHeader({
     <header className="bg-white border-b border-gray-200 py-4">
       <div className="page-container flex items-center gap-4">
         {showBackButton ? (
-          <Link href="/" className="flex items-center gap-2 text-gray-700 hover:text-[#2E7D32]">
+          <Link href="/" className="flex items-center gap-2 text-gray-700 hover:text-primary/80">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
             </svg>

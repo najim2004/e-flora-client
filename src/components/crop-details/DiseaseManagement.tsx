@@ -20,7 +20,7 @@ const DiseaseManagement: React.FC<DiseaseManagementProps> = ({ crop }) => {
       <Accordion type="single" collapsible className="w-full">
         {crop.management.diseaseManagement.map((disease: DiseaseManagementType, index: number) => (
           <AccordionItem key={index} value={`disease-${index}`}>
-            <AccordionTrigger className="text-primary hover:text-green-600">
+            <AccordionTrigger className="text-primary hover:text-primary">
               {disease.name}
             </AccordionTrigger>
             <AccordionContent className="text-primary/80">

@@ -327,11 +327,11 @@ export default function CommunityPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-green-50">
-      <main className="flex-1 container mx-auto px-4 py-8">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Left Sidebar */}
           <div className="w-full lg:w-1/4 space-y-6">
-            <Card className="border-green-100 shadow-sm">
+            <Card className="border-border shadow-sm">
               <CardContent className="p-6">
                 <div className="flex items-center gap-3 mb-4">
                   <Avatar className="h-12 w-12 border-2 border-white shadow-sm">
@@ -350,7 +350,7 @@ export default function CommunityPage() {
                     <h3 className="font-medium text-primary">
                       {currentUser.name}
                     </h3>
-                    <p className="text-sm text-green-600">
+                    <p className="text-sm text-primary">
                       @{currentUser.username}
                     </p>
                   </div>
@@ -359,31 +359,31 @@ export default function CommunityPage() {
                 <div className="space-y-4">
                   <Link
                     href="/profile"
-                    className="flex items-center gap-2 text-primary/80 hover:text-green-600 text-sm"
+                    className="flex items-center gap-2 text-primary/80 hover:text-primary text-sm"
                   >
-                    <span className="w-7 h-7 rounded-full bg-green-100 flex items-center justify-center">
-                      <Users className="h-4 w-4 text-green-600" />
+                    <span className="w-7 h-7 rounded-full bg-secondary/60 flex items-center justify-center">
+                      <Users className="h-4 w-4 text-primary" />
                     </span>
                     <span>View Profile</span>
                   </Link>
                   <Link
                     href="/community/messages"
-                    className="flex items-center gap-2 text-primary/80 hover:text-green-600 text-sm"
+                    className="flex items-center gap-2 text-primary/80 hover:text-primary text-sm"
                   >
-                    <span className="w-7 h-7 rounded-full bg-green-100 flex items-center justify-center">
-                      <MessageSquare className="h-4 w-4 text-green-600" />
+                    <span className="w-7 h-7 rounded-full bg-secondary/60 flex items-center justify-center">
+                      <MessageSquare className="h-4 w-4 text-primary" />
                     </span>
                     <span>Messages</span>
-                    <Badge className="ml-auto bg-green-600 hover:bg-primary/80">
+                    <Badge className="ml-auto bg-primary hover:bg-primary/80">
                       3
                     </Badge>
                   </Link>
                   <Link
                     href="/community/saved"
-                    className="flex items-center gap-2 text-primary/80 hover:text-green-600 text-sm"
+                    className="flex items-center gap-2 text-primary/80 hover:text-primary text-sm"
                   >
-                    <span className="w-7 h-7 rounded-full bg-green-100 flex items-center justify-center">
-                      <Bookmark className="h-4 w-4 text-green-600" />
+                    <span className="w-7 h-7 rounded-full bg-secondary/60 flex items-center justify-center">
+                      <Bookmark className="h-4 w-4 text-primary" />
                     </span>
                     <span>Saved Posts</span>
                   </Link>
@@ -391,13 +391,11 @@ export default function CommunityPage() {
               </CardContent>
             </Card>
 
-            <Card className="border-green-100 shadow-sm">
+            <Card className="border-border shadow-sm">
               <CardContent className="p-6">
                 <div className="flex items-center gap-2 mb-4">
-                  <TrendingUp className="h-5 w-5 text-green-600" />
-                  <h3 className="font-medium text-primary">
-                    Trending Topics
-                  </h3>
+                  <TrendingUp className="h-5 w-5 text-primary" />
+                  <h3 className="font-medium text-primary">Trending Topics</h3>
                 </div>
                 <div className="space-y-3">
                   {trendingTopics.map((topic) => (
@@ -407,11 +405,11 @@ export default function CommunityPage() {
                     >
                       <Link
                         href={`/community/topics/${topic.id}`}
-                        className="text-primary/80 hover:text-green-600 text-sm"
+                        className="text-primary/80 hover:text-primary text-sm"
                       >
                         #{topic.name}
                       </Link>
-                      <span className="text-xs text-green-500">
+                      <span className="text-xs text-primary/80">
                         {topic.posts} posts
                       </span>
                     </div>
@@ -420,29 +418,27 @@ export default function CommunityPage() {
               </CardContent>
             </Card>
 
-            <Card className="border-green-100 shadow-sm">
+            <Card className="border-border shadow-sm">
               <CardContent className="p-6">
                 <div className="flex items-center gap-2 mb-4">
-                  <Calendar className="h-5 w-5 text-green-600" />
-                  <h3 className="font-medium text-primary">
-                    Upcoming Events
-                  </h3>
+                  <Calendar className="h-5 w-5 text-primary" />
+                  <h3 className="font-medium text-primary">Upcoming Events</h3>
                 </div>
                 <div className="space-y-4">
                   {upcomingEvents.map((event) => (
                     <div
                       key={event.id}
-                      className="border-b border-green-100 pb-3 last:border-0 last:pb-0"
+                      className="border-b border-border pb-3 last:border-0 last:pb-0"
                     >
                       <Link
                         href={`/community/events/${event.id}`}
-                        className="font-medium text-primary/80 hover:text-green-600 text-sm"
+                        className="font-medium text-primary/80 hover:text-primary text-sm"
                       >
                         {event.title}
                       </Link>
                       <div className="flex items-center gap-1 mt-1">
-                        <Calendar className="h-3 w-3 text-green-500" />
-                        <span className="text-xs text-green-600">
+                        <Calendar className="h-3 w-3 text-primary/80" />
+                        <span className="text-xs text-primary">
                           {new Date(event.date).toLocaleDateString("en-US", {
                             month: "short",
                             day: "numeric",
@@ -451,8 +447,8 @@ export default function CommunityPage() {
                         </span>
                       </div>
                       <div className="flex items-center gap-1 mt-1">
-                        <MapPin className="h-3 w-3 text-green-500" />
-                        <span className="text-xs text-green-600">
+                        <MapPin className="h-3 w-3 text-primary/80" />
+                        <span className="text-xs text-primary">
                           {event.location}
                         </span>
                       </div>
@@ -461,7 +457,7 @@ export default function CommunityPage() {
                 </div>
                 <Button
                   variant="link"
-                  className="text-green-600 p-0 mt-3 text-sm"
+                  className="text-primary p-0 mt-3 text-sm"
                   asChild
                 >
                   <Link href="/community/events">View All Events</Link>
@@ -473,7 +469,7 @@ export default function CommunityPage() {
           {/* Main Content */}
           <div className="w-full lg:w-2/4 space-y-6">
             {/* Create Post */}
-            <Card className="border-green-100 shadow-sm">
+            <Card className="border-border shadow-sm">
               <CardContent className="p-6">
                 <div className="flex gap-3">
                   <Avatar className="h-10 w-10">
@@ -490,7 +486,7 @@ export default function CommunityPage() {
                   </Avatar>
                   <div className="flex-1">
                     <textarea
-                      className="w-full border border-green-200 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
+                      className="w-full border border-border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary/80 focus:border-transparent resize-none"
                       placeholder="Share something with the community..."
                       rows={3}
                       value={postContent}
@@ -501,9 +497,9 @@ export default function CommunityPage() {
                         {selectedImages.map((file, index) => (
                           <div
                             key={index}
-                            className="relative w-16 h-16 bg-green-100 rounded-md flex items-center justify-center"
+                            className="relative w-16 h-16 bg-secondary/60 rounded-md flex items-center justify-center"
                           >
-                            <ImageIcon className="h-6 w-6 text-green-600" />
+                            <ImageIcon className="h-6 w-6 text-primary" />
                             <button
                               className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs"
                               onClick={() =>
@@ -523,7 +519,7 @@ export default function CommunityPage() {
                         <Button
                           variant="outline"
                           size="sm"
-                          className="border-green-200 text-primary/80 hover:bg-green-50"
+                          className="border-border text-primary/80 hover:bg-green-50"
                           onClick={() =>
                             document.getElementById("image-upload")?.click()
                           }
@@ -542,7 +538,7 @@ export default function CommunityPage() {
                         <Button
                           variant="outline"
                           size="sm"
-                          className="border-green-200 text-primary/80 hover:bg-green-50"
+                          className="border-border text-primary/80 hover:bg-green-50"
                         >
                           <Smile className="h-4 w-4 mr-1" />
                           Feeling
@@ -550,7 +546,7 @@ export default function CommunityPage() {
                       </div>
                       <Button
                         size="sm"
-                        className="bg-green-600 hover:bg-primary/80"
+                        className="bg-primary hover:bg-primary/80"
                         onClick={handleCreatePost}
                         disabled={!postContent.trim()}
                       >
@@ -566,7 +562,7 @@ export default function CommunityPage() {
             {/* Feed Filters */}
             <div className="flex justify-between items-center">
               <Tabs defaultValue="latest" className="w-full">
-                <TabsList className="bg-green-100">
+                <TabsList className="bg-secondary/60">
                   <TabsTrigger
                     value="latest"
                     className="data-[state=active]:bg-white data-[state=active]:text-primary"
@@ -593,7 +589,7 @@ export default function CommunityPage() {
               <Button
                 variant="outline"
                 size="sm"
-                className="border-green-200 text-primary/80 hover:bg-green-50 ml-2"
+                className="border-border text-primary/80 hover:bg-green-50 ml-2"
               >
                 <Filter className="h-4 w-4 mr-1" />
                 Filter
@@ -612,7 +608,7 @@ export default function CommunityPage() {
                   />
                 ))
               ) : (
-                <Card className="border-green-100 shadow-sm">
+                <Card className="border-border shadow-sm">
                   <CardContent className="p-6 text-center">
                     <p className="text-primary/80">
                       No posts found. Be the first to post!
@@ -623,7 +619,7 @@ export default function CommunityPage() {
               <div className="text-center">
                 <Button
                   variant="outline"
-                  className="border-green-600 text-green-600 hover:bg-green-50"
+                  className="border-primary text-primary hover:bg-green-50"
                 >
                   Load More
                   <ChevronDown className="ml-1 h-4 w-4" />
@@ -634,13 +630,13 @@ export default function CommunityPage() {
 
           {/* Right Sidebar */}
           <div className="w-full lg:w-1/4 space-y-6">
-            <Card className="border-green-100 shadow-sm">
+            <Card className="border-border shadow-sm">
               <CardContent className="p-6">
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-green-500" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-primary/80" />
                   <Input
                     placeholder="Search posts, topics, users..."
-                    className="pl-9 border-green-200 focus:border-green-500 focus:ring-green-500"
+                    className="pl-9 border-border focus:border-primary/80 focus:ring-primary/80"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                   />
@@ -648,16 +644,16 @@ export default function CommunityPage() {
               </CardContent>
             </Card>
 
-            <Card className="border-green-100 shadow-sm">
+            <Card className="border-border shadow-sm">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-2">
-                    <Users className="h-5 w-5 text-green-600" />
+                    <Users className="h-5 w-5 text-primary" />
                     <h3 className="font-medium text-primary">Active Users</h3>
                   </div>
                   <Button
                     variant="link"
-                    className="text-green-600 p-0 text-sm"
+                    className="text-primary p-0 text-sm"
                     asChild
                   >
                     <Link href="/community/users">See All</Link>
@@ -686,24 +682,22 @@ export default function CommunityPage() {
                         <p className="text-sm font-medium text-primary truncate">
                           {user.name}
                         </p>
-                        <p className="text-xs text-green-600 truncate">
+                        <p className="text-xs text-primary truncate">
                           {user.occupation}
                         </p>
                       </div>
-                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                      <div className="w-2 h-2 bg-primary/80 rounded-full"></div>
                     </Link>
                   ))}
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="border-green-100 shadow-sm">
+            <Card className="border-border shadow-sm">
               <CardContent className="p-6">
                 <div className="flex items-center gap-2 mb-4">
-                  <MessageSquare className="h-5 w-5 text-green-600" />
-                  <h3 className="font-medium text-primary">
-                    Recent Messages
-                  </h3>
+                  <MessageSquare className="h-5 w-5 text-primary" />
+                  <h3 className="font-medium text-primary">Recent Messages</h3>
                 </div>
                 <ScrollArea className="h-[250px] pr-4">
                   <div className="space-y-4">
@@ -730,9 +724,9 @@ export default function CommunityPage() {
                             <p className="text-sm font-medium text-primary">
                               {user.name}
                             </p>
-                            <p className="text-xs text-green-500">2h ago</p>
+                            <p className="text-xs text-primary/80">2h ago</p>
                           </div>
-                          <p className="text-xs text-green-600 line-clamp-2">
+                          <p className="text-xs text-primary line-clamp-2">
                             {user.id === "user2"
                               ? "আপনার পরামর্শের জন্য ধন্যবাদ। আমি ওই ছত্রাকনাশক ব্যবহার করব।"
                               : "Hello! I wanted to ask about your farming techniques..."}
@@ -742,9 +736,9 @@ export default function CommunityPage() {
                     ))}
                   </div>
                 </ScrollArea>
-                <Separator className="my-4 bg-green-100" />
+                <Separator className="my-4 bg-secondary/60" />
                 <Button
-                  className="w-full bg-green-600 hover:bg-primary/80"
+                  className="w-full bg-primary hover:bg-primary/80"
                   asChild
                 >
                   <Link href="/community/messages">
@@ -755,7 +749,7 @@ export default function CommunityPage() {
               </CardContent>
             </Card>
 
-            <Card className="border-green-100 shadow-sm">
+            <Card className="border-border shadow-sm">
               <CardContent className="p-6">
                 <h3 className="font-medium text-primary mb-4">
                   Community Guidelines
@@ -769,7 +763,7 @@ export default function CommunityPage() {
                 </ul>
                 <Button
                   variant="link"
-                  className="text-green-600 p-0 mt-2 text-sm"
+                  className="text-primary p-0 mt-2 text-sm"
                 >
                   Read Full Guidelines
                 </Button>

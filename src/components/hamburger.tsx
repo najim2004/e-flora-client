@@ -34,7 +34,7 @@ export default function Hamburger({ navItems }: HamburgerProps) {
       <SheetContent className="w-[280px] p-0">
         <SheetHeader className="p-4 border-b">
           <div className="flex items-center justify-between">
-            <SheetTitle className="text-xl font-bold text-[#2E7D32]">
+            <SheetTitle className="text-xl font-bold text-primary/80">
               Menu
             </SheetTitle>
           </div>
@@ -46,7 +46,7 @@ export default function Hamburger({ navItems }: HamburgerProps) {
                 key={item.id}
                 href={item.href || "/"}
                 className="justify-start text-base font-medium cursor-pointer !rounded-button whitespace-nowrap text-gray-600"
-                activeClass="text-[#2E7D32]"
+                activeClass="text-primary/80"
                 onClick={() => setOpen(false)}
               >
                 {item.label}
@@ -55,7 +55,7 @@ export default function Hamburger({ navItems }: HamburgerProps) {
             <Separator className="my-4" />
             <Button
               variant="outline"
-              className="justify-start border-[#2E7D32] text-[#2E7D32] hover:bg-[#E8F5E9] cursor-pointer !rounded-button whitespace-nowrap"
+              className="justify-start border-primary/80 text-primary/80 hover:bg-[#E8F5E9] cursor-pointer !rounded-button whitespace-nowrap"
             >
               <FontAwesomeIcon icon={faGlobe} className="text-sm mr-2" />
               English

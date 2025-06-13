@@ -76,7 +76,7 @@ export default async function DiseaseDetectionResultPage({
       <div className="flex justify-between items-center mb-6">
         <Link
           href="/disease-detection"
-          className="inline-flex items-center text-green-600 hover:text-primary/80"
+          className="inline-flex items-center text-primary hover:text-primary/80"
         >
           <ArrowLeft className="mr-2 h-4 w-4" /> Back
         </Link>
@@ -85,7 +85,7 @@ export default async function DiseaseDetectionResultPage({
           <Button
             variant="outline"
             size="sm"
-            className="border-green-600 text-green-600 hover:bg-green-50"
+            className="border-primary text-primary hover:bg-green-50"
           >
             <Bookmark className="h-4 w-4 mr-2" />
             Save
@@ -93,7 +93,7 @@ export default async function DiseaseDetectionResultPage({
           <Button
             variant="outline"
             size="sm"
-            className="border-green-600 text-green-600 hover:bg-green-50"
+            className="border-primary text-primary hover:bg-green-50"
           >
             <Share2 className="h-4 w-4 mr-2" />
             Share
@@ -101,7 +101,7 @@ export default async function DiseaseDetectionResultPage({
           <Button
             variant="outline"
             size="sm"
-            className="border-green-600 text-green-600 hover:bg-green-50"
+            className="border-primary text-primary hover:bg-green-50"
           >
             <Printer className="h-4 w-4 mr-2" />
             Print
@@ -110,7 +110,7 @@ export default async function DiseaseDetectionResultPage({
       </div>
       <div className="md:grid md:grid-cols-6 md:gap-8">
         <div className="md:col-span-2 md:relative">
-          <Card className="border-green-100 shadow-sm md:sticky md:top-24.5">
+          <Card className="border-border shadow-sm md:sticky md:top-24.5">
             <CardHeader>
               <CardTitle className="text-primary">Detected Disease</CardTitle>
               <CardDescription className="text-primary/80">
@@ -134,7 +134,7 @@ export default async function DiseaseDetectionResultPage({
         </div>
 
         <div className="md:col-span-4">
-          <Card className="border-green-100 shadow-sm">
+          <Card className="border-border shadow-sm">
             <CardHeader>
               <CardTitle className="text-primary">Disease Details</CardTitle>
               <CardDescription className="text-primary/80">
@@ -157,7 +157,7 @@ export default async function DiseaseDetectionResultPage({
                   <ul>
                     {disease.symptoms?.map((symptom, index) => (
                       <li key={index} className="flex items-start">
-                        <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                        <Check className="h-5 w-5 text-primary/80 mr-2 flex-shrink-0 mt-0.5" />
                         <span>{symptom}</span>
                       </li>
                     ))}
@@ -168,7 +168,7 @@ export default async function DiseaseDetectionResultPage({
                   <ul>
                     {disease.causes?.map((cause, index) => (
                       <li key={index} className="flex items-start">
-                        <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                        <Check className="h-5 w-5 text-primary/80 mr-2 flex-shrink-0 mt-0.5" />
                         <span>{cause}</span>
                       </li>
                     ))}
@@ -179,7 +179,7 @@ export default async function DiseaseDetectionResultPage({
                   <ul>
                     {disease.preventiveTips?.map((tip, index) => (
                       <li key={index} className="flex items-start">
-                        <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                        <Check className="h-5 w-5 text-primary/80 mr-2 flex-shrink-0 mt-0.5" />
                         <span>{tip}</span>
                       </li>
                     ))}
@@ -190,7 +190,7 @@ export default async function DiseaseDetectionResultPage({
                   <ul>
                     {disease.treatment?.map((treatment, index) => (
                       <li key={index} className="flex items-start">
-                        <Check className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                        <Check className="h-5 w-5 text-primary/80 mr-2 flex-shrink-0 mt-0.5" />
                         <span>{treatment}</span>
                       </li>
                     ))}
@@ -199,14 +199,14 @@ export default async function DiseaseDetectionResultPage({
               </ul>
 
               <div className="mt-8 flex flex-col sm:flex-row gap-4">
-                <Button className="bg-green-600 hover:bg-primary/80">
+                <Button className="bg-primary hover:bg-primary/80">
                   <Download className="h-4 w-4 mr-2" />
                   Download Full Report
                 </Button>
                 <Link href="/disease-detection">
                   <Button
                     variant="outline"
-                    className="border-green-600 text-green-600 hover:bg-green-50"
+                    className="border-primary text-primary hover:bg-green-50"
                   >
                     <ArrowLeft className="h-4 w-4 mr-2" />
                     Upload Another Image
