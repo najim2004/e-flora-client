@@ -1,11 +1,8 @@
 "use client";
 
-import FarmDetailsForm, {
-  formSchema,
-} from "@/components/crop-suggestions/FarmDetailsForm";
-import WeatherConditions from "@/components/crop-suggestions/WeatherConditions";
-import CropRecommendations from "@/components/crop-suggestions/CropRecommendations";
-import CultivationTips from "@/components/crop-suggestions/CultivationTips";
+import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
 import {
   Card,
   CardContent,
@@ -13,15 +10,19 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import {
-  CropSuggestionProgress,
-  CropSuggestionResponse,
-  CropUpdateDetails,
-} from "@/types/cropSuggestion";
+import { Button } from "@/components/ui/button";
+import { History, Plus, X } from "lucide-react";
 import * as z from "zod";
+
+import FarmDetailsForm, {
+  formSchema,
+} from "@/components/crop-suggestions/FarmDetailsForm";
+import WeatherConditions from "@/components/crop-suggestions/WeatherConditions";
+import CropRecommendations from "@/components/crop-suggestions/CropRecommendations";
+import CultivationTips from "@/components/crop-suggestions/CultivationTips";
+import CropSuggestionProgressComponent from "@/components/crop-suggestions/CropSuggestionProgressComponent";
 import {
+  useCropSuggestionHistoryMutation,
   useCropSuggestionResultQuery,
   useRequestCropSuggestionMutation,
 } from "@/redux/features/cropSuggestions/cropSuggestionApiSlice";
@@ -29,13 +30,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { errorToast, successToast } from "@/components/customToast";
 import { getSocket } from "@/lib/socket";
-import CropSuggestionProgressComponent from "@/components/crop-suggestions/CropSuggestionProgressComponent";
 import {
   insertCropSuggestion,
   updateCropDetails,
 } from "@/redux/features/cropSuggestions/cropSuggestionSlice";
-import { Button } from "@/components/ui/button";
-import { History, Plus } from "lucide-react";
+import {
+  CropSuggestionProgress,
+  CropSuggestionResponse,
+  CropUpdateDetails,
+} from "@/types/cropSuggestion";
 
 export default function CropSuggestionsPage() {
   const isAuthenticated = useSelector(
@@ -44,124 +47,118 @@ export default function CropSuggestionsPage() {
   const cropSuggestions = useSelector(
     (state: RootState) => state.cropSuggestion.cropSuggestions
   );
+  const history = useSelector(
+    (state: RootState) => state.cropSuggestion.history
+  );
 
   const [progress, setProgress] = useState<CropSuggestionProgress | null>(null);
   const [cropSuggestionData, setCropSuggestionData] =
     useState<CropSuggestionResponse | null>(null);
-
-  const searchParams = useSearchParams();
-  const id = searchParams.get("id");
+  const [showHistory, setShowHistory] = useState(false);
+  const [page, setPage] = useState(1);
+  const limit = 10;
 
   const dispatch = useDispatch();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+
+  const [getHistories] = useCropSuggestionHistoryMutation();
+  const [requestSuggestion, { isLoading }] = useRequestCropSuggestionMutation();
+
+  const { data, isLoading: isQueryLoading } = useCropSuggestionResultQuery(
+    id ?? "",
+    {
+      skip: !id || cropSuggestions.some((c) => c._id === id),
+    }
+  );
 
   useEffect(() => {
     const socket = getSocket();
-
     socket.emit("joinCropSuggestionRoom");
 
-    const handleProgress = (data: CropSuggestionProgress) => {
-      console.log("progress", data);
-      setProgress(data);
-    };
+    socket.on("cropSuggestionProgressUpdate", setProgress);
 
-    // Modify handleCompleted
-    const handleCompleted = (payload: {
-      data: CropSuggestionResponse;
-      timestamp: Date;
-    }) => {
-      console.log("complete", payload);
-      if (payload?.data) {
-        dispatch(insertCropSuggestion(payload.data));
-        router.push(`/crop-suggestions?id=${payload.data._id}`);
+    socket.on("cropSuggestionCompleted", ({ data }) => {
+      if (data) {
+        dispatch(insertCropSuggestion(data));
+        setCropSuggestionData(null);
+        router.push(`/crop-suggestions?id=${data._id}`);
       }
       setProgress(null);
-    };
+    });
 
-    const handleFailed = (error: { message: string; timestamp: Date }) => {
-      errorToast("Failed to generate crop suggestions!");
-      console.log("failed", error);
-    };
+    socket.on("cropSuggestionFailed", ({ message }) => {
+      errorToast(message || "Suggestion failed");
+      setProgress(null);
+    });
 
-    const handleCropDetails = (data: CropUpdateDetails) => {
-      console.log("crop update", data);
-      if (id) {
-        dispatch(
-          updateCropDetails({
-            id,
-            details: data,
-          })
-        );
-      }
-    };
-
-    socket.on("cropSuggestionProgressUpdate", handleProgress);
-    socket.on("cropSuggestionCompleted", handleCompleted);
-    socket.on("cropSuggestionFailed", handleFailed);
-    socket.on("individualCropDetailsUpdate", handleCropDetails);
+    socket.on("individualCropDetailsUpdate", (data: CropUpdateDetails) => {
+      if (id) dispatch(updateCropDetails({ id, details: data }));
+    });
 
     return () => {
       socket.emit("leaveCropSuggestionRoom");
-      socket.off("cropSuggestionProgressUpdate", handleProgress);
-      socket.off("cropSuggestionCompleted", handleCompleted);
-      socket.off("cropSuggestionFailed", handleFailed);
-      socket.off("individualCropDetailsUpdate", handleCropDetails);
+      socket.removeAllListeners();
     };
   }, [dispatch, router, id]);
 
   useEffect(() => {
     if (id) {
-      const existing = cropSuggestions.find((c) => c._id === id);
-      if (existing) {
-        setCropSuggestionData(existing);
-      }
+      const local = cropSuggestions.find((c) => c._id === id);
+      if (local) setCropSuggestionData(local);
     }
   }, [id, cropSuggestions]);
 
-  const {
-    data,
-    isLoading: isLoadingQuery,
-    isError,
-  } = useCropSuggestionResultQuery(id ?? "", {
-    skip: !id || cropSuggestions.some((c) => c._id === id),
-  });
-
   useEffect(() => {
-    if (data && data.data && data.success) {
+    if (data?.success && data.data) {
       setCropSuggestionData(data.data);
     }
   }, [data]);
 
-  const [suggestionRequestMutation, { isLoading }] =
-    useRequestCropSuggestionMutation();
-
-  // Modify handleSubmit
   const handleSubmit = async (formData: z.infer<typeof formSchema>) => {
     if (!isAuthenticated || isLoading) return;
 
     try {
       const [latitude, longitude] = formData.location.split(",").map(Number);
-      const res = await suggestionRequestMutation({
+      const res = await requestSuggestion({
         location: { latitude, longitude },
         soilType: formData.soilType,
         farmSize: parseFloat(formData.farmSize),
         irrigationAvailability: formData.irrigation,
       }).unwrap();
 
-      if (res?.success) {
-        successToast(
-          res.message || "Request accepted! Please wait while we process."
-        );
+      if (res.success) {
+        successToast(res.message || "Processing request...");
         setCropSuggestionData(null);
       } else {
-        errorToast(res.error.message || "Failed to submit request!");
+        errorToast(res.error?.message || "Submission failed");
       }
-    } catch (err) {
-      console.error("Submit error:", err);
-      errorToast(
-        err instanceof Error ? err.message : "Something went wrong. Try again."
-      );
+    } catch {
+      errorToast("Something went wrong");
     }
+  };
+
+  const fetchHistory = async (newPage: number) => {
+    try {
+      await getHistories({ page: newPage, limit }).unwrap();
+    } catch (err) {
+      console.error(err);
+      errorToast("Failed to fetch history!");
+    }
+  };
+
+  const handleToggleHistory = () => {
+    setShowHistory((prev) => !prev);
+    if (!showHistory && history.length === 0) {
+      fetchHistory(1);
+    }
+  };
+
+  const handleLoadMore = () => {
+    const nextPage = page + 1;
+    setPage(nextPage);
+    fetchHistory(nextPage);
   };
 
   return (
@@ -172,7 +169,7 @@ export default function CropSuggestionsPage() {
             <CardHeader>
               <CardTitle className="text-primary">Enter Your Details</CardTitle>
               <CardDescription className="text-primary/80">
-                Provide your farm&#39;s location, soil and irrigation info
+                Provide your farm's location, soil and irrigation info
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -202,83 +199,140 @@ export default function CropSuggestionsPage() {
           </Card>
 
           <Card className="shadow-sm md:col-span-2">
-            {progress ? (
-              <CropSuggestionProgressComponent progress={progress} />
-            ) : (
-              <>
-                <CardHeader className="flex justify-between">
-                  <div className="flex-grow">
-                    {cropSuggestionData && (
-                      <>
-                        <CardTitle className="text-primary">
-                          Crop Recommendations
-                        </CardTitle>
-                        <CardDescription className="text-primary/80">
-                          Based on your farm&#39;s location and soil conditions
-                          and weather
-                        </CardDescription>
-                      </>
-                    )}
-                  </div>
-                  <div className="flex gap-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="text-primary border-none !p-0 shadow-none hover:bg-transparent"
-                    >
-                      <History />
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="text-primary border-none !p-0 shadow-none hover:bg-transparent"
-                    >
-                      <Plus />
-                    </Button>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  {cropSuggestionData && (
+            <CardHeader className="flex justify-between items-center z-20">
+              <div className="flex-grow">
+                {cropSuggestionData && (
+                  <>
+                    <CardTitle className="text-primary">
+                      Crop Recommendations
+                    </CardTitle>
+                    <CardDescription className="text-primary/80">
+                      Based on your farm’s soil, irrigation, and weather.
+                    </CardDescription>
+                  </>
+                )}
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  onClick={handleToggleHistory}
+                  variant="outline"
+                  size="sm"
+                  className="text-primary flex items-center gap-1"
+                >
+                  {showHistory ? (
                     <>
-                      <WeatherConditions
-                        weatherData={
-                          cropSuggestionData?.recommendations
-                            ?.weathers?.[0] ?? {
-                            avgMaxTemp: 0,
-                            avgMinTemp: 0,
-                            avgHumidity: 0,
-                            avgRainfall: 0,
-                            avgWindSpeed: 0,
-                            dominantWindDirection: "",
-                          }
-                        }
-                      />
-                      <CropRecommendations
-                        cropData={
-                          cropSuggestionData?.recommendations?.crops ?? []
-                        }
-                      />
-                      <CultivationTips
-                        cultivationTips={
-                          cropSuggestionData?.recommendations
-                            ?.cultivationTips ?? []
-                        }
-                      />
+                      <X size={16} />
+                      <span className="sr-only">Close</span>
+                    </>
+                  ) : (
+                    <>
+                      <History size={16} />
+                      <span className="sr-only">History</span>
                     </>
                   )}
-                </CardContent>
-                {
-                  !cropSuggestionData&& (
-                    <div className="size-full md:-mt-20 mb-16 space-y-3 flex flex-col justify-center items-center text-center">
-                      <CardTitle className="text-primary">Full fill the form!</CardTitle>
-                      <CardDescription className="text-primary/80">
-                        To continue you should full fill the for with original
-                        information!
-                      </CardDescription>
-                    </div>)
-                }
-              </>
-            )}
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="text-primary"
+                  onClick={() => {
+                    setCropSuggestionData(null);
+                    router.push("/crop-suggestions");
+                  }}
+                >
+                  <Plus />
+                </Button>
+              </div>
+            </CardHeader>
+
+            <CardContent>
+              {progress ? (
+                <CropSuggestionProgressComponent progress={progress} />
+              ) : showHistory ? (
+                <div className="space-y-3">
+                  {history.map((item) => (
+                    <Card
+                      onClick={() => {
+                        router.push(`/crop-suggestions?id=${item._id}`);
+                        handleToggleHistory()
+                      }}
+                      key={item._id}
+                      className="bg-white hover:shadow-md transition p-4 rounded-xl border border-muted"
+                    >
+                      <div className="flex justify-between items-center mb-1">
+                        <div className="text-sm text-primary font-medium flex items-center gap-1">
+                          📍 {item.location.latitude}, {item.location.longitude}
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          {new Date(item.createdAt).toLocaleString("en-GB", {
+                            day: "2-digit",
+                            month: "long",
+                            year: "numeric",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            hour12: false,
+                          })}
+                        </div>
+                      </div>
+                      <div className="text-xs text-muted-foreground">
+                        Soil:{" "}
+                        <span className="font-medium text-foreground">
+                          {item.soilType}
+                        </span>
+                        , Size:{" "}
+                        <span className="font-medium">
+                          {item.farmSize} acres
+                        </span>
+                        , Irrigation:{" "}
+                        <span className="font-medium">
+                          {item.irrigationAvailability}
+                        </span>
+                      </div>
+                    </Card>
+                  ))}
+                  <Button
+                    onClick={handleLoadMore}
+                    size="sm"
+                    variant="outline"
+                    className="w-full mt-2 text-primary"
+                  >
+                    Load More
+                  </Button>
+                </div>
+              ) : cropSuggestionData ? (
+                <>
+                  <WeatherConditions
+                    weatherData={
+                      cropSuggestionData.recommendations?.weathers?.[0] ?? {
+                        avgMaxTemp: 0,
+                        avgMinTemp: 0,
+                        avgHumidity: 0,
+                        avgRainfall: 0,
+                        avgWindSpeed: 0,
+                        dominantWindDirection: "",
+                      }
+                    }
+                  />
+                  <CropRecommendations
+                    cropData={cropSuggestionData.recommendations?.crops ?? []}
+                  />
+                  <CultivationTips
+                    cultivationTips={
+                      cropSuggestionData.recommendations?.cultivationTips ?? []
+                    }
+                  />
+                </>
+              ) : (
+                <div className="text-center py-8 space-y-2">
+                  <CardTitle className="text-primary">
+                    Fill out the form!
+                  </CardTitle>
+                  <CardDescription className="text-primary/80">
+                    Get personalized recommendations by submitting farm details.
+                  </CardDescription>
+                </div>
+              )}
+            </CardContent>
           </Card>
         </div>
       </div>

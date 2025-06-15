@@ -4,14 +4,30 @@ import {
   CropUpdateDetails,
 } from "../../../types/cropSuggestion";
 
+interface Location {
+  latitude: number;
+  longitude: number;
+}
+
+interface CropSuggestionHistory {
+  location: Location;
+  _id: string;
+  soilType: string;
+  farmSize: number;
+  irrigationAvailability: string;
+  createdAt: string;
+}
+
 // Define the state shape
 interface CropSuggestionState {
   cropSuggestions: CropSuggestionResponse[];
+  history: CropSuggestionHistory[];
 }
 
 // Initial state
 const initialState: CropSuggestionState = {
   cropSuggestions: [],
+  history: [],
 };
 
 // Create the slice
@@ -60,7 +76,7 @@ const cropSuggestionSlice = createSlice({
             crop.cropDetails = {
               status: details.status,
               slug: details.slug,
-            }; 
+            };
           } else {
             // Update existing cropDetails
             crop.cropDetails.status = details.status;
@@ -69,12 +85,20 @@ const cropSuggestionSlice = createSlice({
         }
       }
     },
+    // Set history data
+    setHistory: (state, action: PayloadAction<CropSuggestionHistory[]>) => {
+      state.history = [...state.history, ...action.payload];
+    },
   },
 });
 
 // Export actions
-export const { insertCropSuggestion, removeCropSuggestion, updateCropDetails } =
-  cropSuggestionSlice.actions;
+export const {
+  insertCropSuggestion,
+  removeCropSuggestion,
+  updateCropDetails,
+  setHistory,
+} = cropSuggestionSlice.actions;
 
 // Export reducer
 export default cropSuggestionSlice.reducer;
