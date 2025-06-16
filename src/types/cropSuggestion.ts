@@ -53,6 +53,7 @@ export interface CropSuggestionResponse {
   farmSize: number;
   irrigationAvailability: string;
   recommendations: Recommendations;
+  createdAt: Date;
 }
 export type CropSuggestionStatus =
   | "initiated"

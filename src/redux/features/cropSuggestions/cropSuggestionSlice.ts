@@ -9,7 +9,7 @@ interface Location {
   longitude: number;
 }
 
-interface CropSuggestionHistory {
+export interface CropSuggestionHistory {
   location: Location;
   _id: string;
   soilType: string;

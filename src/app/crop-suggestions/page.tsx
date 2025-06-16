@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import Link from "next/link";
 import {
   Card,
   CardContent,
@@ -31,6 +30,7 @@ import { RootState } from "@/redux/store";
 import { errorToast, successToast } from "@/components/customToast";
 import { getSocket } from "@/lib/socket";
 import {
+  CropSuggestionHistory as corpHistory,
   insertCropSuggestion,
   updateCropDetails,
 } from "@/redux/features/cropSuggestions/cropSuggestionSlice";
@@ -39,6 +39,71 @@ import {
   CropSuggestionResponse,
   CropUpdateDetails,
 } from "@/types/cropSuggestion";
+import CropSuggestionHistory from "@/components/crop-suggestions/CropSuggestionHistory";
+
+export const DEFAULT_WEATHER_DATA = {
+  avgMaxTemp: 0,
+  avgMinTemp: 0,
+  avgHumidity: 0,
+  avgRainfall: 0,
+  avgWindSpeed: 0,
+  dominantWindDirection: "",
+};
+
+export const EmptySuggestion = () => (
+  <div className="text-center py-8 space-y-2">
+    <CardTitle className="text-primary">Fill out the form!</CardTitle>
+    <CardDescription className="text-primary/80">
+      Get personalized recommendations by submitting farm details.
+    </CardDescription>
+  </div>
+);
+
+interface FarmDetailsCardProps {
+  onSubmit: (formData: z.infer<typeof formSchema>) => Promise<void>;
+  isLoading: boolean;
+  cropSuggestionData: CropSuggestionResponse | null;
+}
+
+function FarmDetailsCard({
+  onSubmit,
+  isLoading,
+  cropSuggestionData,
+}: FarmDetailsCardProps) {
+  return (
+    <Card className="shadow-sm md:col-span-1 h-min md:sticky md:top-24.5">
+      <CardHeader>
+        <CardTitle className="text-primary">Enter Your Details</CardTitle>
+        <CardDescription className="text-primary/80">
+          Provide your farm's location, soil and irrigation info
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <FarmDetailsForm
+          defaultValues={
+            cropSuggestionData
+              ? {
+                  location: `${cropSuggestionData?.location?.latitude ?? ""}, ${
+                    cropSuggestionData?.location?.longitude ?? ""
+                  }`,
+                  soilType: cropSuggestionData.soilType ?? "",
+                  farmSize: String(cropSuggestionData.farmSize),
+                  irrigation: cropSuggestionData.irrigationAvailability ?? "",
+                }
+              : {
+                  location: "",
+                  soilType: "",
+                  farmSize: "",
+                  irrigation: "",
+                }
+          }
+          onSubmit={onSubmit}
+          isLoading={isLoading}
+        />
+      </CardContent>
+    </Card>
+  );
+}
 
 export default function CropSuggestionsPage() {
   const isAuthenticated = useSelector(
@@ -66,12 +131,9 @@ export default function CropSuggestionsPage() {
   const [getHistories] = useCropSuggestionHistoryMutation();
   const [requestSuggestion, { isLoading }] = useRequestCropSuggestionMutation();
 
-  const { data, isLoading: isQueryLoading } = useCropSuggestionResultQuery(
-    id ?? "",
-    {
-      skip: !id || cropSuggestions.some((c) => c._id === id),
-    }
-  );
+  const { data } = useCropSuggestionResultQuery(id ?? "", {
+    skip: !id || cropSuggestions.some((c) => c._id === id),
+  });
 
   useEffect(() => {
     const socket = getSocket();
@@ -165,38 +227,11 @@ export default function CropSuggestionsPage() {
     <div className="min-h-screen bg-green-50">
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="grid md:grid-cols-3 gap-8 md:relative">
-          <Card className="shadow-sm md:col-span-1 h-min md:sticky md:top-24.5">
-            <CardHeader>
-              <CardTitle className="text-primary">Enter Your Details</CardTitle>
-              <CardDescription className="text-primary/80">
-                Provide your farm's location, soil and irrigation info
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <FarmDetailsForm
-                defaultValues={
-                  cropSuggestionData
-                    ? {
-                        location: `${
-                          cropSuggestionData?.location?.latitude ?? ""
-                        }, ${cropSuggestionData?.location?.longitude ?? ""}`,
-                        soilType: cropSuggestionData.soilType ?? "",
-                        farmSize: String(cropSuggestionData.farmSize),
-                        irrigation:
-                          cropSuggestionData.irrigationAvailability ?? "",
-                      }
-                    : {
-                        location: "",
-                        soilType: "",
-                        farmSize: "",
-                        irrigation: "",
-                      }
-                }
-                onSubmit={handleSubmit}
-                isLoading={isLoading}
-              />
-            </CardContent>
-          </Card>
+          <FarmDetailsCard
+            onSubmit={handleSubmit}
+            isLoading={isLoading}
+            cropSuggestionData={cropSuggestionData}
+          />
 
           <Card className="shadow-sm md:col-span-2">
             <CardHeader className="flex justify-between items-center z-20">
@@ -207,7 +242,7 @@ export default function CropSuggestionsPage() {
                       Crop Recommendations
                     </CardTitle>
                     <CardDescription className="text-primary/80">
-                      Based on your farm’s soil, irrigation, and weather.
+                      Based on your farm's soil, irrigation, and weather.
                     </CardDescription>
                   </>
                 )}
@@ -217,7 +252,7 @@ export default function CropSuggestionsPage() {
                   onClick={handleToggleHistory}
                   variant="outline"
                   size="sm"
-                  className="text-primary flex items-center gap-1"
+                  className="text-primary !p-0 border-none shadow-none active:bg-transparent hover:bg-transparent"
                 >
                   {showHistory ? (
                     <>
@@ -234,7 +269,7 @@ export default function CropSuggestionsPage() {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="text-primary"
+                  className="text-primary !p-0 border-none shadow-none active:bg-transparent hover:bg-transparent"
                   onClick={() => {
                     setCropSuggestionData(null);
                     router.push("/crop-suggestions");
@@ -249,68 +284,18 @@ export default function CropSuggestionsPage() {
               {progress ? (
                 <CropSuggestionProgressComponent progress={progress} />
               ) : showHistory ? (
-                <div className="space-y-3">
-                  {history.map((item) => (
-                    <Card
-                      onClick={() => {
-                        router.push(`/crop-suggestions?id=${item._id}`);
-                        handleToggleHistory()
-                      }}
-                      key={item._id}
-                      className="bg-white hover:shadow-md transition p-4 rounded-xl border border-muted"
-                    >
-                      <div className="flex justify-between items-center mb-1">
-                        <div className="text-sm text-primary font-medium flex items-center gap-1">
-                          📍 {item.location.latitude}, {item.location.longitude}
-                        </div>
-                        <div className="text-xs text-muted-foreground">
-                          {new Date(item.createdAt).toLocaleString("en-GB", {
-                            day: "2-digit",
-                            month: "long",
-                            year: "numeric",
-                            hour: "2-digit",
-                            minute: "2-digit",
-                            hour12: false,
-                          })}
-                        </div>
-                      </div>
-                      <div className="text-xs text-muted-foreground">
-                        Soil:{" "}
-                        <span className="font-medium text-foreground">
-                          {item.soilType}
-                        </span>
-                        , Size:{" "}
-                        <span className="font-medium">
-                          {item.farmSize} acres
-                        </span>
-                        , Irrigation:{" "}
-                        <span className="font-medium">
-                          {item.irrigationAvailability}
-                        </span>
-                      </div>
-                    </Card>
-                  ))}
-                  <Button
-                    onClick={handleLoadMore}
-                    size="sm"
-                    variant="outline"
-                    className="w-full mt-2 text-primary"
-                  >
-                    Load More
-                  </Button>
-                </div>
+                <CropSuggestionHistory
+                  history={history as corpHistory[]}
+                  router={router}
+                  handleToggleHistory={handleToggleHistory}
+                  handleLoadMore={handleLoadMore}
+                />
               ) : cropSuggestionData ? (
                 <>
                   <WeatherConditions
                     weatherData={
-                      cropSuggestionData.recommendations?.weathers?.[0] ?? {
-                        avgMaxTemp: 0,
-                        avgMinTemp: 0,
-                        avgHumidity: 0,
-                        avgRainfall: 0,
-                        avgWindSpeed: 0,
-                        dominantWindDirection: "",
-                      }
+                      cropSuggestionData.recommendations?.weathers?.[0] ??
+                      DEFAULT_WEATHER_DATA
                     }
                   />
                   <CropRecommendations
@@ -323,14 +308,7 @@ export default function CropSuggestionsPage() {
                   />
                 </>
               ) : (
-                <div className="text-center py-8 space-y-2">
-                  <CardTitle className="text-primary">
-                    Fill out the form!
-                  </CardTitle>
-                  <CardDescription className="text-primary/80">
-                    Get personalized recommendations by submitting farm details.
-                  </CardDescription>
-                </div>
+                <EmptySuggestion />
               )}
             </CardContent>
           </Card>
