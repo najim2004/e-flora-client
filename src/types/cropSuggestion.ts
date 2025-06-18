@@ -56,6 +56,7 @@ export interface CropSuggestionResponse {
   createdAt: Date;
 }
 export type CropSuggestionStatus =
+  | "pending"
   | "initiated"
   | "analyzing"
   | "generatingData"
