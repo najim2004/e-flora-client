@@ -95,24 +95,14 @@ export default function MyGardenPage() {
   const removedCount = removedCrops.length;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-yellow-50">
-      <div className="max-w-7xl mx-auto px-4">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-green-800 mb-2">
-            My Garden
-          </h1>
-          <p className="text-green-600 text-lg">
-            Monitor and manage your rooftop garden
-          </p>
-        </div>
-
+    <div className="flex flex-col min-h-screen bg-green-50">
+      <div className="flex-1 max-w-7xl w-full mx-auto px-4 py-8">
         {/* Summary Bar */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <Card className="bg-white border-green-200 shadow-md">
-            <CardContent className="p-6">
+        <div className="grid grid-cols-3 gap-4 mb-8">
+          <Card className="bg-white border-green-200 shadow-md p-0">
+            <CardContent className="p-3 md:p-6">
               <div className="flex items-center justify-between">
-                <div>
+                <div className="text-center w-full md:text-start">
                   <p className="text-sm font-medium text-green-600">
                     Active Crops
                   </p>
@@ -120,55 +110,54 @@ export default function MyGardenPage() {
                     {activeCrops}
                   </p>
                 </div>
-                <div className="h-12 w-12 bg-green-100 rounded-xl flex items-center justify-center">
+                <div className="h-12 w-12 bg-green-100 rounded-xl hidden md:flex items-center justify-center">
                   <TrendingUp className="h-6 w-6 text-green-600" />
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-white border-yellow-200 shadow-md">
-            <CardContent className="p-6">
+          <Card className="bg-white border-yellow-200 shadow-md p-0">
+            <CardContent className="p-3 md:p-6">
               <div className="flex items-center justify-between">
-                <div>
+                <div className="text-center w-full md:text-start">
                   <p className="text-sm font-medium text-yellow-600">Pending</p>
                   <p className="text-3xl font-bold text-yellow-800">
                     {pendingCrops}
                   </p>
                 </div>
-                <div className="h-12 w-12 bg-yellow-100 rounded-xl flex items-center justify-center">
+                <div className="h-12 w-12 bg-yellow-100 rounded-xl hidden md:flex items-center justify-center">
                   <Calendar className="h-6 w-6 text-yellow-600" />
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-white border-gray-200 shadow-md">
-            <CardContent className="p-6">
+          <Card className="bg-white border-gray-200 shadow-md p-0">
+            <CardContent className="p-3 md:p-6">
               <div className="flex items-center justify-between">
-                <div>
+                <div className="text-center w-full md:text-start">
                   <p className="text-sm font-medium text-gray-600">Removed</p>
                   <p className="text-3xl font-bold text-gray-800">
                     {removedCount}
                   </p>
                 </div>
-                <div className="h-12 w-12 bg-gray-100 rounded-xl flex items-center justify-center">
+                <div className="h-12 w-12 bg-gray-100 rounded-xl hidden md:flex items-center justify-center">
                   <Trash2 className="h-6 w-6 text-gray-600" />
                 </div>
               </div>
             </CardContent>
           </Card>
         </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Main Content */}
           <div className="lg:col-span-3 space-y-6">
             {/* Promotional Card */}
             <Card className="bg-gradient-to-r from-green-500 to-green-600 border-0 text-white shadow-lg">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className="h-12 w-12 bg-white/20 rounded-xl flex items-center justify-center">
+              <CardContent className="md:p-6">
+                <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+                  <div className="flex flex-col md:flex-row items-center text-center md:text-start gap-4">
+                    <div className="h-12 min-w-12 bg-white/20 rounded-xl flex items-center justify-center">
                       <Gift className="h-6 w-6" />
                     </div>
                     <div>

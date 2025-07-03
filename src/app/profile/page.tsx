@@ -73,7 +73,7 @@ export default function ProfilePage() {
                   <h2 className="text-xl font-bold text-primary">
                     Rahim Ahmed
                   </h2>
-                  <p className="text-primary mb-4">Rice Farmer</p>
+                  <p className="text-primary mb-4">Gardener</p>
                   <div className="flex items-center text-primary/80 mb-1">
                     <MapPin className="h-4 w-4 mr-2" />
                     <span className="text-sm">Dhaka, Bangladesh</span>
@@ -135,7 +135,7 @@ export default function ProfilePage() {
           {/* Main Content */}
           <div className="w-full md:w-3/4">
             <Tabs defaultValue="personal" className="w-full">
-              <TabsList className="grid grid-cols-3 mb-6 h-max p-1.5 rounded-sm w-full">
+              <TabsList className="grid grid-cols-2 mb-6 h-max p-1.5 rounded-sm w-full">
                 <TabsTrigger
                   value="personal"
                   className="data-[state=active]:bg-primary data-[state=active]:text-white py-1.5 rounded-sm text-gray-400"
@@ -143,16 +143,10 @@ export default function ProfilePage() {
                   Personal Info
                 </TabsTrigger>
                 <TabsTrigger
-                  value="farm"
+                  value="garden"
                   className="data-[state=active]:bg-primary data-[state=active]:text-white py-1.5 rounded-sm text-gray-400"
                 >
-                  Farm Details
-                </TabsTrigger>
-                <TabsTrigger
-                  value="preferences"
-                  className="data-[state=active]:bg-primary data-[state=active]:text-white py-1.5 rounded-sm text-gray-400"
-                >
-                  Preferences
+                  Garden Details
                 </TabsTrigger>
               </TabsList>
 
@@ -193,7 +187,7 @@ export default function ProfilePage() {
                             </Label>
                             <Input
                               id="occupation"
-                              defaultValue="Rice Farmer"
+                              defaultValue="Gardener"
                               className="border-border focus:border-primary/80 focus:ring-primary/80"
                             />
                           </div>
@@ -227,7 +221,7 @@ export default function ProfilePage() {
                             </Label>
                             <Textarea
                               id="address"
-                              defaultValue="123 Farmer's Lane, Dhaka, Bangladesh"
+                              defaultValue="123 Gardener's Lane, Dhaka, Bangladesh"
                               className="border-border focus:border-primary/80 focus:ring-primary/80"
                             />
                           </div>
@@ -292,7 +286,7 @@ export default function ProfilePage() {
                             <h3 className="text-sm font-medium text-primary">
                               Occupation
                             </h3>
-                            <p className="mt-1 text-primary">Rice Farmer</p>
+                            <p className="mt-1 text-primary">Gardener</p>
                           </div>
                           <div>
                             <h3 className="text-sm font-medium text-primary">
@@ -315,7 +309,7 @@ export default function ProfilePage() {
                               Address
                             </h3>
                             <p className="mt-1 text-primary">
-                              123 Farmer&#39;s Lane, Dhaka, Bangladesh
+                              123 Gardener&#39;s Lane, Dhaka, Bangladesh
                             </p>
                           </div>
                           <div>
@@ -388,15 +382,15 @@ export default function ProfilePage() {
                 </Card>
               </TabsContent>
 
-              {/* Farm Details Tab */}
-              <TabsContent value="farm">
+              {/* Garden Details Tab */}
+              <TabsContent value="garden">
                 <Card className="border-border shadow-sm">
                   <CardHeader>
                     <CardTitle className="text-primary">
-                      Farm Information
+                      Garden Information
                     </CardTitle>
                     <CardDescription className="text-primary/80">
-                      Manage details about your farm and agricultural practices
+                      Manage details about your garden
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -405,26 +399,26 @@ export default function ProfilePage() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           <div className="space-y-2">
                             <Label
-                              htmlFor="farmName"
+                              htmlFor="gardenName"
                               className="text-primary/80"
                             >
-                              Farm Name
+                              Garden Name
                             </Label>
                             <Input
-                              id="farmName"
-                              defaultValue="Green Harvest Farm"
+                              id="gardenName"
+                              defaultValue="Green Harvest Garden"
                               className="border-border focus:border-primary/80 focus:ring-primary/80"
                             />
                           </div>
                           <div className="space-y-2">
                             <Label
-                              htmlFor="farmSize"
+                              htmlFor="gardenSize"
                               className="text-primary/80"
                             >
-                              Farm Size (Acres)
+                              Garden Size (Sq. Ft.)
                             </Label>
                             <Input
-                              id="farmSize"
+                              id="gardenSize"
                               type="number"
                               defaultValue="5.5"
                               className="border-border focus:border-primary/80 focus:ring-primary/80"
@@ -503,14 +497,14 @@ export default function ProfilePage() {
                           </div>
                           <div className="space-y-2">
                             <Label
-                              htmlFor="farmingType"
+                              htmlFor="gardeningType"
                               className="text-primary/80"
                             >
-                              Farming Type
+                              Gardening Type
                             </Label>
                             <Select defaultValue="conventional">
                               <SelectTrigger className="border-border focus:border-primary/80 focus:ring-primary/80">
-                                <SelectValue placeholder="Select farming type" />
+                                <SelectValue placeholder="Select gardening type" />
                               </SelectTrigger>
                               <SelectContent>
                                 <SelectItem value="conventional">
@@ -526,14 +520,14 @@ export default function ProfilePage() {
                         </div>
                         <div className="space-y-2">
                           <Label
-                            htmlFor="primaryCrops"
+                            htmlFor="primaryPlants"
                             className="text-primary/80"
                           >
-                            Primary Crops
+                            Primary Plants
                           </Label>
                           <Textarea
-                            id="primaryCrops"
-                            defaultValue="Rice (Boro, Aman), Jute, Wheat"
+                            id="primaryPlants"
+                            defaultValue="Tomatoes, Cucumbers, Peppers"
                             className="border-border focus:border-primary/80 focus:ring-primary/80"
                           />
                         </div>
@@ -560,17 +554,17 @@ export default function ProfilePage() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           <div>
                             <h3 className="text-sm font-medium text-primary">
-                              Farm Name
+                              Garden Name
                             </h3>
                             <p className="mt-1 text-primary">
-                              Green Harvest Farm
+                              Green Harvest Garden
                             </p>
                           </div>
                           <div>
                             <h3 className="text-sm font-medium text-primary">
-                              Farm Size
+                              Garden Size
                             </h3>
-                            <p className="mt-1 text-primary">5.5 Acres</p>
+                            <p className="mt-1 text-primary">5.5 Sq. Ft.</p>
                           </div>
                           <div>
                             <h3 className="text-sm font-medium text-primary">
@@ -594,17 +588,17 @@ export default function ProfilePage() {
                           </div>
                           <div>
                             <h3 className="text-sm font-medium text-primary">
-                              Farming Type
+                              Gardening Type
                             </h3>
                             <p className="mt-1 text-primary">Conventional</p>
                           </div>
                         </div>
                         <div>
                           <h3 className="text-sm font-medium text-primary">
-                            Primary Crops
+                            Primary Plants
                           </h3>
                           <p className="mt-1 text-primary">
-                            Rice (Boro, Aman), Jute, Wheat
+                            Tomatoes, Cucumbers, Peppers
                           </p>
                         </div>
                       </div>
@@ -618,7 +612,7 @@ export default function ProfilePage() {
                       Equipment & Resources
                     </CardTitle>
                     <CardDescription className="text-primary/80">
-                      Information about your farming equipment and resources
+                      Information about your gardening equipment and resources
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -643,6 +637,12 @@ export default function ProfilePage() {
                           <Badge className="bg-secondary/60 text-primary/80 hover:bg-secondary/60">
                             Harvester
                           </Badge>
+                          <Badge className="bg-secondary/60 text-primary/80 hover:bg-secondary/60">
+                            Seedling Tray
+                          </Badge>
+                          <Badge className="bg-secondary/60 text-primary/80 hover:bg-secondary/60">
+                            Gardening Gloves
+                          </Badge>
                         </div>
                       </div>
                       <div>
@@ -663,138 +663,6 @@ export default function ProfilePage() {
                             <p className="mt-1 text-primary">8-10 people</p>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-
-              {/* Preferences Tab */}
-              <TabsContent value="preferences">
-                <Card className="border-border shadow-sm">
-                  <CardHeader>
-                    <CardTitle className="text-primary">
-                      Notification Preferences
-                    </CardTitle>
-                    <CardDescription className="text-primary/80">
-                      Manage how and when you receive notifications
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-6">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <h3 className="font-medium text-primary">
-                            Email Notifications
-                          </h3>
-                          <p className="text-sm text-primary">
-                            Receive updates and alerts via email
-                          </p>
-                        </div>
-                        <Switch defaultChecked />
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <h3 className="font-medium text-primary">
-                            SMS Notifications
-                          </h3>
-                          <p className="text-sm text-primary">
-                            Receive updates and alerts via SMS
-                          </p>
-                        </div>
-                        <Switch defaultChecked />
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <h3 className="font-medium text-primary">
-                            Weather Alerts
-                          </h3>
-                          <p className="text-sm text-primary">
-                            Receive alerts about weather conditions
-                          </p>
-                        </div>
-                        <Switch defaultChecked />
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <h3 className="font-medium text-primary">
-                            Crop Price Updates
-                          </h3>
-                          <p className="text-sm text-primary">
-                            Receive updates about market prices
-                          </p>
-                        </div>
-                        <Switch defaultChecked />
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <h3 className="font-medium text-primary">
-                            Disease Outbreak Alerts
-                          </h3>
-                          <p className="text-sm text-primary">
-                            Receive alerts about crop disease outbreaks in your
-                            area
-                          </p>
-                        </div>
-                        <Switch defaultChecked />
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="border-border shadow-sm mt-6">
-                  <CardHeader>
-                    <CardTitle className="text-primary">
-                      App Preferences
-                    </CardTitle>
-                    <CardDescription className="text-primary/80">
-                      Customize your app experience
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-6">
-                      <div className="space-y-2">
-                        <Label htmlFor="language" className="text-primary/80">
-                          Preferred Language
-                        </Label>
-                        <Select defaultValue="bn">
-                          <SelectTrigger className="border-border focus:border-primary/80 focus:ring-primary/80">
-                            <SelectValue placeholder="Select language" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="bn">Bengali (বাংলা)</SelectItem>
-                            <SelectItem value="en">English</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="units" className="text-primary/80">
-                          Measurement Units
-                        </Label>
-                        <Select defaultValue="metric">
-                          <SelectTrigger className="border-border focus:border-primary/80 focus:ring-primary/80">
-                            <SelectValue placeholder="Select units" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="metric">
-                              Metric (Celsius, Kilometers)
-                            </SelectItem>
-                            <SelectItem value="imperial">
-                              Imperial (Fahrenheit, Miles)
-                            </SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <h3 className="font-medium text-primary">
-                            Data Saving Mode
-                          </h3>
-                          <p className="text-sm text-primary">
-                            Reduce data usage by loading lower quality images
-                          </p>
-                        </div>
-                        <Switch />
                       </div>
                     </div>
                   </CardContent>
