@@ -260,7 +260,7 @@ export default function MyGardenPage() {
                         size="sm"
                         className="flex-1 border-green-200 text-green-700 hover:bg-green-50"
                       >
-                        <Link href={`/crop-details/${crop.id}`}>
+                        <Link href={`/my-garden/crops/${crop.id}`}>
                           <Eye className="h-4 w-4 mr-1" />
                           View Details
                         </Link>
