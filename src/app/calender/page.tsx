@@ -14,53 +14,34 @@ import {
   CalendarIcon,
   ChevronLeft,
   ChevronRight,
-  Droplets,
-  Leaf,
-  Heart,
   Plus,
   Check,
   Trash2,
   HelpCircle,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useMemo, useCallback } from "react";
+import {
+  startOfMonth,
+  endOfMonth,
+  eachDayOfInterval,
+  format,
+  isToday,
+  isSameMonth,
+  isSameDay,
+  addMonths,
+  subMonths,
+  startOfDay,
+} from "date-fns";
+import {
+  Task,
+  TaskType,
+  CalendarTasks,
+  taskTypes,
+} from "@/types/calender";
+import TaskHelpModal from "@/components/calender/TaskHelpModal";
 
-const taskTypes = {
-  water: {
-    icon: Droplets,
-    color: "bg-blue-500",
-    label: "Water",
-    lightColor: "bg-blue-50 text-blue-800",
-  },
-  fertilize: {
-    icon: Leaf,
-    color: "bg-green-500",
-    label: "Fertilize",
-    lightColor: "bg-green-50 text-green-800",
-  },
-  diagnosis: {
-    icon: Heart,
-    color: "bg-red-500",
-    label: "Check Health",
-    lightColor: "bg-red-50 text-red-800",
-  },
-  harvest: {
-    icon: CalendarIcon,
-    color: "bg-yellow-500",
-    label: "Harvest",
-    lightColor: "bg-yellow-50 text-yellow-800",
-  },
-  maintenance: {
-    icon: CalendarIcon,
-    color: "bg-purple-500",
-    label: "Maintenance",
-    lightColor: "bg-purple-50 text-purple-800",
-  },
-} as const;
-
-type TaskType = keyof typeof taskTypes;
-
-const calendarTasks = {
-  "2024-01-25": [
+const calendarTasks: CalendarTasks = {
+  "2025-01-25": [
     {
       id: 1,
       crop: "Cherry Tomatoes",
@@ -86,7 +67,7 @@ const calendarTasks = {
       completed: true,
     },
   ],
-  "2024-01-26": [
+  "2025-01-26": [
     {
       id: 4,
       crop: "Basil",
@@ -104,7 +85,7 @@ const calendarTasks = {
       completed: false,
     },
   ],
-  "2024-01-27": [
+  "2025-01-27": [
     {
       id: 6,
       crop: "Lettuce",
@@ -122,7 +103,7 @@ const calendarTasks = {
       completed: false,
     },
   ],
-  "2024-01-28": [
+  "2025-01-28": [
     {
       id: 8,
       crop: "Spinach",
@@ -132,7 +113,7 @@ const calendarTasks = {
       completed: false,
     },
   ],
-  "2024-01-30": [
+  "2025-01-30": [
     {
       id: 9,
       crop: "Basil",
@@ -153,34 +134,61 @@ const calendarTasks = {
 };
 
 export default function CalendarPage() {
-  const [selectedDate, setSelectedDate] = useState<string>("2024-01-25");
-  const [filterType, setFilterType] = useState<string>("all");
-  const [currentMonth, setCurrentMonth] = useState("January 2024");
-  const [tasks, setTasks] = useState(calendarTasks);
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [filterType, setFilterType] = useState<TaskType | "all">("all");
+  const [tasks, setTasks] = useState<CalendarTasks>(calendarTasks);
+  const [isHelpModalOpen, setHelpModalOpen] = useState(false);
+  const [selectedTaskForHelp, setSelectedTaskForHelp] = useState<Task | null>(
+    null
+  );
 
-  const getDaysInMonth = () => {
-    return Array.from({ length: 31 }, (_, i) => i + 1);
+  const handleHelpClick = (task: Task) => {
+    setSelectedTaskForHelp(task);
+    setHelpModalOpen(true);
   };
 
-  const getTasksForDate = (date: number) => {
-    const dateKey = `2024-01-${date.toString().padStart(2, "0")}`;
-    const dateTasks = tasks[dateKey] || [];
+  const daysInMonth = useMemo(() => {
+    const start = startOfMonth(currentDate);
+    const end = endOfMonth(currentDate);
+    return eachDayOfInterval({ start, end });
+  }, [currentDate]);
 
-    if (filterType === "all") return dateTasks;
-    return dateTasks.filter((task) => task.type === filterType);
-  };
+  const monthYear = useMemo(
+    () => format(currentDate, "MMMM yyyy"),
+    [currentDate]
+  );
 
-  const hasTasksOnDate = (date: number) => {
-    return getTasksForDate(date).length > 0;
-  };
+  const handlePreviousMonth = useCallback(() => {
+    setCurrentDate((prev) => subMonths(prev, 1));
+  }, []);
 
-  const getTaskTypesForDate = (date: number) => {
-    const dateTasks = getTasksForDate(date);
-    const types = [...new Set(dateTasks.map((task) => task.type))];
-    return types;
-  };
+  const handleNextMonth = useCallback(() => {
+    setCurrentDate((prev) => addMonths(prev, 1));
+  }, []);
 
-  const handleTaskComplete = (taskId: number, dateKey: string) => {
+  const getTasksForDate = useCallback(
+    (date: Date) => {
+      const dateKey = format(date, "yyyy-MM-dd");
+      const dateTasks = tasks[dateKey] || [];
+
+      if (filterType === "all") return dateTasks;
+      return dateTasks.filter((task) => task.type === filterType);
+    },
+    [filterType, tasks]
+  );
+
+  const getTaskTypesForDate = useCallback(
+    (date: Date) => {
+      const dateTasks = getTasksForDate(date);
+      const types = [...new Set(dateTasks.map((task) => task.type))];
+      return types;
+    },
+    [getTasksForDate]
+  );
+
+  const handleTaskComplete = useCallback((taskId: number, date: Date) => {
+    const dateKey = format(date, "yyyy-MM-dd");
     setTasks((prev) => ({
       ...prev,
       [dateKey]:
@@ -188,16 +196,44 @@ export default function CalendarPage() {
           task.id === taskId ? { ...task, completed: true } : task
         ) || [],
     }));
-  };
+  }, []);
 
-  const handleTaskDelete = (taskId: number, dateKey: string) => {
+  const handleTaskDelete = useCallback((taskId: number, date: Date) => {
+    const dateKey = format(date, "yyyy-MM-dd");
     setTasks((prev) => ({
       ...prev,
       [dateKey]: prev[dateKey]?.filter((task) => task.id !== taskId) || [],
     }));
-  };
+  }, []);
 
-  const selectedDateTasks = tasks[selectedDate] || [];
+  const selectedDateTasks = useMemo(
+    () => getTasksForDate(selectedDate),
+    [getTasksForDate, selectedDate]
+  );
+
+  const upcomingTasks = useMemo(() => {
+    const allTasks = Object.entries(tasks).flatMap(([date, dateTasks]) =>
+      dateTasks.map((task) => ({ ...task, date: new Date(date + "T00:00") }))
+    );
+    const today = startOfDay(new Date());
+
+    return allTasks
+      .filter((task) => !task.completed && task.date >= today)
+      .sort((a, b) => a.date.getTime() - b.date.getTime())
+      .slice(0, 3);
+  }, [tasks]);
+
+  const monthlyStats = useMemo(() => {
+    const monthTasks = Object.entries(tasks)
+      .filter(([date]) => isSameMonth(new Date(date), currentDate))
+      .flatMap(([, dateTasks]) => dateTasks);
+
+    const total = monthTasks.length;
+    const completed = monthTasks.filter((task) => task.completed).length;
+    const pending = total - completed;
+
+    return { total, completed, pending };
+  }, [tasks, currentDate]);
 
   return (
     <div className="min-h-screen max-w-7xl mx-auto px-4 bg-gradient-to-br from-green-50 via-white to-yellow-50">
@@ -229,23 +265,36 @@ export default function CalendarPage() {
                   variant="outline"
                   size="sm"
                   className="border-green-200 bg-transparent"
+                  onClick={handlePreviousMonth}
                 >
                   <ChevronLeft className="h-4 w-4" />
                 </Button>
                 <h2 className="text-lg font-semibold text-green-800">
-                  {currentMonth}
+                  {monthYear}
                 </h2>
                 <Button
                   variant="outline"
                   size="sm"
                   className="border-green-200 bg-transparent"
+                  onClick={handleNextMonth}
                 >
                   <ChevronRight className="h-4 w-4" />
                 </Button>
               </div>
+              <Button
+                variant="outline"
+                size="sm"
+                className="border-green-200 bg-transparent text-green-700"
+                onClick={() => setCurrentDate(new Date())}
+              >
+                Today
+              </Button>
             </div>
 
-            <Select value={filterType} onValueChange={setFilterType}>
+            <Select
+              value={filterType}
+              onValueChange={(value) => setFilterType(value as TaskType | "all")}
+            >
               <SelectTrigger className="w-full border-green-200">
                 <SelectValue />
               </SelectTrigger>
@@ -260,58 +309,130 @@ export default function CalendarPage() {
           </CardContent>
         </Card>
 
+        <div className="grid md:grid-cols-2 gap-6">
+          {/* Upcoming Tasks */}
+          <Card className="bg-white border-green-200 shadow-sm">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-green-800 text-base">
+                Upcoming Tasks
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              {upcomingTasks.length === 0 ? (
+                <p className="text-gray-500 text-sm">No upcoming tasks.</p>
+              ) : (
+                <div className="space-y-3">
+                  {upcomingTasks.map((task) => {
+                    const taskConfig = taskTypes[task.type];
+                    const TaskIcon = taskConfig.icon;
+                    return (
+                      <div key={task.id} className="flex items-center gap-3">
+                        <div
+                          className={`w-8 h-8 rounded-full ${taskConfig.color} flex items-center justify-center flex-shrink-0`}
+                        >
+                          <TaskIcon className="h-4 w-4 text-white" />
+                        </div>
+                        <div className="flex-1">
+                          <p className="font-medium text-sm text-green-800">
+                            {task.task}
+                          </p>
+                          <p className="text-xs text-gray-500">
+                            {format(task.date, "MMM d")} - {task.crop}
+                          </p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Monthly Stats */}
+          <Card className="bg-white border-green-200 shadow-sm">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-green-800 text-base">
+                Monthly Stats
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-3 gap-2 text-center">
+                <div>
+                  <p className="text-2xl font-bold text-green-800">
+                    {monthlyStats.total}
+                  </p>
+                  <p className="text-xs text-gray-500">Total</p>
+                </div>
+                <div>
+                  <p className="text-2xl font-bold text-green-600">
+                    {monthlyStats.completed}
+                  </p>
+                  <p className="text-xs text-gray-500">Completed</p>
+                </div>
+                <div>
+                  <p className="text-2xl font-bold text-yellow-600">
+                    {monthlyStats.pending}
+                  </p>
+                  <p className="text-xs text-gray-500">Pending</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
         {/* Full-Width Calendar */}
         <Card className="bg-white border-green-200 shadow-sm">
           <CardContent className="p-2">
             {/* Calendar Grid */}
             <div className="grid grid-cols-7 gap-1">
               {/* Day Headers */}
-              {["S", "M", "T", "W", "T", "F", "S"].map((day) => (
+              {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
                 <div
                   key={day}
                   className="p-2 text-center font-medium text-gray-600 text-sm"
                 >
-                  {day}
+                  {day.charAt(0)}
                 </div>
               ))}
 
               {/* Calendar Days */}
-              {getDaysInMonth().map((date) => {
-                const taskTypesForDate = getTaskTypesForDate(date);
-                const dateKey = `2024-01-${date.toString().padStart(2, "0")}`;
-                const isSelected = selectedDate === dateKey;
-                const isToday = date === 25;
+              {daysInMonth.map((date) => {
+                const dateKey = format(date, "yyyy-MM-dd");
+                const isSelected = isSameDay(selectedDate, date);
+                const isCurrentMonth = isSameMonth(date, currentDate);
+                const isTodayDate = isToday(date);
 
                 return (
                   <div
-                    key={date}
+                    key={dateKey}
                     className={`
                       p-2 min-h-[60px] border rounded-lg cursor-pointer transition-all
+                      ${!isCurrentMonth ? "opacity-50" : ""}
                       ${
                         isSelected
                           ? "bg-green-100 border-green-300 shadow-sm"
                           : "bg-white border-gray-200 hover:bg-green-50"
                       }
-                      ${isToday ? "ring-2 ring-green-500" : ""}
+                      ${isTodayDate ? "ring-2 ring-green-500" : ""}
                     `}
-                    onClick={() => setSelectedDate(dateKey)}
+                    onClick={() => setSelectedDate(date)}
                   >
                     <div className="flex items-center justify-between mb-1">
                       <span
                         className={`text-sm font-medium ${
-                          isToday ? "text-green-800" : "text-gray-700"
+                          isTodayDate ? "text-green-800" : "text-gray-700"
                         }`}
                       >
-                        {date}
+                        {format(date, "d")}
                       </span>
-                      {isToday && (
+                      {isTodayDate && (
                         <div className="w-2 h-2 bg-green-500 rounded-full" />
                       )}
                     </div>
 
                     {/* Task Indicators */}
                     <div className="flex flex-wrap gap-1">
-                      {taskTypesForDate.slice(0, 3).map((type) => {
+                      {getTaskTypesForDate(date).slice(0, 3).map((type) => {
                         const taskConfig = taskTypes[type];
                         if (!taskConfig) return null;
                         return (
@@ -322,11 +443,6 @@ export default function CalendarPage() {
                           />
                         );
                       })}
-                      {taskTypesForDate.length > 3 && (
-                        <div className="text-xs text-gray-500">
-                          +{taskTypesForDate.length - 3}
-                        </div>
-                      )}
                     </div>
                   </div>
                 );
@@ -340,20 +456,14 @@ export default function CalendarPage() {
           <CardHeader className="pb-3">
             <CardTitle className="text-green-800 flex items-center gap-2">
               <CalendarIcon className="h-5 w-5" />
-              {new Date(selectedDate).toLocaleDateString("en-US", {
-                weekday: "long",
-                month: "long",
-                day: "numeric",
-              })}
+              {format(selectedDate, "EEEE, MMMM d, yyyy")}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
             {selectedDateTasks.length === 0 ? (
               <div className="text-center py-8">
                 <CalendarIcon className="h-12 w-12 text-gray-300 mx-auto mb-3" />
-                <p className="text-gray-500">
-                  No tasks scheduled for this date
-                </p>
+                <p className="text-gray-500">No tasks scheduled for this date</p>
                 <Button
                   variant="outline"
                   className="mt-3 border-green-200 text-green-700 bg-transparent"
@@ -365,7 +475,6 @@ export default function CalendarPage() {
             ) : (
               selectedDateTasks.map((task) => {
                 const taskConfig = taskTypes[task.type];
-                if (!taskConfig) return null;
                 const TaskIcon = taskConfig.icon;
 
                 return (
@@ -432,6 +541,7 @@ export default function CalendarPage() {
                               size="sm"
                               variant="outline"
                               className="border-blue-200 text-blue-600 hover:bg-blue-50 bg-transparent"
+                              onClick={() => handleHelpClick(task)}
                             >
                               <HelpCircle className="h-4 w-4" />
                             </Button>
@@ -481,6 +591,11 @@ export default function CalendarPage() {
           </CardContent>
         </Card>
       </div>
+      <TaskHelpModal
+        task={selectedTaskForHelp}
+        isOpen={isHelpModalOpen}
+        onClose={() => setHelpModalOpen(false)}
+      />
     </div>
   );
 }
