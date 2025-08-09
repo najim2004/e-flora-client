@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm, Control } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -16,10 +16,8 @@ import {
   FormMessage,
   FormControl,
 } from "@/components/ui/form";
-
-import { MapPin } from "lucide-react";
+import { Loader, MapPin } from "lucide-react";
 import { errorToast } from "../customToast";
-
 import {
   Select,
   SelectTrigger,
@@ -28,7 +26,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-// Zod schema
+// ---------------- Constants ----------------
 const plantTypeEnum = z.enum([
   "vegetable",
   "fruit",
@@ -38,99 +36,183 @@ const plantTypeEnum = z.enum([
   "ornamental",
 ]);
 
-const schema = z.object({
-  forMyGarden: z.boolean(),
-  plantType: z.array(plantTypeEnum).min(1, "Select at least one plant type"),
-  location: z.string().optional(),
-  latitude: z.number().optional(),
-  longitude: z.number().optional(),
-  soilType: z.string().optional(),
-  area: z.number().optional(),
-  waterSource: z.string().optional(),
-  purpose: z.string().optional(),
-  sunlight: z.string().optional(),
-  currentCrops: z.string().optional(),
-  gardenImage: z.custom<File>((file) => file instanceof File).optional(),
-});
+const schema = z
+  .object({
+    forMyGarden: z.boolean(),
+    plantType: z.array(plantTypeEnum).min(1, "Select at least one plant type"),
+    location: z.string().min(1, "Location is required").optional(),
+    latitude: z.number().min(-90).max(90).optional(),
+    longitude: z.number().min(-180).max(180).optional(),
+    soilType: z.string().min(1, "Soil type is required").optional(),
+    area: z.number().positive("Area must be positive").optional(),
+    waterSource: z.string().min(1, "Water source is required").optional(),
+    purpose: z.string().min(1, "Purpose is required").optional(),
+    sunlight: z.string().min(1, "Sunlight is required").optional(),
+    currentCrops: z.string().optional(),
+    gardenImage: z.custom<File>((f) => f instanceof File).optional(),
+  })
+  .refine((d) => d.forMyGarden || !!d.location, {
+    path: ["location"],
+    message: "Location is required",
+  })
+  .refine((d) => d.forMyGarden || d.latitude != null, {
+    path: ["latitude"],
+    message: "Latitude is required",
+  })
+  .refine((d) => d.forMyGarden || d.longitude != null, {
+    path: ["longitude"],
+    message: "Longitude is required",
+  })
+  .refine((d) => d.forMyGarden || !!d.soilType, {
+    path: ["soilType"],
+    message: "Soil type is required",
+  })
+  .refine((d) => d.forMyGarden || d.area != null, {
+    path: ["area"],
+    message: "Area is required",
+  })
+  .refine((d) => d.forMyGarden || !!d.waterSource, {
+    path: ["waterSource"],
+    message: "Water source is required",
+  })
+  .refine((d) => d.forMyGarden || !!d.purpose, {
+    path: ["purpose"],
+    message: "Purpose is required",
+  })
+  .refine((d) => d.forMyGarden || !!d.sunlight, {
+    path: ["sunlight"],
+    message: "Sunlight is required",
+  });
 
 type FormData = z.infer<typeof schema>;
 
-type SelectFieldProps = {
-  name: keyof FormData;
-  label: string;
-  options: { value: string; label: string }[];
-  control: Control<FormData>;
-  placeholder?: string;
+const options = {
+  soilType: ["loamy", "sandy", "clayey", "silty", "peaty", "chalky", "unknown"],
+  waterSource: [
+    "tube-well",
+    "tap",
+    "rainwater",
+    "storage",
+    "manual",
+    "uncertain",
+  ],
+  purpose: ["eat", "sell", "decor", "educational", "mixed"],
+  sunlight: ["full", "partial", "shade"],
 };
 
-function SelectField({
+// ---------------- Reusable Fields ----------------
+const SelectField = ({
   name,
   label,
-  options,
+  opts,
   control,
-  placeholder,
-}: SelectFieldProps) {
-  return (
-    <FormField
-      name={name}
-      control={control}
-      render={({ field }) => (
-        <FormItem>
-          <FormLabel>{label}</FormLabel>
-          <FormControl>
-            <Select
-              onValueChange={field.onChange}
-              value={typeof field.value === "string" ? field.value : ""}
-              defaultValue={typeof field.value === "string" ? field.value : ""}
-            >
-              <SelectTrigger className="!h-10 w-full">
-                <SelectValue placeholder={placeholder || `Select ${label}`} />
-              </SelectTrigger>
-              <SelectContent>
-                {options.map(({ value, label }) => (
-                  <SelectItem key={value} value={value}>
-                    {label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-      )}
-    />
-  );
-}
+}: {
+  name: keyof FormData;
+  label: string;
+  opts: string[];
+  control: Control<FormData>;
+}) => (
+  <FormField
+    name={name}
+    control={control}
+    render={({ field }) => (
+      <FormItem>
+        <FormLabel>{label}</FormLabel>
+        <FormControl>
+          <Select
+            onValueChange={field.onChange}
+            value={(field.value as string) || ""}
+          >
+            <SelectTrigger className="!h-10 w-full">
+              <SelectValue placeholder={`Select ${label}`} />
+            </SelectTrigger>
+            <SelectContent>
+              {opts.map((o) => (
+                <SelectItem key={o} value={o}>
+                  {o.charAt(0).toUpperCase() + o.slice(1)}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </FormControl>
+        <FormMessage />
+      </FormItem>
+    )}
+  />
+);
 
+const NumberField = ({
+  name,
+  label,
+  control,
+  min = 0,
+}: {
+  name: keyof FormData;
+  label: string;
+  control: Control<FormData>;
+  min?: number;
+}) => (
+  <FormField
+    name={name}
+    control={control}
+    render={({ field }) => (
+      <FormItem>
+        <FormLabel>{label}</FormLabel>
+        <FormControl>
+          <Input
+            type="number"
+            min={min}
+            value={typeof field.value === "number" ? field.value : ""}
+            onChange={(e) => {
+              const val = e.target.value;
+              field.onChange(val === "" ? undefined : e.target.valueAsNumber);
+            }}
+          />
+        </FormControl>
+        <FormMessage />
+      </FormItem>
+    )}
+  />
+);
+
+// ---------------- Main Component ----------------
 export default function FarmDetailsForm({
   onSubmit,
+  clear = false,
   isLoading = false,
 }: {
-  onSubmit: (values: FormData) => void;
+  onSubmit: (v: FormData) => void;
+  clear?: boolean;
   isLoading?: boolean;
 }) {
-  // Important: set defaultValues with plantType at least one empty array or minimum one
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
-    defaultValues: {
-      forMyGarden: false,
-      plantType: [],
-    },
+    defaultValues: { forMyGarden: false, plantType: [] },
   });
-
   const [locLoading, setLocLoading] = useState(false);
+  const [fileKey, setFileKey] = useState(Date.now());
+
+  const forMyGarden = form.watch("forMyGarden");
+  const plantTypes = plantTypeEnum.options;
+
+  // Reset fields when forMyGarden is ON
+  useEffect(() => {
+    if (forMyGarden) {
+      form.reset({ forMyGarden: true, plantType: form.getValues("plantType") });
+      setFileKey(Date.now());
+    }
+  }, [forMyGarden, form]);
 
   const getLocation = () => {
     if (!navigator.geolocation) return errorToast("Geolocation not supported");
     setLocLoading(true);
     navigator.geolocation.getCurrentPosition(async (pos) => {
-      const lat = pos.coords.latitude,
-        lon = pos.coords.longitude;
-      form.setValue("latitude", lat);
-      form.setValue("longitude", lon);
+      const { latitude, longitude } = pos.coords;
+      form.setValue("latitude", latitude);
+      form.setValue("longitude", longitude);
       try {
         const res = await fetch(
-          `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`
+          `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`
         );
         const data = await res.json();
         const city =
@@ -147,45 +229,20 @@ export default function FarmDetailsForm({
     });
   };
 
-  const forMyGarden = form.watch("forMyGarden");
-  const plantTypes = plantTypeEnum.options;
-
-  const soilOptions = [
-    { value: "loamy", label: "Loamy" },
-    { value: "sandy", label: "Sandy" },
-    { value: "clayey", label: "Clayey" },
-    { value: "silty", label: "Silty" },
-    { value: "peaty", label: "Peaty" },
-    { value: "chalky", label: "Chalky" },
-    { value: "unknown", label: "Unknown" },
-  ];
-
-  const waterSourceOptions = [
-    { value: "tube-well", label: "Tube-well" },
-    { value: "tap", label: "Tap" },
-    { value: "rainwater", label: "Rainwater" },
-    { value: "storage", label: "Storage" },
-    { value: "manual", label: "Manual" },
-    { value: "uncertain", label: "Uncertain" },
-  ];
-
-  const purposeOptions = [
-    { value: "eat", label: "Eat" },
-    { value: "sell", label: "Sell" },
-    { value: "decor", label: "Decor" },
-    { value: "educational", label: "Educational" },
-    { value: "mixed", label: "Mixed" },
-  ];
-
-  const sunlightOptions = [
-    { value: "full", label: "Full" },
-    { value: "partial", label: "Partial" },
-    { value: "shade", label: "Shade" },
-  ];
+  const handleFormSubmit = (v: FormData) => {
+    onSubmit(v);
+    if (clear) {
+      form.reset({ forMyGarden: false, plantType: [] });
+      setFileKey(Date.now());
+    }
+  };
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form
+        onSubmit={form.handleSubmit(handleFormSubmit)}
+        className="space-y-6"
+      >
         {/* Switch */}
         <div className="flex items-center justify-between border p-3 rounded-lg">
           <FormLabel className="text-base">For my garden</FormLabel>
@@ -195,7 +252,7 @@ export default function FarmDetailsForm({
           />
         </div>
 
-        {/* Plant Type Checkboxes */}
+        {/* Plant Type */}
         <FormField
           name="plantType"
           control={form.control}
@@ -203,26 +260,20 @@ export default function FarmDetailsForm({
             <div>
               <FormLabel className="text-base">Plant Type</FormLabel>
               <div className="flex flex-wrap gap-4 mt-2">
-                {plantTypes.map((type) => (
-                  <div key={type} className="flex items-center gap-2">
+                {plantTypes.map((t) => (
+                  <label key={t} className="flex items-center gap-2 capitalize">
                     <Checkbox
-                      checked={(form.watch("plantType") ?? []).includes(type)}
+                      checked={(form.watch("plantType") ?? []).includes(t)}
                       onCheckedChange={(v) => {
                         const prev = form.getValues("plantType") ?? [];
-                        if (v) {
-                          if (!prev.includes(type)) {
-                            form.setValue("plantType", [...prev, type]);
-                          }
-                        } else {
-                          form.setValue(
-                            "plantType",
-                            prev.filter((t) => t !== type)
-                          );
-                        }
+                        form.setValue(
+                          "plantType",
+                          v ? [...prev, t] : prev.filter((x) => x !== t)
+                        );
                       }}
-                    />
-                    <span className="capitalize">{type}</span>
-                  </div>
+                    />{" "}
+                    {t}
+                  </label>
                 ))}
               </div>
               <FormMessage />
@@ -230,10 +281,10 @@ export default function FarmDetailsForm({
           )}
         />
 
-        {/* Manual fields show only if NOT forMyGarden */}
+        {/* Extra fields if not forMyGarden */}
         {!forMyGarden && (
           <>
-            {/* Location and get location button */}
+            {/* Location */}
             <div className="flex gap-2">
               <FormField
                 name="location"
@@ -242,7 +293,11 @@ export default function FarmDetailsForm({
                   <FormItem className="flex-1">
                     <FormLabel>Location</FormLabel>
                     <FormControl>
-                      <Input placeholder="City, State, Country" {...field} />
+                      <Input
+                        disabled={locLoading}
+                        placeholder="City, State, Country"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -255,54 +310,42 @@ export default function FarmDetailsForm({
                 disabled={locLoading}
                 className="mt-auto h-10 text-primary"
               >
-                <MapPin size={18} />
+                {locLoading ? (
+                  <Loader size={18} className="animate-spin" />
+                ) : (
+                  <MapPin size={18} />
+                )}
               </Button>
             </div>
 
             <SelectField
               name="soilType"
               label="Soil Type"
-              options={soilOptions}
+              opts={options.soilType}
               control={form.control}
-              placeholder="Select soil type"
             />
-
-            <FormField
+            <NumberField
               name="area"
+              label="Garden Area (SQF)"
               control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Garden Area (Acres)</FormLabel>
-                  <FormControl>
-                    <Input type="number" min={0} {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
             />
-
             <SelectField
               name="waterSource"
               label="Water Source"
-              options={waterSourceOptions}
+              opts={options.waterSource}
               control={form.control}
-              placeholder="Select water source"
             />
-
             <SelectField
               name="purpose"
               label="Purpose"
-              options={purposeOptions}
+              opts={options.purpose}
               control={form.control}
-              placeholder="Select purpose"
             />
-
             <SelectField
               name="sunlight"
               label="Sunlight"
-              options={sunlightOptions}
+              opts={options.sunlight}
               control={form.control}
-              placeholder="Select sunlight exposure"
             />
 
             <FormField
@@ -312,11 +355,7 @@ export default function FarmDetailsForm({
                 <FormItem>
                   <FormLabel>Current Crops</FormLabel>
                   <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="tomato, spinach, cabbage"
-                      onChange={(e) => field.onChange(e.target.value)}
-                    />
+                    <Input {...field} placeholder="tomato, spinach, cabbage" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -331,11 +370,10 @@ export default function FarmDetailsForm({
                   <FormLabel>Garden Image (Optional)</FormLabel>
                   <FormControl>
                     <Input
+                      key={fileKey}
                       type="file"
-                      onChange={(e) => {
-                        field.onChange(e.target.files?.[0] ?? undefined);
-                      }}
                       accept="image/*"
+                      onChange={(e) => field.onChange(e.target.files?.[0])}
                     />
                   </FormControl>
                   <FormMessage />
