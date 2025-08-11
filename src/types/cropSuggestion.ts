@@ -3,12 +3,33 @@ export interface Location {
   longitude: number;
 }
 
-export interface CropSuggestionBody {
-  soilType: string;
-  farmSize: number;
-  irrigationAvailability: string;
-  location: Location;
+export interface LocationWithAddress extends Location {
+  country: string;
+  state: string;
+  city: string;
+  zipCode?: string;
 }
+export interface CropSuggestionAuto {
+  mode: "auto";
+  plantType: string[];
+  avoidCurrentCrops: boolean;
+}
+
+export interface CropSuggestionManual {
+  mode: "manual";
+  plantType: string[];
+  currentCrops: string[];
+  sunlight: string;
+  purpose: string;
+  area: number;
+  waterSource: string;
+  soilType: string;
+  gardenType: string;
+  gardenerType: string;
+  location: LocationWithAddress;
+}
+
+export type CropSuggestionPayload = CropSuggestionAuto | CropSuggestionManual;
 
 export interface CropDetails {
   status: "success" | "failed" | "pending";

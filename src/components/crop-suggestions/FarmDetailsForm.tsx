@@ -26,6 +26,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+// ---------------- Types ----------------
+export type GardenType =
+  | "rooftop"
+  | "balcony"
+  | "backyard"
+  | "indoor"
+  | "terrace"
+  | "field";
+export type GardenerType = "beginner" | "intermediate" | "expert";
+
 // ---------------- Constants ----------------
 const plantTypeEnum = z.enum([
   "vegetable",
@@ -36,9 +46,22 @@ const plantTypeEnum = z.enum([
   "ornamental",
 ]);
 
+const gardenTypeEnum = z.enum([
+  "rooftop",
+  "balcony",
+  "backyard",
+  "indoor",
+  "terrace",
+  "field",
+]);
+const gardenerTypeEnum = z.enum(["beginner", "intermediate", "expert"]);
+
 const schema = z
   .object({
     forMyGarden: z.boolean(),
+    avoidCurrentCrops: z.boolean().optional(),
+    gardenType: gardenTypeEnum.optional(),
+    gardenerType: gardenerTypeEnum.optional(),
     plantType: z.array(plantTypeEnum).min(1, "Select at least one plant type"),
     location: z.string().min(1, "Location is required").optional(),
     latitude: z.number().min(-90).max(90).optional(),
@@ -51,6 +74,7 @@ const schema = z
     currentCrops: z.string().optional(),
     gardenImage: z.custom<File>((f) => f instanceof File).optional(),
   })
+  // Required when not forMyGarden
   .refine((d) => d.forMyGarden || !!d.location, {
     path: ["location"],
     message: "Location is required",
@@ -82,9 +106,18 @@ const schema = z
   .refine((d) => d.forMyGarden || !!d.sunlight, {
     path: ["sunlight"],
     message: "Sunlight is required",
+  })
+  // Required when forMyGarden is false
+  .refine((d) => d.forMyGarden || !!d.gardenType, {
+    path: ["gardenType"],
+    message: "Garden type is required",
+  })
+  .refine((d) => d.forMyGarden || !!d.gardenerType, {
+    path: ["gardenerType"],
+    message: "Gardener type is required",
   });
 
-type FormData = z.infer<typeof schema>;
+export type FormData = z.infer<typeof schema>;
 
 const options = {
   soilType: ["loamy", "sandy", "clayey", "silty", "peaty", "chalky", "unknown"],
@@ -98,6 +131,8 @@ const options = {
   ],
   purpose: ["eat", "sell", "decor", "educational", "mixed"],
   sunlight: ["full", "partial", "shade"],
+  gardenType: ["rooftop", "balcony", "backyard", "indoor", "terrace", "field"],
+  gardenerType: ["beginner", "intermediate", "expert"],
 };
 
 // ---------------- Reusable Fields ----------------
@@ -187,7 +222,11 @@ export default function FarmDetailsForm({
 }) {
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
-    defaultValues: { forMyGarden: false, plantType: [] },
+    defaultValues: {
+      forMyGarden: false,
+      avoidCurrentCrops: false,
+      plantType: [],
+    },
   });
   const [locLoading, setLocLoading] = useState(false);
   const [fileKey, setFileKey] = useState(Date.now());
@@ -195,10 +234,13 @@ export default function FarmDetailsForm({
   const forMyGarden = form.watch("forMyGarden");
   const plantTypes = plantTypeEnum.options;
 
-  // Reset fields when forMyGarden is ON
   useEffect(() => {
     if (forMyGarden) {
-      form.reset({ forMyGarden: true, plantType: form.getValues("plantType") });
+      form.reset({
+        forMyGarden: true,
+        avoidCurrentCrops: false,
+        plantType: form.getValues("plantType"),
+      });
       setFileKey(Date.now());
     }
   }, [forMyGarden, form]);
@@ -232,7 +274,11 @@ export default function FarmDetailsForm({
   const handleFormSubmit = (v: FormData) => {
     onSubmit(v);
     if (clear) {
-      form.reset({ forMyGarden: false, plantType: [] });
+      form.reset({
+        forMyGarden: false,
+        avoidCurrentCrops: false,
+        plantType: [],
+      });
       setFileKey(Date.now());
     }
   };
@@ -243,7 +289,7 @@ export default function FarmDetailsForm({
         onSubmit={form.handleSubmit(handleFormSubmit)}
         className="space-y-6"
       >
-        {/* Switch */}
+        {/* For My Garden Switch */}
         <div className="flex items-center justify-between border p-3 rounded-lg">
           <FormLabel className="text-base">For my garden</FormLabel>
           <Switch
@@ -251,6 +297,35 @@ export default function FarmDetailsForm({
             onCheckedChange={(v) => form.setValue("forMyGarden", v)}
           />
         </div>
+
+        {/* Avoid current crops - only if forMyGarden is true */}
+        {forMyGarden && (
+          <div className="flex items-center justify-between border p-3 rounded-lg">
+            <FormLabel className="text-base">Avoid current crops</FormLabel>
+            <Switch
+              checked={form.watch("avoidCurrentCrops")}
+              onCheckedChange={(v) => form.setValue("avoidCurrentCrops", v)}
+            />
+          </div>
+        )}
+
+        {/* GardenType & GardenerType - only if forMyGarden is false */}
+        {!forMyGarden && (
+          <>
+            <SelectField
+              name="gardenType"
+              label="Garden Type"
+              opts={options.gardenType}
+              control={form.control}
+            />
+            <SelectField
+              name="gardenerType"
+              label="Gardener Type"
+              opts={options.gardenerType}
+              control={form.control}
+            />
+          </>
+        )}
 
         {/* Plant Type */}
         <FormField
@@ -284,7 +359,6 @@ export default function FarmDetailsForm({
         {/* Extra fields if not forMyGarden */}
         {!forMyGarden && (
           <>
-            {/* Location */}
             <div className="flex gap-2">
               <FormField
                 name="location"
@@ -383,7 +457,6 @@ export default function FarmDetailsForm({
           </>
         )}
 
-        {/* Submit */}
         <Button
           type="submit"
           className="w-full"

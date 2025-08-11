@@ -1,12 +1,11 @@
 import { apiSlice } from "@/redux/apiSlice";
-import { CropSuggestionBody } from "@/types/cropSuggestion";
-import { setHistory } from "./cropSuggestionSlice";
+import { CropSuggestionPayload } from "@/types/cropSuggestion";
 
 export const cropSuggestionApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     requestCropSuggestion: builder.mutation({
-      query: (body: CropSuggestionBody) => ({
-        url: `/api/v1/crops/crop-suggestion`,
+      query: (body: CropSuggestionPayload) => ({
+        url: "/api/v1/crops/crop-suggestions",
         method: "POST",
         body,
       }),
@@ -21,16 +20,6 @@ export const cropSuggestionApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         params,
       }),
-      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-        try {
-          const { data } = await queryFulfilled;
-          if (data?.success && data?.data) {
-            dispatch(setHistory(data.data));
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      },
     }),
   }),
 });
