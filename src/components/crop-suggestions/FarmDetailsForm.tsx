@@ -229,7 +229,6 @@ export default function FarmDetailsForm({
     },
   });
   const [locLoading, setLocLoading] = useState(false);
-  const [fileKey, setFileKey] = useState(Date.now());
 
   const forMyGarden = form.watch("forMyGarden");
   const plantTypes = plantTypeEnum.options;
@@ -241,7 +240,6 @@ export default function FarmDetailsForm({
         avoidCurrentCrops: false,
         plantType: form.getValues("plantType"),
       });
-      setFileKey(Date.now());
     }
   }, [forMyGarden, form]);
 
@@ -279,7 +277,6 @@ export default function FarmDetailsForm({
         avoidCurrentCrops: false,
         plantType: [],
       });
-      setFileKey(Date.now());
     }
   };
 
@@ -371,6 +368,7 @@ export default function FarmDetailsForm({
                         disabled={locLoading}
                         placeholder="City, State, Country"
                         {...field}
+                        CardHeader
                       />
                     </FormControl>
                     <FormMessage />
@@ -430,25 +428,6 @@ export default function FarmDetailsForm({
                   <FormLabel>Current Crops</FormLabel>
                   <FormControl>
                     <Input {...field} placeholder="tomato, spinach, cabbage" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              name="gardenImage"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Garden Image (Optional)</FormLabel>
-                  <FormControl>
-                    <Input
-                      key={fileKey}
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) => field.onChange(e.target.files?.[0])}
-                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
