@@ -84,7 +84,7 @@ const Navbar: React.FC = () => {
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
-                  className="relative size-8 rounded-full border data-[state=open]:bg-muted"
+                  className="relative size-8 rounded-full border data-[state=open]:bg-muted cursor-pointer"
                 >
                   <Avatar.Avatar className="size-8">
                     <Avatar.AvatarImage

@@ -14,7 +14,12 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { errorToast } from "@/components/customToast";
 import { useRequestCropSuggestionMutation } from "@/redux/features/cropSuggestions/cropSuggestionApiSlice";
-import { CropSuggestionPayload } from "@/types/cropSuggestion";
+import {
+  CropSuggestionPayload,
+  CropSuggestionProgress,
+} from "@/types/cropSuggestion";
+import { useEffect } from "react";
+import { getSocket } from "@/lib/socket";
 
 export default function CropSuggestionsPage() {
   const isAuthenticated = useSelector(
@@ -23,10 +28,36 @@ export default function CropSuggestionsPage() {
   const [requestCropSuggestion, { isLoading }] =
     useRequestCropSuggestionMutation();
 
+  useEffect(() => {
+    const socket = getSocket();
+
+    socket.emit("joinCropSuggestionRoom");
+
+    const handleProgress = (data: CropSuggestionProgress) => console.log(data);
+    const handleResult = (payload: { resultId: string }) =>
+      console.log(payload);
+    const handleError = (error: unknown) => {
+      console.log(error);
+      errorToast("Disease detection failed!");
+    };
+
+    socket.on("cropSuggestion:progressUpdate", handleProgress);
+    socket.on("cropSuggestion:result", handleResult);
+    socket.on("cropSuggestion:error", handleError);
+
+    return () => {
+      socket.emit("leaveCropSuggestionRoom");
+      socket.off("cropSuggestion:progressUpdate", handleProgress);
+      socket.off("cropSuggestion:result", handleResult);
+      socket.off("cropSuggestion:error", handleError);
+    };
+  }, []);
+
   const handleSubmit = async (formData: FormData) => {
     if (!isAuthenticated) return;
 
     try {
+      console.log(formData);
       if (formData.forMyGarden) {
         const body: CropSuggestionPayload = {
           mode: "auto",

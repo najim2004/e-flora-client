@@ -5,7 +5,7 @@ export const cropSuggestionApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     requestCropSuggestion: builder.mutation({
       query: (body: CropSuggestionPayload) => ({
-        url: "/api/v1/crops/crop-suggestions",
+        url: "/api/v1/crops/crop-suggestion",
         method: "POST",
         body,
       }),
