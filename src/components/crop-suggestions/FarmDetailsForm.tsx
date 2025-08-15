@@ -368,7 +368,6 @@ export default function FarmDetailsForm({
                         disabled={locLoading}
                         placeholder="City, State, Country"
                         {...field}
-                        CardHeader
                       />
                     </FormControl>
                     <FormMessage />

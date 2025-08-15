@@ -14,44 +14,29 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { errorToast } from "@/components/customToast";
 import { useRequestCropSuggestionMutation } from "@/redux/features/cropSuggestions/cropSuggestionApiSlice";
-import {
-  CropSuggestionPayload,
-  CropSuggestionProgress,
-} from "@/types/cropSuggestion";
+import { CropSuggestionPayload } from "@/types/cropSuggestion";
+import { useCropSuggestionSocket } from "@/hooks/useCropSuggestionSocket";
 import { useEffect } from "react";
-import { getSocket } from "@/lib/socket";
+import { useRouter } from "next/navigation";
 
 export default function CropSuggestionsPage() {
+  // const [isUnknownError, setUnknownError] = useState(false);
   const isAuthenticated = useSelector(
     (state: RootState) => state.user.isAuthenticated
   );
   const [requestCropSuggestion, { isLoading }] =
     useRequestCropSuggestionMutation();
-
+  const { progress, failed, completed } = useCropSuggestionSocket();
+  const router = useRouter();
   useEffect(() => {
-    const socket = getSocket();
-
-    socket.emit("joinCropSuggestionRoom");
-
-    const handleProgress = (data: CropSuggestionProgress) => console.log(data);
-    const handleResult = (payload: { resultId: string }) =>
-      console.log(payload);
-    const handleError = (error: unknown) => {
-      console.log(error);
-      errorToast("Disease detection failed!");
-    };
-
-    socket.on("cropSuggestion:progressUpdate", handleProgress);
-    socket.on("cropSuggestion:result", handleResult);
-    socket.on("cropSuggestion:error", handleError);
-
-    return () => {
-      socket.emit("leaveCropSuggestionRoom");
-      socket.off("cropSuggestion:progressUpdate", handleProgress);
-      socket.off("cropSuggestion:result", handleResult);
-      socket.off("cropSuggestion:error", handleError);
-    };
-  }, []);
+    if (completed?.resultId) {
+      router.push(`/crop-suggestions/${completed.resultId}`);
+    }
+    // else {
+    // setUnknownError(true);
+    // errorToast("Unknown Error occurred !");
+    // }
+  }, [completed, router]);
 
   const handleSubmit = async (formData: FormData) => {
     if (!isAuthenticated) return;
@@ -123,7 +108,15 @@ export default function CropSuggestionsPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <FarmDetailsForm onSubmit={handleSubmit} isLoading={isLoading} />
+            <FarmDetailsForm
+              onSubmit={handleSubmit}
+              isLoading={
+                isLoading ||
+                !!failed ||
+                (progress?.status !== "completed" &&
+                  progress?.status !== "failed" && progress!==null)
+              }
+            />
           </CardContent>
         </Card>
       </div>
