@@ -1,55 +1,56 @@
 "use client";
+
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
+  CardDescription,
 } from "@/components/ui/card";
-
 import FarmDetailsForm, {
   FormData,
 } from "@/components/crop-suggestions/FarmDetailsForm";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
 import { errorToast } from "@/components/customToast";
 import { useRequestCropSuggestionMutation } from "@/redux/features/cropSuggestions/cropSuggestionApiSlice";
+import { RootState } from "@/redux/store";
 import { CropSuggestionPayload } from "@/types/cropSuggestion";
 import { useCropSuggestionSocket } from "@/hooks/useCropSuggestionSocket";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { ProgressModal } from "@/components/custom-progress";
 
 export default function CropSuggestionsPage() {
-  // const [isUnknownError, setUnknownError] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
   const isAuthenticated = useSelector(
     (state: RootState) => state.user.isAuthenticated
   );
-  const [requestCropSuggestion, { isLoading }] =
+  const [requestCropSuggestion, { isLoading: requestLoading }] =
     useRequestCropSuggestionMutation();
   const { progress, failed, completed } = useCropSuggestionSocket();
-  const router = useRouter();
+
+  // Redirect on completion
   useEffect(() => {
     if (completed?.resultId) {
       router.push(`/crop-suggestions/${completed.resultId}`);
     }
-    // else {
-    // setUnknownError(true);
-    // errorToast("Unknown Error occurred !");
-    // }
   }, [completed, router]);
 
   const handleSubmit = async (formData: FormData) => {
     if (!isAuthenticated) return;
 
     try {
-      console.log(formData);
+      let body: CropSuggestionPayload;
+
       if (formData.forMyGarden) {
-        const body: CropSuggestionPayload = {
+        body = {
           mode: "auto",
           plantType: formData.plantType,
           avoidCurrentCrops: formData.avoidCurrentCrops ?? false,
         };
-        await requestCropSuggestion(body);
       } else {
         if (
           !formData.location ||
@@ -63,18 +64,17 @@ export default function CropSuggestionsPage() {
           !formData.gardenType ||
           !formData.gardenerType
         ) {
-          errorToast(
-            "Please provide a valid location with latitude and longitude"
-          );
+          errorToast("Please provide all required fields");
           return;
         }
-        const body: CropSuggestionPayload = {
+
+        body = {
           mode: "manual",
           gardenerType: formData.gardenerType,
           gardenType: formData.gardenType,
           plantType: formData.plantType,
           currentCrops: formData.currentCrops
-            ? formData.currentCrops.split(",").map((c: string) => c.trim())
+            ? formData.currentCrops.split(",").map((c) => c.trim())
             : [],
           sunlight: formData.sunlight,
           purpose: formData.purpose,
@@ -89,18 +89,37 @@ export default function CropSuggestionsPage() {
             longitude: formData.longitude,
           },
         };
-        const res = await requestCropSuggestion(body).unwrap();
-        console.log(res);
       }
+
+      await requestCropSuggestion(body).unwrap();
     } catch {
-      errorToast("Something went wrong");
+      errorToast("Something went wrong while requesting crop suggestion");
     }
   };
 
+  const handleClose = () => setIsOpen(false);
+
+  useEffect(() => {
+    if (progress || failed) setIsOpen(true);
+    else setIsOpen(false);
+  }, [progress, failed]);
+  useEffect(() => {
+    if (
+      requestLoading ||
+      (progress &&
+        progress.status !== "completed" &&
+        progress.status !== "failed")
+    ) {
+      setIsLoading(true);
+    } else {
+      setIsLoading(false);
+    }
+  }, [isLoading, requestLoading, progress]);
+
   return (
-    <div className="min-h-screen bg-green-50">
+    <div className="min-h-screen bg-green-50 relative">
       <div className="max-w-7xl mx-auto px-4 py-8">
-        <Card className="shadow-sm md:col-span-1 h-min md:sticky md:top-24.5 max-w-2xl mx-auto">
+        <Card className="shadow-sm max-w-2xl mx-auto">
           <CardHeader>
             <CardTitle className="text-primary">Enter Your Details</CardTitle>
             <CardDescription className="text-primary/80">
@@ -108,18 +127,20 @@ export default function CropSuggestionsPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <FarmDetailsForm
-              onSubmit={handleSubmit}
-              isLoading={
-                isLoading ||
-                !!failed ||
-                (progress?.status !== "completed" &&
-                  progress?.status !== "failed" && progress!==null)
-              }
-            />
+            <FarmDetailsForm onSubmit={handleSubmit} isLoading={isLoading} />
           </CardContent>
         </Card>
       </div>
+
+      {(progress || failed) && (
+        <ProgressModal
+          isOpen={isOpen}
+          onClose={handleClose}
+          data={
+            progress || { status: "failed", progress: 0, message: failed ?? "" }
+          }
+        />
+      )}
     </div>
   );
 }
