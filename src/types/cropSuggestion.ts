@@ -98,3 +98,46 @@ export interface CropUpdateDetails {
   scientificName: string;
   timestamp: Date;
 }
+
+export interface Input {
+  location: LocationWithAddress;
+  purpose: string;
+  sunlight: string;
+  soilType: string;
+  area: number;
+  waterSource: string;
+  plantType: string[];
+  gardenType: string;
+}
+
+export interface CropSuggestionResult {
+  _id: string;
+  userId: string;
+  input: Input;
+  crops: CropCardType[];
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface CropCardType {
+  name: string; // e.g. "Tomato"
+  scientificName: string;
+  image: {
+    _id: string;
+    url: string;
+    index: string;
+  };
+  difficulty: "very easy" | "easy" | "medium" | "hard";
+  features?: string[]; // Max 3 short bullet features
+  description?: string; // Short one-liner
+  maturityTime?: string; // e.g. '90 days', '3 years'
+  plantingSeason?: string; // e.g. 'Winter'
+  sunlight?: string; // e.g. 'Full sun'
+  waterNeed?: string; // e.g. 'Moderate'
+  soilType: "loamy" | "sandy" | "clayey" | "silty" | "peaty" | "chalky";
+  details: {
+    status: "pending" | "success" | "failed";
+    detailsId?: string;
+    slug?: string;
+  };
+}
