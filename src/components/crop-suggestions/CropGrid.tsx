@@ -31,11 +31,19 @@ export default function CropGrid({ crops }: { crops: CropCardType[] }) {
   const { cropDetails } = useCropSuggestionSocket();
 
   useEffect(() => {
+    console.log(cropDetails);
     if (!cropDetails) return;
     setAllCrops((prev) =>
       prev.map((c) =>
         c.scientificName === cropDetails.scientificName
-          ? { ...c, ...cropDetails }
+          ? {
+              ...c,
+              details: {
+                ...c.details,
+                status: cropDetails.status,
+                slug: cropDetails.slug,
+              },
+            }
           : c
       )
     );

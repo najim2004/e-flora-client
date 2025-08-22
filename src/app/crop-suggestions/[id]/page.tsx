@@ -37,7 +37,6 @@ export default async function RecommendationsPage({
 }: Props): Promise<JSX.Element> {
   const id = (await params).id;
   const resultData = await getResultData(id).catch(() => notFound());
-  console.log(resultData);
   const cropData = resultData.data.crops;
 
   return (
