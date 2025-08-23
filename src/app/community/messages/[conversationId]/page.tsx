@@ -70,8 +70,7 @@ const conversationData = {
   ],
 }
 
-export default function ConversationPage({ params }: { params: { conversationId: string } }) {
-  console.log(params);
+export default function ConversationPage() {
   const [messages, setMessages] = useState(conversationData.messages)
   const [newMessage, setNewMessage] = useState("")
 
