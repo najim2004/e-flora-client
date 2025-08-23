@@ -12,12 +12,17 @@ interface ResultResponse {
 }
 const getResultData = async (id: string): Promise<ResultResponse> => {
   const cookieStore = await cookies();
+  const cookieHeader = cookieStore
+    .getAll()
+    .map((c) => `${c.name}=${c.value}`)
+    .join("; ");
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/crops/crop-suggestion/result/${id}`,
     {
+      credentials: "include",
       headers: {
-        Cookie: cookieStore.toString(),
+        Cookie: cookieHeader,
       },
       next: { revalidate: 60 },
     }
