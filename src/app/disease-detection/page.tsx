@@ -12,12 +12,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Upload, Check, Loader2, X, History, Plus } from "lucide-react";
+import { Upload, Check, Loader2, X, History } from "lucide-react";
 import { getSocket } from "@/lib/socket";
 import { useRequestDiseaseDetectionMutation } from "@/redux/features/diseaseDetection/diseaseDetectionApiSlice";
 import { errorToast } from "@/components/customToast";
 import { CropSuggestionProgress } from "@/types/cropSuggestion";
-import ProgressDisplay from "@/components/custom-progress";
+// import { ProgressModal } from "@/components/custom-progress";
 
 export default function DiseaseDetectionPage() {
   const router = useRouter();
@@ -156,12 +156,12 @@ export default function DiseaseDetectionPage() {
                   />
                   {progress !== null && (
                     <div className="absolute inset-0 flex flex-col items-center justify-center rounded-md bg-black/30 p-4">
-                      <ProgressDisplay
+                      {/* <ProgressModal
                         status={progress.status}
                         progress={progress.progress}
                         message={progress.message}
                         timestamp={progress.timestamp}
-                      />
+                      /> */}
                     </div>
                   )}
                   <button

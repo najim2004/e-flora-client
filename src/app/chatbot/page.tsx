@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Send, User, Bot, Mic, ImageIcon, Paperclip } from "lucide-react";
+import { Send, User, Bot, Mic, Paperclip } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
 export default function ChatbotPage() {

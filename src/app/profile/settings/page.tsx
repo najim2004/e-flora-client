@@ -38,7 +38,7 @@ import {
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 export default function AccountSettingsPage() {
-  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  // const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   return (
     <div className="flex flex-col min-h-screen bg-green-50">
@@ -159,7 +159,7 @@ export default function AccountSettingsPage() {
                           Get notified when someone logs into your account
                         </p>
                         <p className="text-sm text-primary mt-1">
-                          We'll send you an alert when your account is accessed
+                          We&#39;ll send you an alert when your account is accessed
                           from a new device
                         </p>
                       </div>

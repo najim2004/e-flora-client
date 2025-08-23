@@ -4,7 +4,7 @@ import type {
   FetchArgs,
   FetchBaseQueryError,
 } from "@reduxjs/toolkit/query";
-import { userApiSlice } from "./features/user/userApiSlice";
+// import { userApiSlice } from "./features/user/userApiSlice";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: "https://e-flora.up.railway.app/",

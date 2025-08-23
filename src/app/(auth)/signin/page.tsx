@@ -62,9 +62,11 @@ export default function LoginPage() {
           res?.message || "Something went wrong please try again letter"
         );
       }
-    } catch (error: any) {
+    } catch (error) {
       console.log(error);
+
       errorToast(
+        // @ts-ignore
         error?.data?.error?.message ||
           "Something went wrong please try again later"
       );
@@ -75,9 +77,7 @@ export default function LoginPage() {
     <div className="min-h-screen bg-green-50 flex flex-col items-center justify-center p-4">
       <Card className="w-full max-w-md border-border shadow-md rounded-sm">
         <CardHeader className="text-center">
-          <CardTitle className="text-primary text-2xl">
-            Welcome Back
-          </CardTitle>
+          <CardTitle className="text-primary text-2xl">Welcome Back</CardTitle>
           <CardDescription className="text-primary/80">
             Sign in to your account to continue
           </CardDescription>

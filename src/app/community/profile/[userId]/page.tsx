@@ -194,6 +194,7 @@ const followers = [
 ]
 
 export default function UserProfilePage({ params }: { params: { userId: string } }) {
+  console.log(params);
   const [isFollowing, setIsFollowing] = useState(false)
   const [posts, setPosts] = useState(userPosts)
 

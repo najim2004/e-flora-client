@@ -1,17 +1,15 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { theme } from "./theme";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function getThemeColor(path: string): string {
-  return path.split('.').reduce((obj, key) => obj[key], theme.colors as any) || '';
-}
-
-export function createThemeValue(value: string | number, unit: string = 'px'): string {
-  return typeof value === 'number' ? `${value}${unit}` : value;
+export function createThemeValue(
+  value: string | number,
+  unit: string = "px"
+): string {
+  return typeof value === "number" ? `${value}${unit}` : value;
 }
 
 // Type utilities

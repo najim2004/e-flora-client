@@ -137,7 +137,7 @@ const plantingSteps = [
 
 export default function CropDetailsPage() {
   const [steps, setSteps] = useState(plantingSteps);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [selectedDate] = useState<Date | null>(null);
 
   const completedStepsCount = useMemo(
     () => steps.filter((s) => s.completed).length,

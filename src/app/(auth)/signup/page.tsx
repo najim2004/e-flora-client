@@ -67,9 +67,10 @@ export default function SignUpPage() {
           res.message || "Something went wrong please try again letter"
         );
       }
-    } catch (error: any) {
+    } catch (error) {
       console.log("Error:", error);
       errorToast(
+        // @ts-ignore
         error?.data?.error?.message || "Something went wrong please try again"
       );
     }

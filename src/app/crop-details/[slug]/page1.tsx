@@ -243,7 +243,7 @@ export default function CropDetailsPage() {
             </Card>
 
             <div className="space-y-4">
-              {steps.map((step, index) => (
+              {steps.map((step) => (
                 <Card
                   key={step.id}
                   className={`border shadow-sm transition-all ${

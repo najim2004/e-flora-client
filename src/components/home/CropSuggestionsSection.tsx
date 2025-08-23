@@ -22,8 +22,10 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { WeatherData, CropSuggestion, SoilType } from "@/types";
 
+import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
+
 const getWeatherIcon = (iconName: string) => {
-  const iconMap: { [key: string]: any } = {
+  const iconMap: { [key: string]: IconDefinition } = {
     sun: faTemperatureHigh,
     cloud: faCloudRain,
     rain: faDroplet,
