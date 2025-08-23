@@ -3,7 +3,6 @@ import CropGrid from "@/components/crop-suggestions/CropGrid";
 import { CropSuggestionResult } from "@/types/cropSuggestion";
 import { JSX } from "react";
 import GardenDetails from "@/components/crop-suggestions/GardenDetails";
-import { cookies } from "next/headers";
 
 interface ResultResponse {
   success: boolean;
@@ -11,19 +10,9 @@ interface ResultResponse {
   data: CropSuggestionResult;
 }
 const getResultData = async (id: string): Promise<ResultResponse> => {
-  const cookieStore = await cookies();
-  const cookieHeader = cookieStore
-    .getAll()
-    .map((c) => `${c.name}=${c.value}`)
-    .join("; ");
-
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/crops/crop-suggestion/result/${id}`,
     {
-      credentials: "include",
-      headers: {
-        Cookie: cookieHeader,
-      },
       next: { revalidate: 60 },
     }
   );
