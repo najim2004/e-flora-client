@@ -17,6 +17,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
+import { useLogoutMutation } from "@/redux/features/user/userApiSlice";
 
 export interface NavItems {
   id: string;
@@ -41,6 +42,10 @@ const Navbar: React.FC = () => {
     { id: "support", href: "/support", label: "Support" },
   ];
   const userState = useSelector((state: RootState) => state.user);
+  const [logout] = useLogoutMutation();
+  const logoutHandler = async () => {
+    await logout({});
+  };
   return (
     <header className="sticky top-0 z-50 w-full bg-white border-b shadow-sm">
       <div className="container flex items-center justify-between h-16 px-4 mx-auto max-w-7xl">
@@ -52,9 +57,7 @@ const Navbar: React.FC = () => {
             height={40}
             className="w-10 h-10"
           />
-          <h1 className="text-xl font-bold text-primary">
-            Mati&apos;r Sathi
-          </h1>
+          <h1 className="text-xl font-bold text-primary">Mati&apos;r Sathi</h1>
         </div>
 
         <nav className="hidden md:flex items-center space-x-8">
@@ -104,7 +107,9 @@ const Navbar: React.FC = () => {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>Profile</DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Sign Out</DropdownMenuItem>
+                <DropdownMenuItem onClick={logoutHandler}>
+                  Sign Out
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (

@@ -5,7 +5,6 @@ import { JSX } from "react";
 import GardenDetails from "@/components/crop-suggestions/GardenDetails";
 import { cookies } from "next/headers";
 
-
 interface ResultResponse {
   success: boolean;
   message: string;
@@ -13,6 +12,7 @@ interface ResultResponse {
 }
 const getResultData = async (id: string): Promise<ResultResponse> => {
   const cookieStore = await cookies();
+
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/crops/crop-suggestion/result/${id}`,
     {
@@ -22,6 +22,8 @@ const getResultData = async (id: string): Promise<ResultResponse> => {
       next: { revalidate: 60 },
     }
   );
+
+  console.log(res);
   if (!res.ok) {
     throw new Error("Failed to fetch crop suggestion result");
   }
@@ -37,6 +39,7 @@ export default async function RecommendationsPage({
 }: Props): Promise<JSX.Element> {
   const id = (await params).id;
   const resultData = await getResultData(id).catch(() => notFound());
+  console.log(resultData);
   const cropData = resultData.data.crops;
 
   return (
@@ -48,9 +51,7 @@ export default async function RecommendationsPage({
           </h2>
         </div>
         <GardenDetails data={resultData.data.input} />
-        <CropGrid
-          crops={cropData}
-        />
+        <CropGrid crops={cropData} />
         {cropData.length === 0 && (
           <div className="text-center py-12">
             <p className="text-gray-600 text-lg">

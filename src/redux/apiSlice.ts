@@ -7,7 +7,7 @@ import type {
 // import { userApiSlice } from "./features/user/userApiSlice";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://e-flora.up.railway.app/",
+  baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000",
   credentials: "include",
 });
 

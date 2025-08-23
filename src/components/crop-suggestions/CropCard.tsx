@@ -34,12 +34,12 @@ const CropCard: React.FC<CropCardProps> = ({
       <CardHeader className="pb-4">
         <div className="relative h-48 mb-4 rounded-lg overflow-hidden bg-green-50">
           <Image
-            src={crop.image.url || "/placeholder.svg"}
+            src={crop?.image?.url || "/placeholder.svg"}
             alt={crop.name}
             fill
             className="object-cover"
           />
-          {crop.image.index == "default_image" && (
+          {crop?.image?.index == "default_image" && (
             <span className="absolute bottom-5 mx-auto text-center w-full text-gray-400 text-lg md:text-2xl font-medium z-20">
               Image Not Found
             </span>
