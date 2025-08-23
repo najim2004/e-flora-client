@@ -26,7 +26,7 @@ const fetchDetails = async (
 ): Promise<DiseaseDetectionResult | undefined> => {
   try {
     const res = await fetch(
-      `http://localhost:5000/api/v1/crops/disease-detection/result/${id}`,
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/crops/disease-detection/result/${id}`,
       {
         cache: "force-cache",
         headers: {

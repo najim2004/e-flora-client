@@ -19,7 +19,7 @@ interface CropDetailsPageProps {
 
 async function getCropDetails(slug: string): Promise<Crop> {
   const res = await fetch(
-    `http://localhost:5000/api/v1/crops/crop-details/${slug}`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/crops/crop-details/${slug}`,
     {
       cache: "force-cache",
       headers: {
