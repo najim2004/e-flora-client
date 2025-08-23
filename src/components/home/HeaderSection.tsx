@@ -31,7 +31,9 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({ activeTab, setActiveTab }
             alt="Mati'r Sathi Logo"
             className="w-10 h-10"
           />
-          <h1 className="text-xl font-bold text-primary/80">Mati'r Sathi</h1>
+          <h1 className="text-xl font-bold text-primary/80">
+            Mati&#39;r Sathi
+          </h1>
         </div>
         <nav className="hidden md:flex items-center space-x-8">
           <Button
@@ -190,7 +192,7 @@ const HeaderSection: React.FC<HeaderSectionProps> = ({ activeTab, setActiveTab }
                 </div>
                 <div className="mt-6 text-center">
                   <span className="text-sm text-gray-600">
-                    Don't have an account?{" "}
+                    Don&#39;t have an account?{" "}
                   </span>
                   <Button
                     id="sign-up-link"

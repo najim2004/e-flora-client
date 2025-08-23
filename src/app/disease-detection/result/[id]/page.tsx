@@ -15,7 +15,6 @@ import {
   Share2,
 } from "lucide-react";
 import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
 import { DiseaseDetectionResult } from "@/types/diseaseDetection";
 import { cookies } from "next/headers";
 import ImagePreview from "@/components/ImagePreview";

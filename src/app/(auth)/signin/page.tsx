@@ -65,11 +65,11 @@ export default function LoginPage() {
     } catch (error) {
       console.log(error);
 
-      errorToast(
-        // @ts-ignore
-        error?.data?.error?.message ||
-          "Something went wrong please try again later"
-      );
+      const errMsg =
+        (error as { data?: { error?: { message?: string } } })?.data?.error
+          ?.message || "Something went wrong please try again later";
+
+      errorToast(errMsg);
     }
   }
 

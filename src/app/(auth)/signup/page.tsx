@@ -69,10 +69,11 @@ export default function SignUpPage() {
       }
     } catch (error) {
       console.log("Error:", error);
-      errorToast(
-        // @ts-ignore
-        error?.data?.error?.message || "Something went wrong please try again"
-      );
+     const errMsg =
+       (error as { data?: { error?: { message?: string } } })?.data?.error
+         ?.message || "Something went wrong please try again later";
+
+     errorToast(errMsg);
     }
   }
 
