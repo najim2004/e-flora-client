@@ -11,10 +11,7 @@ interface ResultResponse {
 }
 const getResultData = async (id: string): Promise<ResultResponse> => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/crops/crop-suggestion/result/${id}`,
-    {
-      next: { revalidate: 60 },
-    }
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/crops/crop-suggestion/result/${id}`
   );
 
   console.log(res);
@@ -33,7 +30,6 @@ export default async function RecommendationsPage({
 }: Props): Promise<JSX.Element> {
   const id = (await params).id;
   const resultData = await getResultData(id).catch(() => notFound());
-  console.log(resultData);
   const cropData = resultData.data.crops;
 
   return (

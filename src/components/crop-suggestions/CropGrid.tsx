@@ -35,7 +35,7 @@ export default function CropGrid({ crops }: { crops: CropCardType[] }) {
     if (!cropDetails) return;
     setAllCrops((prev) =>
       prev.map((c) =>
-        c.scientificName === cropDetails.scientificName
+        c.details._id === cropDetails.detailsId
           ? {
               ...c,
               details: {

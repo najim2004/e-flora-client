@@ -43,53 +43,66 @@ export default function CropSuggestionsPage() {
     if (!isAuthenticated) return;
 
     try {
-      let body: CropSuggestionPayload;
+      const isAuto = formData.forMyGarden;
 
-      if (formData.forMyGarden) {
-        body = {
-          mode: "auto",
-          plantType: formData.plantType,
-          avoidCurrentCrops: formData.avoidCurrentCrops ?? false,
-        };
-      } else {
-        if (
-          !formData.location ||
-          !formData.latitude ||
-          !formData.longitude ||
-          !formData.sunlight ||
-          !formData.purpose ||
-          !formData.area ||
-          !formData.waterSource ||
-          !formData.soilType ||
-          !formData.gardenType ||
-          !formData.gardenerType
-        ) {
-          errorToast("Please provide all required fields");
-          return;
-        }
+      // Strictly typed clean helper
+      const clean = <T extends Record<string, unknown>>(obj: T): Partial<T> =>
+        Object.fromEntries(
+          Object.entries(obj).filter(
+            ([, v]) => v !== "" && v !== undefined && v !== null
+          )
+        ) as Partial<T>;
 
-        body = {
-          mode: "manual",
-          gardenerType: formData.gardenerType,
-          gardenType: formData.gardenType,
-          plantType: formData.plantType,
-          currentCrops: formData.currentCrops
-            ? formData.currentCrops.split(",").map((c) => c.trim())
-            : [],
-          sunlight: formData.sunlight,
-          purpose: formData.purpose,
-          area: formData.area,
-          waterSource: formData.waterSource,
-          soilType: formData.soilType,
-          location: {
-            country: formData.location?.split(",")[2]?.trim() || "",
-            state: formData.location?.split(",")[1]?.trim() || "",
-            city: formData.location?.split(",")[0]?.trim() || "",
-            latitude: formData.latitude,
-            longitude: formData.longitude,
-          },
-        };
-      }
+      const body: CropSuggestionPayload = isAuto
+        ? {
+            mode: "auto",
+            plantType: formData.plantType,
+            avoidCurrentCrops: formData.avoidCurrentCrops ?? false,
+          }
+        : (() => {
+            const requiredFields: (keyof FormData)[] = [
+              "location",
+              "latitude",
+              "longitude",
+              "sunlight",
+              "purpose",
+              "area",
+              "waterSource",
+              "soilType",
+              "gardenType",
+              "gardenerType",
+            ];
+
+            if (requiredFields.some((f) => !formData[f])) {
+              errorToast("Please provide all required fields");
+              throw new Error("Missing fields");
+            }
+
+            const [city, state, country] = formData
+              .location!.split(",")
+              .map((s) => s.trim());
+
+            return {
+              mode: "manual",
+              gardenerType: formData.gardenerType,
+              gardenType: formData.gardenType,
+              plantType: formData.plantType,
+              currentCrops:
+                formData.currentCrops?.split(",").map((c) => c.trim()) || [],
+              sunlight: formData.sunlight,
+              purpose: formData.purpose,
+              area: formData.area,
+              waterSource: formData.waterSource,
+              soilType: formData.soilType,
+              location: clean({
+                city,
+                state,
+                country,
+                latitude: formData.latitude,
+                longitude: formData.longitude,
+              }),
+            } as CropSuggestionPayload;
+          })();
 
       await requestCropSuggestion(body).unwrap();
     } catch {

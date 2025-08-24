@@ -22,7 +22,7 @@ interface CompletedData {
 interface CropDetailsUpdate {
   status: "success" | "failed";
   slug?: string;
-  scientificName: string;
+  detailsId: string;
   timestamp: string;
 }
 

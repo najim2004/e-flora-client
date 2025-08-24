@@ -136,6 +136,7 @@ export interface CropCardType {
   waterNeed?: string; // e.g. 'Moderate'
   soilType: "loamy" | "sandy" | "clayey" | "silty" | "peaty" | "chalky";
   details: {
+    _id: string;
     status: "pending" | "success" | "failed";
     detailsId?: string;
     slug?: string;
