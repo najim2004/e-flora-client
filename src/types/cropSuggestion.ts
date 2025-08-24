@@ -120,6 +120,7 @@ export interface CropSuggestionResult {
 }
 
 export interface CropCardType {
+  _id:string;
   name: string; // e.g. "Tomato"
   scientificName: string;
   image: {

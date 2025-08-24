@@ -48,12 +48,15 @@ export default function CropGrid({ crops }: { crops: CropCardType[] }) {
       )
     );
   }, [cropDetails]);
-
+  const handleAddToGarden = async (cropId: string) => {
+    console.log(cropId);
+  };
   return (
     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
       {allCrops.map((crop) => (
         <CropCard
           key={crop.scientificName}
+          onAddToGarden={handleAddToGarden}
           crop={crop}
           getSunlightColor={(v) => getColor("sunlight", v)}
           getWaterColor={(v) => getColor("water", v)}

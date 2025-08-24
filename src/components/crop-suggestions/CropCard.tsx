@@ -18,6 +18,7 @@ interface CropCardProps {
   getSunlightColor: (sunlight: string) => string;
   getWaterColor: (water: string) => string;
   getDifficultyColor: (difficulty: string) => string;
+  onAddToGarden: (cropId: string) => void;
 }
 
 const CropCard: React.FC<CropCardProps> = ({
@@ -25,6 +26,7 @@ const CropCard: React.FC<CropCardProps> = ({
   getSunlightColor,
   getWaterColor,
   getDifficultyColor,
+  onAddToGarden,
 }) => {
   return (
     <Card
@@ -131,6 +133,7 @@ const CropCard: React.FC<CropCardProps> = ({
           <Button
             size="sm"
             disabled={crop.details.status == "pending"}
+            onClick={()=>crop?.details?.status=='success'&&onAddToGarden(crop._id)}
             className="flex-1 bg-primary/80 hover:bg-primary"
           >
             {crop.details.status == "failed" ? (
