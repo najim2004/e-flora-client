@@ -29,6 +29,7 @@ interface CropDetailsUpdate {
 interface GardenAddingStatus {
   success: boolean;
   message: string;
+  cropId:string;
   timestamp: string;
 }
 

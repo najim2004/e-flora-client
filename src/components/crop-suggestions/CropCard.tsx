@@ -15,6 +15,7 @@ import { CropCardType } from "@/types/cropSuggestion";
 
 interface CropCardProps {
   crop: CropCardType;
+  loadings: string[];
   getSunlightColor: (sunlight: string) => string;
   getWaterColor: (water: string) => string;
   getDifficultyColor: (difficulty: string) => string;
@@ -23,6 +24,7 @@ interface CropCardProps {
 
 const CropCard: React.FC<CropCardProps> = ({
   crop,
+  loadings,
   getSunlightColor,
   getWaterColor,
   getDifficultyColor,
@@ -132,12 +134,18 @@ const CropCard: React.FC<CropCardProps> = ({
           </Button>
           <Button
             size="sm"
-            disabled={crop.details.status == "pending"}
-            onClick={()=>crop?.details?.status=='success'&&onAddToGarden(crop._id)}
+            disabled={
+              crop.details.status == "pending" || loadings.includes(crop._id)
+            }
+            onClick={() =>
+              crop?.details?.status == "success" && onAddToGarden(crop._id)
+            }
             className="flex-1 bg-primary/80 hover:bg-primary"
           >
             {crop.details.status == "failed" ? (
               "Regenerate"
+            ) : loadings.includes(crop._id) ? (
+              <Loader className="size-6 text-white animate-spin" />
             ) : (
               <>
                 <Plus className="h-4 w-4 mr-1" />
