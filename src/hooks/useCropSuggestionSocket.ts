@@ -26,10 +26,18 @@ interface CropDetailsUpdate {
   timestamp: string;
 }
 
+interface GardenAddingStatus {
+  success: boolean;
+  message: string;
+  timestamp: string;
+}
+
 export const useCropSuggestionSocket = () => {
   const [progress, setProgress] = useState<ProgressUpdate | null>(null);
   const [completed, setCompleted] = useState<CompletedData | null>(null);
   const [failed, setFailed] = useState<string | null>(null);
+  const [gardenAddingStatus, setGardenAddingStatus] =
+    useState<GardenAddingStatus | null>(null);
   const [cropDetails, setCropDetails] = useState<CropDetailsUpdate | null>(
     null
   );
@@ -42,6 +50,7 @@ export const useCropSuggestionSocket = () => {
     socket.on("cropSuggestionCompleted", ({ data }) => setCompleted(data));
     socket.on("cropSuggestionFailed", ({ message }) => setFailed(message));
     socket.on("individualCropDetailsUpdate", setCropDetails);
+    socket.on("gardenAddingStatus", setGardenAddingStatus);
 
     return () => {
       socket.emit("leaveCropSuggestionRoom");
@@ -52,5 +61,5 @@ export const useCropSuggestionSocket = () => {
     };
   }, []);
 
-  return { progress, completed, failed, cropDetails };
+  return { progress, completed, failed, cropDetails, gardenAddingStatus };
 };
