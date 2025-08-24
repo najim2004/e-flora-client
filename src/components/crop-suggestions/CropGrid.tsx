@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import CropCard from "./CropCard";
 import { CropCardType } from "@/types/cropSuggestion";
 import { useCropSuggestionSocket } from "@/hooks/useCropSuggestionSocket";
+import { errorToast, successToast } from "../customToast";
 
 const colorMap = {
   sunlight: {
@@ -28,7 +29,7 @@ const getColor = (type: keyof typeof colorMap, value: string) =>
 
 export default function CropGrid({ crops }: { crops: CropCardType[] }) {
   const [allCrops, setAllCrops] = useState(crops);
-  const { cropDetails } = useCropSuggestionSocket();
+  const { cropDetails, gardenAddingStatus } = useCropSuggestionSocket();
 
   useEffect(() => {
     console.log(cropDetails);
@@ -48,8 +49,36 @@ export default function CropGrid({ crops }: { crops: CropCardType[] }) {
       )
     );
   }, [cropDetails]);
+  useEffect(() => {
+    if (!gardenAddingStatus) return;
+    if (gardenAddingStatus.success) {
+      successToast(gardenAddingStatus.message);
+    } else {
+      errorToast(gardenAddingStatus.message);
+    }
+  }, [gardenAddingStatus]);
   const handleAddToGarden = async (cropId: string) => {
     console.log(cropId);
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/gardens/add-crop`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ cropId }),
+        }
+      );
+      if (!res.ok) {
+        throw new Error("Failed to add crop to garden");
+      }
+      const data = await res.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+      errorToast("Failed to add crop to garden. Please try again.");
+    }
   };
   return (
     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
