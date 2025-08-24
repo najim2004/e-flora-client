@@ -52,12 +52,12 @@ const Navbar: React.FC = () => {
         <div className="flex items-center space-x-2">
           <Image
             src="https://readdy.ai/api/search-image?query=A%20minimalist%20logo%20for%20Matir%20Sathi%20agricultural%20platform%20with%20a%20simple%20leaf%20or%20plant%20sprout%20icon%20in%20green%20and%20brown%20earthy%20tones%2C%20modern%20clean%20design%20suitable%20for%20an%20app%20icon%2C%20transparent%20background%2C%20professional&width=50&height=50&seq=1&orientation=squarish"
-            alt="Mati'r Sathi Logo"
+            alt="eFlora Logo"
             width={40}
             height={40}
             className="w-10 h-10"
           />
-          <h1 className="text-xl font-bold text-primary">Mati&apos;r Sathi</h1>
+          <h1 className="text-xl font-bold text-primary">eFlora</h1>
         </div>
 
         <nav className="hidden md:flex items-center space-x-8">

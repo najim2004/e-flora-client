@@ -14,7 +14,6 @@ const getResultData = async (id: string): Promise<ResultResponse> => {
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/crops/crop-suggestion/result/${id}`
   );
 
-  console.log(res);
   if (!res.ok) {
     throw new Error("Failed to fetch crop suggestion result");
   }

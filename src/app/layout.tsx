@@ -20,9 +20,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Mati'r Sathi - Smart Farming Assistant",
+  title: "eFlora - Smart Gardening Assistant",
   description:
-    "AI-powered agriculture platform for crop disease detection, smart crop suggestions, and Bengali AI chatbot",
+    "AI-powered Garden platform for crop disease detection, smart crop suggestions, and Bengali AI chatbot",
 };
 
 export default function RootLayout({

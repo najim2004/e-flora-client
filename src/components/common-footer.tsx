@@ -63,22 +63,22 @@ const footerConfig = {
   },
   social: [
     {
-      href: "https://facebook.com/matirsathi",
+      href: "https://facebook.com/najim2004",
       label: "Facebook",
       icon: "facebook",
     },
     {
-      href: "https://twitter.com/matirsathi",
+      href: "https://twitter.com/najim2004",
       label: "Twitter",
       icon: "twitter",
     },
     {
-      href: "https://instagram.com/matirsathi",
+      href: "https://instagram.com/najim2004",
       label: "Instagram",
       icon: "instagram",
     },
     {
-      href: "https://youtube.com/matirsathi",
+      href: "https://youtube.com/najim2004",
       label: "YouTube",
       icon: "youtube",
     },
@@ -120,12 +120,12 @@ export default function CommonFooter() {
             <div className="mb-4 flex items-center space-x-2">
               <Image
                 src="/logo.jpg"
-                alt="Mati'r Sathi Logo"
+                alt="eFlora Logo"
                 width={32}
                 height={32}
                 className="h-8 w-8"
               />
-              <h3 className="text-xl font-bold">Mati&apos;r Sathi</h3>
+              <h3 className="text-xl font-bold">eFlora</h3>
             </div>
             <p className="mb-4 text-white/80">
               Empowering farmers with technology to improve agricultural
@@ -175,7 +175,7 @@ export default function CommonFooter() {
               </li>
               <li className="flex items-center">
                 <Icons.mail className="mr-3 h-5 w-5" />
-                <span className="text-white/80">info@matirsathi.com</span>
+                <span className="text-white/80">info@eflora.com</span>
               </li>
             </ul>
             <Button
