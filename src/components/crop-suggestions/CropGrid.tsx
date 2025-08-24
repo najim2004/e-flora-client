@@ -61,13 +61,13 @@ export default function CropGrid({ crops }: { crops: CropCardType[] }) {
     console.log(cropId);
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/gardens/add-crop`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/gardens/add-crop/${cropId}`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ cropId }),
+          credentials: "include",
         }
       );
       if (!res.ok) {
