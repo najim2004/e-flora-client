@@ -4,6 +4,7 @@ import CropCard from "./CropCard";
 import { CropCardType } from "@/types/cropSuggestion";
 import { useCropSuggestionSocket } from "@/hooks/useCropSuggestionSocket";
 import { errorToast, successToast } from "../customToast";
+import { useRouter } from "next/navigation";
 
 const colorMap = {
   sunlight: {
@@ -32,6 +33,8 @@ export default function CropGrid({ crops }: { crops: CropCardType[] }) {
   const [loadings, setLoadings] = useState<string[]>([]);
   const { cropDetails, gardenAddingStatus } = useCropSuggestionSocket();
 
+  const router = useRouter();
+
   useEffect(() => {
     console.log(cropDetails);
     if (!cropDetails) return;
@@ -53,14 +56,19 @@ export default function CropGrid({ crops }: { crops: CropCardType[] }) {
   useEffect(() => {
     if (!gardenAddingStatus) return;
     if (gardenAddingStatus.success) {
-      successToast(gardenAddingStatus.message);
+      successToast(gardenAddingStatus.message, {
+        level: "View",
+        onClick: () => {
+          router.push(`/garden`);
+        },
+      });
     } else {
       errorToast(gardenAddingStatus.message);
     }
     setLoadings((prev) =>
       prev.filter((id) => id !== gardenAddingStatus.cropId)
     );
-  }, [gardenAddingStatus]);
+  }, [gardenAddingStatus, router]);
   const handleAddToGarden = async (cropId: string) => {
     try {
       setLoadings((prev) => [...prev, cropId]);
