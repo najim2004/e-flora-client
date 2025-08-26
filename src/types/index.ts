@@ -61,5 +61,6 @@ export interface CommonHeaderProps {
 export interface SuccessResponse<T> {
   success: boolean;
   message: string;
+  newAccessToken?: string;
   data?: T;
 }

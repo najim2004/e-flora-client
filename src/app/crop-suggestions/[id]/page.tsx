@@ -7,6 +7,7 @@ export interface ResultResponse {
   success: boolean;
   message: string;
   data: CropSuggestionResult;
+  newAccessToken?: string;
 }
 const getResultData = async (id: string): Promise<ResultResponse> => {
   const cookieStore = await cookies();
@@ -24,7 +25,16 @@ const getResultData = async (id: string): Promise<ResultResponse> => {
   if (!res.ok) {
     throw new Error("Failed to fetch crop suggestion result");
   }
-  return res.json();
+  console.log(res);
+  const data = await res.json();
+  if (data?.newAccessToken) {
+    cookieStore.set("accessToken", data?.newAccessToken, {
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 1000 * 60 * 60 * 24 * 365,
+    });
+  }
+  return data;
 };
 
 type Props = {
@@ -35,7 +45,7 @@ export default async function RecommendationsPage({
   params,
 }: Props): Promise<JSX.Element> {
   const id = (await params).id;
-  const resultData = await getResultData(id).catch(() => null);
+  const resultData = await getResultData(id).catch((e) => {console.log(e); return  null});
   return (
     <>
       <Result resultData={resultData} resultId={id} />

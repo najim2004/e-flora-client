@@ -5,7 +5,7 @@ import GardenDetails from "./GardenDetails";
 import CropGrid from "./CropGrid";
 import { CropSuggestionResult } from "@/types/cropSuggestion";
 import { notFound } from "next/navigation";
-
+import Cookies from "js-cookie";
 const Result = ({
   resultData,
   resultId,
@@ -32,8 +32,19 @@ const Result = ({
         if (!res.ok) {
           throw new Error("Failed to fetch crop suggestion result");
         }
-
-        return res.json();
+        const token = res?.headers?.get("x-access-token") || null;
+        if (token) {
+          Cookies.set("accessToken", token, {
+            path: "/",
+            expires: 7,
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+            secure: process.env.NODE_ENV === "production",
+          });
+        }
+        const data = await res.json();
+        if (!data?.success)
+          throw new Error("Failed to fetch crop suggestion result");
+        return data;
       };
 
       fetchDta()

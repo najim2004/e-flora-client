@@ -36,7 +36,6 @@ export default function CropGrid({ crops }: { crops: CropCardType[] }) {
   const router = useRouter();
 
   useEffect(() => {
-    console.log(cropDetails);
     if (!cropDetails) return;
     setAllCrops((prev) =>
       prev.map((c) =>

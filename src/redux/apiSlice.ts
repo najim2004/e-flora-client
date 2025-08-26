@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type {
   BaseQueryFn,
@@ -21,6 +22,19 @@ const baseQueryWithError: BaseQueryFn<
   if (result.error?.status === 401 || result.error?.status === 403) {
     // Dispatch logout mutation from userApiSlice
     // await api.dispatch(userApiSlice.endpoints.logout.initiate(undefined));
+  }
+  // headers access
+  if (result.meta?.response) {
+    const headers = result.meta.response.headers;
+    const token = headers.get("x-access-token"); // example: header name
+    if (token) {
+      Cookies.set("accessToken", token, {
+        expires: 7,
+        path: "/",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+        secure: process.env.NODE_ENV === "production",
+      });
+    }
   }
 
   return result;
