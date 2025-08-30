@@ -103,8 +103,6 @@ export default function CropGrid({ crops }: { crops: CropCardType[] }) {
           onAddToGarden={handleAddToGarden}
           crop={crop}
           loadings={loadings}
-          getSunlightColor={(v) => getColor("sunlight", v)}
-          getWaterColor={(v) => getColor("water", v)}
           getDifficultyColor={(v) => getColor("difficulty", v)}
         />
       ))}
