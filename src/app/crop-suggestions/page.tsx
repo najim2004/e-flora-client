@@ -14,12 +14,12 @@ import {
 import FarmDetailsForm, {
   FormData,
 } from "@/components/crop-suggestions/FarmDetailsForm";
-import { errorToast } from "@/components/customToast";
+import { errorToast } from "@/components/common/CustomToast";
 import { useRequestCropSuggestionMutation } from "@/redux/features/cropSuggestions/cropSuggestionApiSlice";
 import { RootState } from "@/redux/store";
 import { CropSuggestionPayload } from "@/types/cropSuggestion";
 import { useCropSuggestionSocket } from "@/hooks/useCropSuggestionSocket";
-import { ProgressModal } from "@/components/custom-progress";
+import { ProgressModal } from "@/components/common/CustomProgress";
 
 export default function CropSuggestionsPage() {
   const [isOpen, setIsOpen] = useState(false);

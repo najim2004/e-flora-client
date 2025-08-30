@@ -16,7 +16,7 @@ import {
   Calendar,
 } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CommunityPost } from "@/components/community-post";
+import { CommunityPost } from "@/components/common/CommunityPost";
 import Link from "next/link";
 
 // Sample search results

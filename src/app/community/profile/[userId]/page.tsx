@@ -9,7 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { ArrowLeft, MapPin, Calendar, Mail, Phone, MessageSquare, Users, LinkIcon, ExternalLink } from "lucide-react"
-import { CommunityPost } from "@/components/community-post"
+import { CommunityPost } from "@/components/common/CommunityPost";
 
 // Sample user data
 const userData = {

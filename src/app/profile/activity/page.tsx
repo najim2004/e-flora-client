@@ -18,7 +18,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { ProfileSidebar } from "@/components/profile-sidebar";
+import { ProfileSidebar } from "@/components/layout/ProfileSidebar";
 import { Badge } from "@/components/ui/badge";
 import {
   Select,

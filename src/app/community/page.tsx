@@ -27,7 +27,7 @@ import {
 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
-import { CommunityPost } from "@/components/community-post";
+import { CommunityPost } from "@/components/common/CommunityPost";
 import Link from "next/link";
 import { ScrollArea } from "@/components/ui/scroll-area";
 

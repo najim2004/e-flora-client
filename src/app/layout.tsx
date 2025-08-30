@@ -4,12 +4,12 @@ import "./globals.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { LanguageProvider } from "@/providers/LanguageProvider";
-import Navbar from "@/components/Navbar";
-import MobileNavigation from "@/components/mobile-navigation";
-import CommonFooter from "@/components/common-footer";
+import Navbar from "@/components/layout/Navbar";
+import MobileNavigation from "@/components/layout/MobileNavigation";
+import CommonFooter from "@/components/layout/CommonFooter";
 import { ReduxProvider } from "@/providers/ReduxProvider";
 import { Toaster } from "sonner";
-import FetchInitialData from "@/components/fetchInitialData";
+import FetchInitialData from "@/components/common/FetchInitialData";
 
 // Initialize Font Awesome config
 config.autoAddCss = false;

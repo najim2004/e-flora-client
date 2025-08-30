@@ -17,7 +17,7 @@ import {
   FormControl,
 } from "@/components/ui/form";
 import { Loader, MapPin } from "lucide-react";
-import { errorToast } from "../customToast";
+import { errorToast } from "../common/CustomToast";
 import {
   Select,
   SelectTrigger,

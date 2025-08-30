@@ -17,7 +17,7 @@ import {
 import Link from "next/link";
 import { DiseaseDetectionResult } from "@/types/diseaseDetection";
 import { cookies } from "next/headers";
-import ImagePreview from "@/components/ImagePreview";
+import ImagePreview from "@/components/common/ImagePreview";
 import React from "react";
 import { notFound } from "next/navigation";
 

@@ -3,30 +3,8 @@ import { useEffect, useState } from "react";
 import CropCard from "./CropCard";
 import { CropCardType } from "@/types/cropSuggestion";
 import { useCropSuggestionSocket } from "@/hooks/useCropSuggestionSocket";
-import { errorToast, successToast } from "../customToast";
+import { errorToast, successToast } from "../common/CustomToast";
 import { useRouter } from "next/navigation";
-
-const colorMap = {
-  sunlight: {
-    "Full Sun": "text-yellow-600 bg-yellow-100",
-    "Partial Sun": "text-orange-600 bg-orange-100",
-    default: "text-blue-600 bg-blue-100",
-  },
-  water: {
-    High: "text-blue-600 bg-blue-100",
-    Moderate: "text-green-600 bg-green-100",
-    default: "text-gray-600 bg-gray-100",
-  },
-  difficulty: {
-    Easy: "text-green-600 bg-green-100",
-    Moderate: "text-yellow-600 bg-yellow-100",
-    default: "text-red-600 bg-red-100",
-  },
-};
-
-const getColor = (type: keyof typeof colorMap, value: string) =>
-  colorMap[type][value as keyof (typeof colorMap)[typeof type]] ||
-  colorMap[type].default;
 
 export default function CropGrid({ crops }: { crops: CropCardType[] }) {
   const [allCrops, setAllCrops] = useState(crops);
@@ -103,7 +81,6 @@ export default function CropGrid({ crops }: { crops: CropCardType[] }) {
           onAddToGarden={handleAddToGarden}
           crop={crop}
           loadings={loadings}
-          getDifficultyColor={(v) => getColor("difficulty", v)}
         />
       ))}
     </div>

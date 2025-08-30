@@ -10,7 +10,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import NavLink from "./ui/navlink";
+import NavLink from "../ui/navlink";
 import { NavItems } from "./Navbar";
 
 interface HamburgerProps {

@@ -24,7 +24,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { useSignupMutation } from "@/redux/features/user/userApiSlice";
 import { useRouter } from "next/navigation";
-import { errorToast } from "@/components/customToast";
+import { errorToast } from "@/components/common/CustomToast";
 
 const formSchema = z
   .object({

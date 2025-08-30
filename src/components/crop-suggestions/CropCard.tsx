@@ -27,21 +27,19 @@ import type { CropCardType } from '@/types/cropSuggestion';
 interface CropCardProps {
   crop: CropCardType;
   loadings: string[];
-  getDifficultyColor: (difficulty: string) => string;
   onAddToGarden: (cropId: string) => void;
 }
 
 const CropCard: React.FC<CropCardProps> = ({
   crop,
   loadings,
-  getDifficultyColor,
   onAddToGarden,
 }) => {
   return (
-    <Card className="group flex flex-col h-full hover:shadow-xl transition-all duration-300 border-0 bg-card shadow-sm hover:scale-[1.02] overflow-hidden pt-0 rounded-lg !rounded-tl-4xl !rounded-br-4xl">
+    <Card className="group flex flex-col h-full hover:shadow-xl transition-all duration-300 border-0 bg-card shadow-sm hover:scale-[1.02] overflow-hidden pt-0 rounded-md !rounded-tl-[60px] !rounded-br-[60px] gap-2">
       <CardHeader className="p-0">
         <div className="relative h-48 overflow-hidden">
-          {crop?.image?.url && crop.image.index !== 'default_image' ? (
+          {crop?.image?.url && crop.image.index !== "default_image" ? (
             <Image
               src={crop.image.url}
               alt={crop.name}
@@ -59,9 +57,7 @@ const CropCard: React.FC<CropCardProps> = ({
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
           <div className="absolute top-4 right-4">
             <Badge
-              className={`${getDifficultyColor(
-                crop.difficulty
-              )} shadow-lg backdrop-blur-sm`}
+              className={`bg-background text-primary shadow-lg backdrop-blur-sm`}
             >
               {crop.difficulty}
             </Badge>
@@ -77,7 +73,7 @@ const CropCard: React.FC<CropCardProps> = ({
         </div>
       </CardHeader>
 
-      <CardContent className="px-4 pb-4 flex-grow space-y-4">
+      <CardContent className="px-4 pb-4 flex-grow space-y-2">
         <CardDescription className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
           {crop.description}
         </CardDescription>
@@ -139,13 +135,13 @@ const CropCard: React.FC<CropCardProps> = ({
         <div className="flex gap-2 w-full">
           <Button
             variant="outline"
-            disabled={crop.details.status !== 'success'}
+            disabled={crop.details.status !== "success"}
             size="sm"
             className="flex-1"
           >
-            {crop.details.status === 'success' ? (
-              'Learn More'
-            ) : crop.details.status === 'failed' ? (
+            {crop.details.status === "success" ? (
+              "Learn More"
+            ) : crop.details.status === "failed" ? (
               <>
                 <AlertCircle className="h-4 w-4 mr-1" />
                 Failed
@@ -161,10 +157,10 @@ const CropCard: React.FC<CropCardProps> = ({
           <Button
             size="sm"
             disabled={
-              crop.details.status === 'pending' || loadings.includes(crop._id)
+              crop.details.status === "pending" || loadings.includes(crop._id)
             }
             onClick={() =>
-              crop?.details?.status === 'success' && onAddToGarden(crop._id)
+              crop?.details?.status === "success" && onAddToGarden(crop._id)
             }
             className="flex-1"
           >

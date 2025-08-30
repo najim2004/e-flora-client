@@ -2,8 +2,8 @@
 import { Button } from "@/components/ui/button";
 import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Hamburger from "./hamburger";
-import NavLink from "./ui/navlink";
+import Hamburger from "./Hamburger";
+import NavLink from "../ui/navlink";
 import Link from "next/link";
 import Image from "next/image";
 import { useSelector } from "react-redux";

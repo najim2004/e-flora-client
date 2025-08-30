@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Separator } from "./ui/separator";
-import { Button } from "./ui/button";
+import { Separator } from "../ui/separator";
+import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import {
   Facebook,

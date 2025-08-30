@@ -15,9 +15,9 @@ import {
 import { Upload, Check, Loader2, X, History } from "lucide-react";
 import { getSocket } from "@/lib/socket";
 import { useRequestDiseaseDetectionMutation } from "@/redux/features/diseaseDetection/diseaseDetectionApiSlice";
-import { errorToast } from "@/components/customToast";
+import { errorToast } from "@/components/common/CustomToast";
 import { CropSuggestionProgress } from "@/types/cropSuggestion";
-// import { ProgressModal } from "@/components/custom-progress";
+// import { ProgressModal } from "@/components/common/CustomProgress";
 
 export default function DiseaseDetectionPage() {
   const router = useRouter();

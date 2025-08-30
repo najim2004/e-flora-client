@@ -1,6 +1,6 @@
 "use client";
 import { theme } from "@/lib/theme";
-import NavLink from "./ui/navlink";
+import NavLink from "../ui/navlink";
 
 const navItems = [
   {

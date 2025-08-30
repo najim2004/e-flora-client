@@ -23,7 +23,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
-import { ProfileSidebar } from "@/components/profile-sidebar";
+import { ProfileSidebar } from "@/components/layout/ProfileSidebar";
 import {
   Dialog,
   DialogContent,
