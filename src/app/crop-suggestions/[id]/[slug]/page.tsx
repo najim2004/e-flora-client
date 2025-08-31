@@ -1,94 +1,95 @@
-"use client";
+import ClientCropDetailsPage from "@/components/crop-suggestions/details/ClientCropDetailsPage";
+import { CropDetails } from "@/types/cropSuggestion";
+import { cookies } from "next/headers";
+import { Metadata } from "next";
+import { JSX } from "react";
 
-import { useState, useEffect } from "react";
-import { ICropDetails } from "@/types/cropSuggestion";
-import AestheticValue from "@/components/crop-suggestions/details/AestheticValue";
-import CareRequirements from "@/components/crop-suggestions/details/CareRequirements";
-import CompanionPlanting from "@/components/crop-suggestions/details/CompanionPlanting";
-import EconomicAspects from "@/components/crop-suggestions/details/EconomicAspects";
-import FunFacts from "@/components/crop-suggestions/details/FunFacts";
-import GrowthAndHarvest from "@/components/crop-suggestions/details/GrowthAndHarvest";
-import NutritionalAndCulinary from "@/components/crop-suggestions/details/NutritionalAndCulinary";
-import Overview from "@/components/crop-suggestions/details/Overview";
-import PestAndDiseaseManagement from "@/components/crop-suggestions/details/PestAndDiseaseManagement";
-import RegionalSuitability from "@/components/crop-suggestions/details/RegionalSuitability";
-import SideNav from "@/components/crop-suggestions/details/SideNav";
-import SustainabilityTips from "@/components/crop-suggestions/details/SustainabilityTips";
-import { mockCropDetails } from "@/lib/mockData";
+export interface ResultResponse {
+  success: boolean;
+  message: string;
+  data: CropDetails;
+  newAccessToken?: string;
+}
 
-const CropDetailsPage = ({ params }: { params: { slug: string } }) => {
-  const [cropDetails, setCropDetails] = useState<ICropDetails | null>(null);
-  const [activeSection, setActiveSection] = useState("overview");
-
-  useEffect(() => {
-    setCropDetails(mockCropDetails);
-  }, []);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
+const geCropDetailsData = async (slug: string): Promise<ResultResponse> => {
+  const cookieStore = await cookies();
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/crops/crop-details/${slug}`,
+    {
+      credentials: "include",
+      headers: {
+        Cookie: cookieStore.toString(),
       },
-      { rootMargin: "0px 0px -50% 0px" }
-    );
-
-    const sections = document.querySelectorAll("div[id]");
-    sections.forEach((section) => observer.observe(section));
-
-    return () => sections.forEach((section) => observer.unobserve(section));
-  }, [cropDetails]);
-
-  if (!cropDetails) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="text-2xl">Loading...</div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="bg-gray-50">
-      <div
-        className="h-64 bg-cover bg-center relative"
-        style={{ backgroundImage: "url(/hero.jpg)" }}
-      >
-        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="text-center text-white">
-            <h1 className="text-5xl font-bold mb-2">{cropDetails.name}</h1>
-            <p className="text-xl italic">{cropDetails.scientificName}</p>
-          </div>
-        </div>
-      </div>
-
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="md:col-span-1">
-            <SideNav
-              activeSection={activeSection}
-              setActiveSection={setActiveSection}
-            />
-          </div>
-          <div className="md:col-span-3">
-            <Overview cropDetails={cropDetails} />
-            <GrowthAndHarvest cropDetails={cropDetails} />
-            <CareRequirements cropDetails={cropDetails} />
-            <PestAndDiseaseManagement cropDetails={cropDetails} />
-            <CompanionPlanting cropDetails={cropDetails} />
-            <NutritionalAndCulinary cropDetails={cropDetails} />
-            <EconomicAspects cropDetails={cropDetails} />
-            <SustainabilityTips cropDetails={cropDetails} />
-            <AestheticValue cropDetails={cropDetails} />
-            <RegionalSuitability cropDetails={cropDetails} />
-            <FunFacts cropDetails={cropDetails} />
-          </div>
-        </div>
-      </div>
-    </div>
+      next: { revalidate: 3000 },
+    }
   );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch crop details");
+  }
+  return await res.json();
 };
 
-export default CropDetailsPage;
+// ----------------- ✅ Dynamic Metadata -----------------
+type MetaProps = { params: Promise<{ slug: string }> };
+
+export async function generateMetadata({
+  params,
+}: MetaProps): Promise<Metadata> {
+  const { slug } = await params;
+  try {
+    const cropDetailsData = await geCropDetailsData(slug);
+
+    if (!cropDetailsData?.data) {
+      return {
+        title: "Crop not found",
+        description: "No crop details available.",
+      };
+    }
+
+    const crop = cropDetailsData.data;
+
+    return {
+      title: `${crop.name} - Crop Details`,
+      description: crop.description || `Learn more about ${crop.name}`,
+      openGraph: {
+        title: crop.name,
+        description: crop.description || "",
+        images: crop.image ? [crop.image] : [],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: crop.name,
+        description: crop.description || "",
+        images: crop.image ? [crop.image] : [],
+      },
+    };
+  } catch {
+    return {
+      title: "Error fetching crop details",
+      description: "Something went wrong while loading crop data.",
+    };
+  }
+}
+
+// ----------------- ✅ Page Component -----------------
+type Props = {
+  params: Promise<{ slug: string }>;
+};
+
+export default async function ServerCropDetailsPage({
+  params,
+}: Props): Promise<JSX.Element> {
+  const slug = (await params).slug;
+  const cropDetailsData = await geCropDetailsData(slug).catch((e) => {
+    console.log(e);
+    return null;
+  });
+
+  return (
+    <ClientCropDetailsPage
+      cropDetails={cropDetailsData?.data || null}
+      params={{ slug: slug ?? "" }}
+    />
+  );
+}

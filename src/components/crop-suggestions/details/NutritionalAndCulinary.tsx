@@ -1,10 +1,10 @@
-import { ICropDetails } from "@/types/cropSuggestion";
+import { CropDetails } from "@/types/cropSuggestion";
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Icons } from "@/components/icons";
 
 interface NutritionalAndCulinaryProps {
-  cropDetails: ICropDetails;
+  cropDetails: CropDetails;
 }
 
 const NutritionalAndCulinary: React.FC<NutritionalAndCulinaryProps> = ({
@@ -22,19 +22,19 @@ const NutritionalAndCulinary: React.FC<NutritionalAndCulinaryProps> = ({
         <div className="space-y-4">
           <div>
             <h3 className="font-semibold text-gray-600">Nutritional Value</h3>
-            <p>{cropDetails.nutritionalAndCulinary.nutritionalValue}</p>
+            <p>{cropDetails?.nutritionalAndCulinary?.nutritionalValue}</p>
           </div>
           <div>
             <h3 className="font-semibold text-gray-600">Health Benefits</h3>
-            <p>{cropDetails.nutritionalAndCulinary.healthBenefits}</p>
+            <p>{cropDetails?.nutritionalAndCulinary?.healthBenefits}</p>
           </div>
           <div>
             <h3 className="font-semibold text-gray-600">Culinary Uses</h3>
-            <p>{cropDetails.nutritionalAndCulinary.culinaryUses}</p>
+            <p>{cropDetails?.nutritionalAndCulinary?.culinaryUses}</p>
           </div>
           <div>
             <h3 className="font-semibold text-gray-600">Storage Tips</h3>
-            <p>{cropDetails.nutritionalAndCulinary.storageTips}</p>
+            <p>{cropDetails?.nutritionalAndCulinary?.storageTips}</p>
           </div>
         </div>
       </CardContent>

@@ -1,10 +1,10 @@
-import { ICropDetails } from "@/types/cropSuggestion";
+import { CropDetails } from "@/types/cropSuggestion";
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Icons } from "@/components/icons";
 
 interface CompanionPlantingProps {
-  cropDetails: ICropDetails;
+  cropDetails: CropDetails;
 }
 
 const CompanionPlanting: React.FC<CompanionPlantingProps> = ({
@@ -22,21 +22,23 @@ const CompanionPlanting: React.FC<CompanionPlantingProps> = ({
         <div className="space-y-4">
           <div>
             <h3 className="text-xl font-semibold mb-2">Companion Plants</h3>
-            {cropDetails.companionPlanting.companionPlants.map((plant, index) => (
-              <div key={index} className="mb-2">
-                <h4 className="font-semibold">{plant.name}</h4>
-                <p>{plant.benefit}</p>
-              </div>
-            ))}
+            {cropDetails?.companionPlanting?.companionPlants?.map(
+              (plant, index) => (
+                <div key={index} className="mb-2">
+                  <h4 className="font-semibold">{plant?.name}</h4>
+                  <p>{plant?.benefit}</p>
+                </div>
+              )
+            )}
           </div>
           <div>
             <h3 className="font-semibold text-gray-600">Avoid Near</h3>
-            <p>{cropDetails.companionPlanting.avoidNear.join(", ")}</p>
+            <p>{cropDetails?.companionPlanting?.avoidNear?.join(", ")}</p>
           </div>
-          {cropDetails.companionPlanting.notes && (
+          {cropDetails?.companionPlanting?.notes && (
             <div>
               <h3 className="font-semibold text-gray-600">Notes</h3>
-              <p>{cropDetails.companionPlanting.notes}</p>
+              <p>{cropDetails?.companionPlanting?.notes}</p>
             </div>
           )}
         </div>

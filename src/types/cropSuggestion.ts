@@ -31,14 +31,12 @@ export interface CropSuggestionManual {
 
 export type CropSuggestionPayload = CropSuggestionAuto | CropSuggestionManual;
 
-export interface CropDetails {
-  status: "success" | "failed" | "pending";
-  id?: string;
-  slug?: string;
-}
-
 export interface Crop {
-  cropDetails: CropDetails;
+  cropDetails: {
+    status: "success" | "failed" | "pending";
+    id?: string;
+    slug?: string;
+  };
   icon: string;
   name: string;
   scientificName: string;
@@ -76,28 +74,28 @@ export interface CropSuggestionResponse {
   recommendations: Recommendations;
   createdAt: Date;
 }
-export type CropSuggestionStatus =
-  | "pending"
-  | "initiated"
-  | "analyzing"
-  | "generatingData"
-  | "savingToDB"
-  | "completed"
-  | "failed";
+// export type CropSuggestionStatus =
+//   | "pending"
+//   | "initiated"
+//   | "analyzing"
+//   | "generatingData"
+//   | "savingToDB"
+//   | "completed"
+//   | "failed";
 
-export interface CropSuggestionProgress {
-  status: CropSuggestionStatus;
-  progress: number;
-  message?: string;
-  timestamp: Date;
-}
+// export interface CropSuggestionProgress {
+//   status: CropSuggestionStatus;
+//   progress: number;
+//   message?: string;
+//   timestamp: Date;
+// }
 
-export interface CropUpdateDetails {
-  status: "success" | "failed";
-  slug?: string;
-  scientificName: string;
-  timestamp: Date;
-}
+// export interface CropUpdateDetails {
+//   status: "success" | "failed";
+//   slug?: string;
+//   scientificName: string;
+//   timestamp: Date;
+// }
 
 export interface Input {
   location: LocationWithAddress;
@@ -120,7 +118,7 @@ export interface CropSuggestionResult {
 }
 
 export interface CropCardType {
-  _id:string;
+  _id: string;
   name: string; // e.g. "Tomato"
   scientificName: string;
   image: {
@@ -293,7 +291,11 @@ export interface GrowthAndHarvest {
   };
 }
 
-export interface ICropDetails extends CommonProperties {
+export interface CropDetails extends CommonProperties {
+  image: {
+    url: string;
+    index: string;
+  };
   cropId: string;
   name: string;
   scientificName: string;

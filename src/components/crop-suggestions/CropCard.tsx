@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import type React from 'react';
-import Image from 'next/image';
+import type React from "react";
+import Image from "next/image";
 import {
   Card,
   CardContent,
@@ -9,9 +9,9 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Sun,
   Droplets,
@@ -21,8 +21,9 @@ import {
   Leaf,
   Thermometer,
   AlertCircle,
-} from 'lucide-react';
-import type { CropCardType } from '@/types/cropSuggestion';
+} from "lucide-react";
+import type { CropCardType } from "@/types/cropSuggestion";
+import { useParams, useRouter } from "next/navigation";
 
 interface CropCardProps {
   crop: CropCardType;
@@ -35,6 +36,8 @@ const CropCard: React.FC<CropCardProps> = ({
   loadings,
   onAddToGarden,
 }) => {
+  const router = useRouter();
+  const id = useParams()?.id ?? "";
   return (
     <Card className="group flex flex-col h-full hover:shadow-xl transition-all duration-300 border-0 bg-card shadow-sm hover:scale-[1.02] overflow-hidden pt-0 rounded-md !rounded-tl-[60px] !rounded-br-[60px] gap-2">
       <CardHeader className="p-0">
@@ -136,6 +139,10 @@ const CropCard: React.FC<CropCardProps> = ({
           <Button
             variant="outline"
             disabled={crop.details.status !== "success"}
+            onClick={() =>
+              crop?.details?.status === "success" &&
+              router.push(`/crop-suggestions/${id}/${crop.details.slug}`)
+            }
             size="sm"
             className="flex-1"
           >

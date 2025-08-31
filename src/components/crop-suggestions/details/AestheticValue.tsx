@@ -1,10 +1,10 @@
-import { ICropDetails } from "@/types/cropSuggestion";
+import { CropDetails } from "@/types/cropSuggestion";
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Icons } from "@/components/icons";
 
 interface AestheticValueProps {
-  cropDetails: ICropDetails;
+  cropDetails: CropDetails;
 }
 
 const AestheticValue: React.FC<AestheticValueProps> = ({ cropDetails }) => {
@@ -17,10 +17,10 @@ const AestheticValue: React.FC<AestheticValueProps> = ({ cropDetails }) => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="mb-4">{cropDetails.aestheticValue.description}</p>
+        <p className="mb-4">{cropDetails?.aestheticValue?.description}</p>
         <div>
           <h3 className="font-semibold text-gray-600">Tips</h3>
-          <p>{cropDetails.aestheticValue.tips}</p>
+          <p>{cropDetails?.aestheticValue?.tips}</p>
         </div>
       </CardContent>
     </Card>

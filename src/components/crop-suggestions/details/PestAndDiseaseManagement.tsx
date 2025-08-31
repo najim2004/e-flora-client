@@ -1,10 +1,10 @@
-import { ICropDetails } from "@/types/cropSuggestion";
+import { CropDetails } from "@/types/cropSuggestion";
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Icons } from "@/components/icons";
 
 interface PestAndDiseaseManagementProps {
-  cropDetails: ICropDetails;
+  cropDetails: CropDetails;
 }
 
 const PestAndDiseaseManagement: React.FC<PestAndDiseaseManagementProps> = ({
@@ -22,15 +22,15 @@ const PestAndDiseaseManagement: React.FC<PestAndDiseaseManagementProps> = ({
         <div className="space-y-4">
           <div>
             <h3 className="text-xl font-semibold mb-2">Common Diseases</h3>
-            {cropDetails.pestAndDiseaseManagement.commonDiseases.map(
+            {cropDetails?.pestAndDiseaseManagement?.commonDiseases?.map(
               (disease, index) => (
                 <div key={index} className="mb-4">
-                  <h4 className="font-semibold">{disease.name}</h4>
+                  <h4 className="font-semibold">{disease?.name}</h4>
                   <p>
-                    <strong>Symptoms:</strong> {disease.symptoms}
+                    <strong>Symptoms:</strong> {disease?.symptoms}
                   </p>
                   <p>
-                    <strong>Treatment:</strong> {disease.treatment}
+                    <strong>Treatment:</strong> {disease?.treatment}
                   </p>
                 </div>
               )
@@ -38,15 +38,15 @@ const PestAndDiseaseManagement: React.FC<PestAndDiseaseManagementProps> = ({
           </div>
           <div>
             <h3 className="text-xl font-semibold mb-2">Common Pests</h3>
-            {cropDetails.pestAndDiseaseManagement.commonPests.map(
+            {cropDetails?.pestAndDiseaseManagement?.commonPests?.map(
               (pest, index) => (
                 <div key={index} className="mb-4">
-                  <h4 className="font-semibold">{pest.name}</h4>
+                  <h4 className="font-semibold">{pest?.name}</h4>
                   <p>
-                    <strong>Symptoms:</strong> {pest.symptoms}
+                    <strong>Symptoms:</strong> {pest?.symptoms}
                   </p>
                   <p>
-                    <strong>Treatment:</strong> {pest.treatment}
+                    <strong>Treatment:</strong> {pest?.treatment}
                   </p>
                 </div>
               )

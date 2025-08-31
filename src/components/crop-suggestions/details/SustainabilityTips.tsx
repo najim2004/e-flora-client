@@ -1,10 +1,10 @@
-import { ICropDetails } from "@/types/cropSuggestion";
+import { CropDetails } from "@/types/cropSuggestion";
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Icons } from "@/components/icons";
 
 interface SustainabilityTipsProps {
-  cropDetails: ICropDetails;
+  cropDetails: CropDetails;
 }
 
 const SustainabilityTips: React.FC<SustainabilityTipsProps> = ({
@@ -20,7 +20,7 @@ const SustainabilityTips: React.FC<SustainabilityTipsProps> = ({
       </CardHeader>
       <CardContent>
         <ul className="list-disc list-inside">
-          {cropDetails.sustainabilityTips.map((tip, index) => (
+          {cropDetails?.sustainabilityTips?.map((tip, index) => (
             <li key={index}>{tip}</li>
           ))}
         </ul>

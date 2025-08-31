@@ -1,10 +1,10 @@
-import { ICropDetails } from "@/types/cropSuggestion";
+import { CropDetails } from "@/types/cropSuggestion";
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Icons } from "@/components/icons";
 
 interface RegionalSuitabilityProps {
-  cropDetails: ICropDetails;
+  cropDetails: CropDetails;
 }
 
 const RegionalSuitability: React.FC<RegionalSuitabilityProps> = ({
@@ -22,11 +22,15 @@ const RegionalSuitability: React.FC<RegionalSuitabilityProps> = ({
         <div className="space-y-4">
           <div>
             <h3 className="font-semibold text-gray-600">Suitable Regions</h3>
-            <p>{cropDetails.regionalSuitability.suitableRegions.join(", ")}</p>
+            <p>
+              {cropDetails?.regionalSuitability?.suitableRegions?.join(", ")}
+            </p>
           </div>
           <div>
-            <h3 className="font-semibold text-gray-600">Urban Gardening Notes</h3>
-            <p>{cropDetails.regionalSuitability.urbanGardeningNotes}</p>
+            <h3 className="font-semibold text-gray-600">
+              Urban Gardening Notes
+            </h3>
+            <p>{cropDetails?.regionalSuitability?.urbanGardeningNotes}</p>
           </div>
         </div>
       </CardContent>

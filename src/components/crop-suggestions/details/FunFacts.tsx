@@ -1,10 +1,10 @@
-import { ICropDetails } from "@/types/cropSuggestion";
+import { CropDetails } from "@/types/cropSuggestion";
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Icons } from "@/components/icons";
 
 interface FunFactsProps {
-  cropDetails: ICropDetails;
+  cropDetails: CropDetails;
 }
 
 const FunFacts: React.FC<FunFactsProps> = ({ cropDetails }) => {
@@ -18,7 +18,7 @@ const FunFacts: React.FC<FunFactsProps> = ({ cropDetails }) => {
       </CardHeader>
       <CardContent>
         <ul className="list-disc list-inside">
-          {cropDetails.funFacts.map((fact, index) => (
+          {cropDetails?.funFacts?.map((fact, index) => (
             <li key={index}>{fact}</li>
           ))}
         </ul>
