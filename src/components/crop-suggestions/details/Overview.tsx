@@ -1,10 +1,10 @@
-import { ICropDetails } from "@/types/cropSuggestion";
+import { CropDetails } from "@/types/cropSuggestion";
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Icons } from "@/components/icons";
 
 interface OverviewProps {
-  cropDetails: ICropDetails;
+  cropDetails: CropDetails;
 }
 
 const Overview: React.FC<OverviewProps> = ({ cropDetails }) => {

@@ -26,11 +26,9 @@ import {
   FlaskConical,
   Landmark,
   Smile,
-  type Icon as LucideIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-export type Icon = LucideIcon;
 
 export const Icons = {
   logo: ({ className, ...props }: React.HTMLAttributes<SVGElement>) => (
