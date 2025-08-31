@@ -74,21 +74,21 @@ export interface CropSuggestionResponse {
   recommendations: Recommendations;
   createdAt: Date;
 }
-// export type CropSuggestionStatus =
-//   | "pending"
-//   | "initiated"
-//   | "analyzing"
-//   | "generatingData"
-//   | "savingToDB"
-//   | "completed"
-//   | "failed";
+export type CropSuggestionStatus =
+  | "pending"
+  | "initiated"
+  | "analyzing"
+  | "generatingData"
+  | "savingToDB"
+  | "completed"
+  | "failed";
 
-// export interface CropSuggestionProgress {
-//   status: CropSuggestionStatus;
-//   progress: number;
-//   message?: string;
-//   timestamp: Date;
-// }
+export interface CropSuggestionProgress {
+  status: CropSuggestionStatus;
+  progress: number;
+  message?: string;
+  timestamp: Date;
+}
 
 // export interface CropUpdateDetails {
 //   status: "success" | "failed";
