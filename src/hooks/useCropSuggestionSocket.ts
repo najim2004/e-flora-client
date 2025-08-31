@@ -19,8 +19,8 @@ interface CompletedData {
   resultId: string;
 }
 
-interface CropDetailsUpdate {
-  status: "success" | "failed";
+export interface CropDetailsUpdate {
+  status: "success" | "failed" | "pending";
   slug?: string;
   detailsId: string;
   timestamp: string;

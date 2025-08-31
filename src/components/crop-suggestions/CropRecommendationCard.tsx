@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { CropDetails } from "@/types/cropSuggestion";
+import { CropDetailsUpdate } from "@/hooks/useCropSuggestionSocket";
 import { ArrowRight, LoaderCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,7 +13,7 @@ interface CropRecommendationCardProps {
   matchPercentage: number;
   imageSrc: string;
   imageAlt: string;
-  cropDetails: CropDetails;
+  cropDetails: CropDetailsUpdate;
 }
 
 export default function CropRecommendationCard({
