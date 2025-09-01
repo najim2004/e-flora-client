@@ -20,5 +20,8 @@ export interface DiseaseDetectionResult {
     _id: string;
     cropName: string;
     description: string | null;
+    cta?: boolean;
+    gardenId?: string;
+    cropId?: string;
   };
 }
