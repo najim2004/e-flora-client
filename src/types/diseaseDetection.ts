@@ -8,16 +8,14 @@ export interface DiseaseDetectionResult {
     };
     detectedDisease: {
       status: string;
-      id: {
-        _id: string;
-        cropName: string;
-        diseaseName: string;
-        description: string;
-        symptoms: string[];
-        treatment: string[];
-        causes: string[];
-        preventiveTips: string[];
-      };
+      _id: string;
+      cropName: string;
+      diseaseName: string;
+      description: string;
+      symptoms: string[];
+      treatment: string[];
+      causes: string[];
+      preventiveTips: string[];
     };
     _id: string;
     cropName: string;

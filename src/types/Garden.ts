@@ -1,5 +1,6 @@
 import { LocationWithAddress } from "./cropSuggestion";
 
+// This is the main type for the getMyGarden API response
 export interface Garden {
   _id: string;
   userId: string;
@@ -12,20 +13,20 @@ export interface Garden {
   location: LocationWithAddress;
   size: number;
   weather: Weather;
-  crops: Crop[];
+  crops: Crop[]; // Active and pending crops
   activeCrops: number;
   pendingCrops: number;
-  removedCrops: number;
+  removedCrops: Crop[]; // Renamed from archivedCrops to match server response
   notes: string;
   gardenType: GardenType;
   purpose: Purpose;
   sunlight: Sunlight;
   soilType: SoilType[];
   waterSource: WaterSource;
-  gardenerType: GardenType;
-  archivedCrops: Crop[];
+  gardenerType: GardenerType;
 }
 
+// This interface for individual crop items is mostly correct and can be reused.
 export interface Crop {
   _id: string;
   cropName: string;

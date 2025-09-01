@@ -1,7 +1,5 @@
 "use client";
 
-"use client";
-
 import { Crop } from "@/types/cropSuggestion";
 import CropRecommendationCard from "./CropRecommendationCard";
 

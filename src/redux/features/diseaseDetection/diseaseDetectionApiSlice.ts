@@ -3,19 +3,24 @@ import { apiSlice } from "@/redux/apiSlice";
 export const diseaseDetectionApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     requestDiseaseDetection: builder.mutation({
-      query: ({
-        image,
-        cropName,
-        description,
-      }: {
+      query: (args: {
         image: File;
-        cropName: string;
         description: string;
+        mode: 'MANUAL' | 'GARDEN_CROP';
+        cropName?: string;
+        gardenCropId?: string;
       }) => {
+        const { image, description, mode, cropName, gardenCropId } = args;
         const formData = new FormData();
         formData.append("image", image);
         formData.append("description", description);
-        formData.append("cropName", cropName);
+        formData.append("mode", mode);
+
+        if (mode === 'MANUAL' && cropName) {
+          formData.append("cropName", cropName);
+        } else if (mode === 'GARDEN_CROP' && gardenCropId) {
+          formData.append("gardenCropId", gardenCropId);
+        }
 
         return {
           url: "/api/v1/crops/disease-detection",

@@ -57,8 +57,7 @@ export default async function DiseaseDetectionResultPage({
   params: Promise<{ id: string }>;
 }) {
   const id = (await params).id;
-  const result = await fetchDetails(id);
-
+  const result = (await fetchDetails(id)) as DiseaseDetectionResult;
   if (!result?.data) {
     return (
       <main className="flex-1 container mx-auto px-4 py-8">
@@ -68,7 +67,6 @@ export default async function DiseaseDetectionResultPage({
   }
 
   const { image, detectedDisease } = result.data;
-  const disease = detectedDisease.id;
 
   return (
     <main className="flex-1 max-w-7xl mx-auto px-4 py-8">
@@ -121,10 +119,10 @@ export default async function DiseaseDetectionResultPage({
                 <ImagePreview imageUrl={image.url || "/placeholder.svg"} />
                 <div className="mt-6">
                   <p className="text-primary/80 text-sm italic">
-                    <em>Crop:</em> {result.data.cropName}
+                    <em>Crop:</em> {result?.data?.cropName}
                   </p>
                   <p className="text-primary/80 text-sm italic">
-                    <em>Description:</em> {result.data.description}
+                    <em>Description:</em> {result?.data?.description}
                   </p>
                 </div>
               </div>
@@ -143,18 +141,18 @@ export default async function DiseaseDetectionResultPage({
             <CardContent>
               <ul className="space-y-4 text-primary/80">
                 <li>
-                  <strong>Crop Name:</strong> {disease.cropName}
+                  <strong>Crop Name:</strong> {detectedDisease?.cropName}
                 </li>
                 <li>
-                  <strong>Disease Name:</strong> {disease.diseaseName}
+                  <strong>Disease Name:</strong> {detectedDisease?.diseaseName}
                 </li>
                 <li>
-                  <strong>Description:</strong> {disease.description}
+                  <strong>Description:</strong> {detectedDisease?.description}
                 </li>
                 <li>
                   <strong>Symptoms:</strong>
                   <ul>
-                    {disease.symptoms?.map((symptom, index) => (
+                    {detectedDisease?.symptoms?.map((symptom, index) => (
                       <li key={index} className="flex items-start">
                         <Check className="h-5 w-5 text-primary/80 mr-2 flex-shrink-0 mt-0.5" />
                         <span>{symptom}</span>
@@ -165,7 +163,7 @@ export default async function DiseaseDetectionResultPage({
                 <li>
                   <strong>Causes:</strong>
                   <ul>
-                    {disease.causes?.map((cause, index) => (
+                    {detectedDisease?.causes?.map((cause, index) => (
                       <li key={index} className="flex items-start">
                         <Check className="h-5 w-5 text-primary/80 mr-2 flex-shrink-0 mt-0.5" />
                         <span>{cause}</span>
@@ -176,7 +174,7 @@ export default async function DiseaseDetectionResultPage({
                 <li>
                   <strong>Preventive Tips:</strong>
                   <ul>
-                    {disease.preventiveTips?.map((tip, index) => (
+                    {detectedDisease?.preventiveTips?.map((tip, index) => (
                       <li key={index} className="flex items-start">
                         <Check className="h-5 w-5 text-primary/80 mr-2 flex-shrink-0 mt-0.5" />
                         <span>{tip}</span>
@@ -187,7 +185,7 @@ export default async function DiseaseDetectionResultPage({
                 <li>
                   <strong>Treatment:</strong>
                   <ul>
-                    {disease.treatment?.map((treatment, index) => (
+                    {detectedDisease?.treatment?.map((treatment, index) => (
                       <li key={index} className="flex items-start">
                         <Check className="h-5 w-5 text-primary/80 mr-2 flex-shrink-0 mt-0.5" />
                         <span>{treatment}</span>
