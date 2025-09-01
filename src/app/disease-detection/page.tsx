@@ -14,60 +14,41 @@ import {
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Upload, Loader2, X, Leaf, Package } from "lucide-react";
-import { getSocket } from "@/lib/socket";
 import { useRequestDiseaseDetectionMutation } from "@/redux/features/diseaseDetection/diseaseDetectionApiSlice";
 import { errorToast } from "@/components/common/CustomToast";
 import { GardenCropSelector } from "@/components/disease-detection/GardenCropSelector";
-
-interface DetectionProgress {
-  status: string;
-  progress: number;
-  message: string;
-}
+import { useDiseaseDetectionSocket } from "@/hooks/useDiseaseDetectionSocket"; // Import the new hook
+import { ProgressModal } from "@/components/common/CustomProgress"; // Import ProgressModal and ProgressData
 
 export default function DiseaseDetectionPage() {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
 
   // State
-  const [mode, setMode] = useState<"MANUAL" | "GARDEN_CROP">("MANUAL");
+  const [mode, setMode] = useState<'MANUAL' | 'GARDEN_CROP'>('MANUAL');
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [cropName, setCropName] = useState("");
-  const [selectedGardenCropId, setSelectedGardenCropId] = useState<
-    string | null
-  >(null);
+  const [selectedGardenCropId, setSelectedGardenCropId] = useState<string | null>(null);
   const [description, setDescription] = useState("");
-  const [progress, setProgress] = useState<DetectionProgress | null>(null);
   const [dragOver, setDragOver] = useState(false);
+  
+  const [requestDetection, { isLoading: isInitialLoading }] = useRequestDiseaseDetectionMutation();
 
-  const [requestDetection, { isLoading }] =
-    useRequestDiseaseDetectionMutation();
+  // Use the new custom socket hook
+  const { progress, result, error, reset } = useDiseaseDetectionSocket(); // Destructure reset
 
-  // Socket.IO effect
+  // Effect to handle redirection on result or error from socket
   useEffect(() => {
-    const socket = getSocket();
-    socket.emit("joinDiseaseDetectionRoom");
-
-    const handleProgress = (data: DetectionProgress) => setProgress(data);
-    const handleResult = (payload: { resultId: string }) =>
-      router.push(`/disease-detection/result/${payload.resultId}`);
-    const handleError = (error: { message?: string }) => {
+    if (result) {
+      router.push(`/disease-detection/result/${result.resultId}`);
+      reset(); // Reset all states after redirection
+    }
+    if (error) {
       errorToast(error.message || "Disease detection failed!");
-      setProgress(null);
-    };
-
-    socket.on("diseaseDetection:progressUpdate", handleProgress);
-    socket.on("diseaseDetection:result", handleResult);
-    socket.on("diseaseDetection:error", handleError);
-
-    return () => {
-      socket.emit("leaveDiseaseDetectionRoom");
-      socket.off("diseaseDetection:progressUpdate", handleProgress);
-      socket.off("diseaseDetection:result", handleResult);
-      socket.off("diseaseDetection:error", handleError);
-    };
-  }, [router]);
+      reset(); // Reset all states after showing toast
+    }
+  }, [result, error, router, reset]); // Add reset to dependency array
 
   // File handling logic
   const handleFileChange = (file: File) => {
@@ -77,6 +58,8 @@ export default function DiseaseDetectionPage() {
     }
     setImageFile(file);
     setPreviewUrl(URL.createObjectURL(file));
+    // Reset progress, result, error when a new image is selected
+    reset(); // Call reset
   };
 
   const handleDrop = (e: DragEvent<HTMLDivElement>) => {
@@ -98,33 +81,41 @@ export default function DiseaseDetectionPage() {
     e.stopPropagation();
     setImageFile(null);
     setPreviewUrl(null);
-    setProgress(null);
     if (inputRef.current) inputRef.current.value = "";
+    // Reset all states related to detection when image is removed
+    reset(); // Call reset
   };
 
   // Submission logic
   const handleSubmit = async () => {
     if (!imageFile) return errorToast("Please select an image first.");
-
-    if (mode === "MANUAL" && !cropName.trim()) {
-      return errorToast("Crop name is required for Manual mode.");
-    } else if (mode === "GARDEN_CROP" && !selectedGardenCropId) {
-      return errorToast("Please select a crop from your garden.");
+    
+    if (mode === 'MANUAL' && !cropName.trim()) {
+        return errorToast("Crop name is required for Manual mode.");
+    } else if (mode === 'GARDEN_CROP' && !selectedGardenCropId) {
+        return errorToast("Please select a crop from your garden.");
     }
+
+    // Reset socket states before new request
+    reset(); // Call reset
 
     try {
       await requestDetection({
         image: imageFile,
         description,
         mode,
-        cropName: mode === "MANUAL" ? cropName.trim() : undefined,
-        gardenCropId:
-          mode === "GARDEN_CROP" ? selectedGardenCropId! : undefined,
+        cropName: mode === 'MANUAL' ? cropName.trim() : undefined,
+        gardenCropId: mode === 'GARDEN_CROP' ? selectedGardenCropId! : undefined,
       }).unwrap();
     } catch {
       errorToast("Failed to start disease detection process.");
+      // If initial request fails, ensure states are reset
+      reset(); // Call reset
     }
   };
+
+  // Determine if ProgressModal should be open
+  const isProgressModalOpen = progress !== null && progress.status !== 'completed' && progress.status !== 'failed';
 
   return (
     <div className="min-h-[calc(100vh-64px)] bg-gray-50 flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8">
@@ -166,25 +157,6 @@ export default function DiseaseDetectionPage() {
                       height={500}
                       className="mx-auto rounded-md object-contain max-h-96 w-full"
                     />
-                    {isLoading && ( // Progress indicator integrated into image preview
-                      <div className="absolute inset-0 flex flex-col items-center justify-center rounded-md bg-black/60 p-4 text-white transition-opacity duration-300 opacity-100">
-                        <Loader2 className="h-8 w-8 animate-spin mb-2" />
-                        <p className="font-semibold text-lg">
-                          {progress?.status || "Initiating..."}
-                        </p>
-                        <p className="text-sm mt-1 text-gray-200">
-                          {progress?.message || "Please wait"}
-                        </p>
-                        {progress && (
-                          <div className="w-full bg-gray-700 rounded-full h-2.5 mt-4">
-                            <div
-                              className="bg-green-400 h-2.5 rounded-full transition-all duration-500 ease-out"
-                              style={{ width: `${progress.progress}%` }}
-                            ></div>
-                          </div>
-                        )}
-                      </div>
-                    )}
                     <Button
                       type="button"
                       variant="destructive"
@@ -192,7 +164,7 @@ export default function DiseaseDetectionPage() {
                       onClick={handleRemoveImage}
                       className="absolute top-2 right-2 rounded-full h-8 w-8 bg-red-500/80 hover:bg-red-600/90"
                       aria-label="Remove Image"
-                      disabled={isLoading}
+                      disabled={isInitialLoading}
                     >
                       <X className="h-4 w-4" />
                     </Button>
@@ -304,9 +276,9 @@ export default function DiseaseDetectionPage() {
                 <Button
                   onClick={handleSubmit}
                   className="bg-primary hover:bg-primary/80 w-full mt-6"
-                  disabled={isLoading}
+                  disabled={isInitialLoading}
                 >
-                  {isLoading ? (
+                  {isInitialLoading ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                       Detecting...
@@ -320,6 +292,10 @@ export default function DiseaseDetectionPage() {
           </div>
         </div>
       </div>
+      {/* Render ProgressModal conditionally */}
+      {progress && (
+        <ProgressModal data={progress} isOpen={isProgressModalOpen} />
+      )}
     </div>
   );
 }

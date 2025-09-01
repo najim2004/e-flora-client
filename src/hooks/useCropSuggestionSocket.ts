@@ -2,7 +2,7 @@
 import { getSocket } from "@/lib/socket";
 import { useEffect, useState } from "react";
 
-interface ProgressUpdate {
+export interface ProgressUpdate {
   status:
     | "initiated"
     | "analyzing"
