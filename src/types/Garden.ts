@@ -16,7 +16,7 @@ export interface Garden {
   crops: Crop[]; // Active and pending crops
   activeCrops: number;
   pendingCrops: number;
-  removedCrops: Crop[]; // Renamed from archivedCrops to match server response
+  removedCrops: number; // Renamed from archivedCrops to match server response
   notes: string;
   gardenType: GardenType;
   purpose: Purpose;
@@ -24,6 +24,7 @@ export interface Garden {
   soilType: SoilType[];
   waterSource: WaterSource;
   gardenerType: GardenerType;
+  archivedCrops: Crop[];
 }
 
 // This interface for individual crop items is mostly correct and can be reused.
