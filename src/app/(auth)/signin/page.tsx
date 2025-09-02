@@ -23,7 +23,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 import { useLoginMutation } from "@/redux/features/user/userApiSlice";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { errorToast } from "@/components/common/CustomToast";
 
 const formSchema = z.object({
@@ -44,6 +44,8 @@ export default function LoginPage() {
     },
   });
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect") || "/";
 
   const [loginMutation] = useLoginMutation();
 
@@ -56,7 +58,8 @@ export default function LoginPage() {
       }).unwrap();
       console.log(res);
       if (res?.success) {
-        router.replace("/");
+        const redirectPath = redirect || "/";
+        router.replace(redirectPath);
       } else {
         errorToast(
           res?.message || "Something went wrong please try again letter"
@@ -92,7 +95,7 @@ export default function LoginPage() {
               Sign In
             </NavLink>
             <NavLink
-              href="/signup"
+              href={`/signup${redirect ? `?redirect=${redirect}` : ""}`}
               className="p-1.5 text-center text-gray-600 rounded-sm text-sm font-medium"
               activeClass="bg-primary text-white"
             >

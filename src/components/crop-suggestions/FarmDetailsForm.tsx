@@ -1,6 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useForm, Control } from "react-hook-form";
+import {
+  useForm,
+  Control,
+  UseFormGetValues,
+  UseFormSetValue,
+} from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
@@ -45,6 +50,14 @@ const plantTypeEnum = z.enum([
   "tree",
   "ornamental",
 ]);
+const purposeEnum = z.enum([
+  "home-consumption",
+  "commercial-selling",
+  "aesthetic-decoration",
+  "educational-learning",
+  "medicinal-use",
+  "shade-environmental",
+]);
 
 const gardenTypeEnum = z.enum([
   "rooftop",
@@ -66,15 +79,15 @@ const schema = z
     location: z.string().min(1, "Location is required").optional(),
     latitude: z.number().min(-90).max(90).optional(),
     longitude: z.number().min(-180).max(180).optional(),
-    soilType: z.string().min(1, "Soil type is required").optional(),
+    soilType: z.string().optional(),
     area: z.number().positive("Area must be positive").optional(),
     waterSource: z.string().min(1, "Water source is required").optional(),
-    purpose: z.string().min(1, "Purpose is required").optional(),
+    purpose: z.array(purposeEnum).min(1, "Select at least one purpose"),
     sunlight: z.string().min(1, "Sunlight is required").optional(),
     currentCrops: z.string().optional(),
     gardenImage: z.custom<File>((f) => f instanceof File).optional(),
   })
-  // Required when not forMyGarden
+  // Refinements for manual mode (when forMyGarden is false)
   .refine((d) => d.forMyGarden || !!d.location, {
     path: ["location"],
     message: "Location is required",
@@ -87,10 +100,6 @@ const schema = z
     path: ["longitude"],
     message: "Longitude is required",
   })
-  .refine((d) => d.forMyGarden || !!d.soilType, {
-    path: ["soilType"],
-    message: "Soil type is required",
-  })
   .refine((d) => d.forMyGarden || d.area != null, {
     path: ["area"],
     message: "Area is required",
@@ -99,7 +108,7 @@ const schema = z
     path: ["waterSource"],
     message: "Water source is required",
   })
-  .refine((d) => d.forMyGarden || !!d.purpose, {
+  .refine((d) => d.forMyGarden || (d.purpose && d.purpose.length > 0), {
     path: ["purpose"],
     message: "Purpose is required",
   })
@@ -107,7 +116,6 @@ const schema = z
     path: ["sunlight"],
     message: "Sunlight is required",
   })
-  // Required when forMyGarden is false
   .refine((d) => d.forMyGarden || !!d.gardenType, {
     path: ["gardenType"],
     message: "Garden type is required",
@@ -122,17 +130,36 @@ export type FormData = z.infer<typeof schema>;
 const options = {
   soilType: ["loamy", "sandy", "clayey", "silty", "peaty", "chalky", "unknown"],
   waterSource: [
-    "tube-well",
-    "tap",
-    "rainwater",
-    "storage",
-    "manual",
-    "uncertain",
+    { id: "automated", label: "Automated (Drip, Sprinklers)" },
+    { id: "manual", label: "Manual (Watering Can, Hose)" },
+    { id: "rainwater", label: "Collected Rainwater" },
+    { id: "tap-water", label: "Tap Water (Municipal Supply)" },
+    { id: "well-water", label: "Well or Tube-well Water" },
+    { id: "unknown", label: "I don't know" },
   ],
-  purpose: ["eat", "sell", "decor", "educational", "mixed"],
-  sunlight: ["full", "partial", "shade"],
+  purpose: [
+    { id: "home-consumption", label: "Home Consumption / Eating" },
+    { id: "commercial-selling", label: "Commercial / Selling" },
+    { id: "aesthetic-decoration", label: "Aesthetic / Decoration" },
+    { id: "educational-learning", label: "Educational / Learning" },
+    { id: "medicinal-use", label: "Medicinal Use" },
+    { id: "shade-environmental", label: "Shade / Environmental" },
+  ],
+  sunlight: [
+    { id: "full", label: "Full Sun (6+ hours)" },
+    { id: "partial", label: "Partial Shade (4-6 hours)" },
+    { id: "shade", label: "Full Shade (<4 hours)" },
+  ],
   gardenType: ["rooftop", "balcony", "backyard", "indoor", "terrace", "field"],
   gardenerType: ["beginner", "intermediate", "expert"],
+  plantType: [
+    "vegetable",
+    "fruit",
+    "flower",
+    "herb",
+    "tree",
+    "ornamental",
+  ],
 };
 
 // ---------------- Reusable Fields ----------------
@@ -141,11 +168,13 @@ const SelectField = ({
   label,
   opts,
   control,
+  placeholder,
 }: {
   name: keyof FormData;
   label: string;
-  opts: string[];
+  opts: { id: string; label: string }[] | string[];
   control: Control<FormData>;
+  placeholder?: string;
 }) => (
   <FormField
     name={name}
@@ -159,19 +188,77 @@ const SelectField = ({
             value={(field.value as string) || ""}
           >
             <SelectTrigger className="!h-10 w-full">
-              <SelectValue placeholder={`Select ${label}`} />
+              <SelectValue placeholder={placeholder || `Select ${label}`} />
             </SelectTrigger>
             <SelectContent>
-              {opts.map((o) => (
-                <SelectItem key={o} value={o}>
-                  {o.charAt(0).toUpperCase() + o.slice(1)}
-                </SelectItem>
-              ))}
+              {opts.map((o) => {
+                const value = typeof o === "string" ? o : o.id;
+                const displayLabel = typeof o === "string" ? o : o.label;
+                return (
+                  <SelectItem key={value} value={value}>
+                    {displayLabel.charAt(0).toUpperCase() +
+                      displayLabel.slice(1)}
+                  </SelectItem>
+                );
+              })}
             </SelectContent>
           </Select>
         </FormControl>
         <FormMessage />
       </FormItem>
+    )}
+  />
+);
+
+const CheckboxGroupField = ({
+  name,
+  label,
+  opts,
+  control,
+  getValues,
+  setValue,
+}: {
+  name: keyof FormData;
+  label: string;
+  opts: { id: string; label: string }[] | string[];
+  control: Control<FormData>;
+  getValues: UseFormGetValues<FormData>;
+  setValue: UseFormSetValue<FormData>;
+}) => (
+  <FormField
+    name={name}
+    control={control}
+    render={() => (
+      <div>
+        <FormLabel className="text-base">{label}</FormLabel>
+        <div className="flex flex-wrap gap-4 mt-2">
+          {opts.map((o) => {
+            const value = typeof o === "string" ? o : o.id;
+            const displayLabel = typeof o === "string" ? o : o.label;
+            return (
+              <label
+                key={value}
+                className="flex items-center gap-2 capitalize"
+              >
+                <Checkbox
+                  checked={((getValues(name) as string[]) ?? []).includes(
+                    value
+                  )}
+                  onCheckedChange={(checked) => {
+                    const prev = (getValues(name) as string[]) ?? [];
+                    const newValue = checked
+                      ? [...prev, value]
+                      : prev.filter((x) => x !== value);
+                    setValue(name, newValue as never);
+                  }}
+                />
+                {displayLabel}
+              </label>
+            );
+          })}
+        </div>
+        <FormMessage />
+      </div>
     )}
   />
 );
@@ -226,12 +313,12 @@ export default function FarmDetailsForm({
       forMyGarden: false,
       avoidCurrentCrops: false,
       plantType: [],
+      purpose: [],
     },
   });
   const [locLoading, setLocLoading] = useState(false);
 
   const forMyGarden = form.watch("forMyGarden");
-  const plantTypes = plantTypeEnum.options;
 
   useEffect(() => {
     if (forMyGarden) {
@@ -239,6 +326,7 @@ export default function FarmDetailsForm({
         forMyGarden: true,
         avoidCurrentCrops: false,
         plantType: form.getValues("plantType"),
+        purpose: form.getValues("purpose"),
       });
     }
   }, [forMyGarden, form]);
@@ -276,6 +364,7 @@ export default function FarmDetailsForm({
         forMyGarden: false,
         avoidCurrentCrops: false,
         plantType: [],
+        purpose: [],
       });
     }
   };
@@ -325,32 +414,23 @@ export default function FarmDetailsForm({
         )}
 
         {/* Plant Type */}
-        <FormField
+        <CheckboxGroupField
           name="plantType"
+          label="What do you want to grow?"
+          opts={options.plantType}
           control={form.control}
-          render={() => (
-            <div>
-              <FormLabel className="text-base">Plant Type</FormLabel>
-              <div className="flex flex-wrap gap-4 mt-2">
-                {plantTypes.map((t) => (
-                  <label key={t} className="flex items-center gap-2 capitalize">
-                    <Checkbox
-                      checked={(form.watch("plantType") ?? []).includes(t)}
-                      onCheckedChange={(v) => {
-                        const prev = form.getValues("plantType") ?? [];
-                        form.setValue(
-                          "plantType",
-                          v ? [...prev, t] : prev.filter((x) => x !== t)
-                        );
-                      }}
-                    />{" "}
-                    {t}
-                  </label>
-                ))}
-              </div>
-              <FormMessage />
-            </div>
-          )}
+          getValues={form.getValues}
+          setValue={form.setValue}
+        />
+
+        {/* Purpose */}
+        <CheckboxGroupField
+          name="purpose"
+          label="What is the main purpose?"
+          opts={options.purpose}
+          control={form.control}
+          getValues={form.getValues}
+          setValue={form.setValue}
         />
 
         {/* Extra fields if not forMyGarden */}
@@ -394,6 +474,7 @@ export default function FarmDetailsForm({
               label="Soil Type"
               opts={options.soilType}
               control={form.control}
+              placeholder="Select Soil Type (Optional)"
             />
             <NumberField
               name="area"
@@ -404,12 +485,6 @@ export default function FarmDetailsForm({
               name="waterSource"
               label="Water Source"
               opts={options.waterSource}
-              control={form.control}
-            />
-            <SelectField
-              name="purpose"
-              label="Purpose"
-              opts={options.purpose}
               control={form.control}
             />
             <SelectField

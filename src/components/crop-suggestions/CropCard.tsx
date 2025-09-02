@@ -17,13 +17,16 @@ import {
   Droplets,
   Clock,
   Plus,
-  Loader,
   Leaf,
   Thermometer,
   AlertCircle,
+  RefreshCw,
 } from "lucide-react";
 import type { CropCardType } from "@/types/cropSuggestion";
 import { useParams, useRouter } from "next/navigation";
+import { successToast, errorToast } from "../common/CustomToast";
+import DottedLoader from "../common/DottedLoader";
+import { useFetch } from "@/hooks/useFetch";
 
 interface CropCardProps {
   crop: CropCardType;
@@ -38,6 +41,27 @@ const CropCard: React.FC<CropCardProps> = ({
 }) => {
   const router = useRouter();
   const id = useParams()?.id ?? "";
+  const { loading: isRegenerating, fetchData: regenerate } = useFetch<void>();
+
+  const handleRegenerate = async () => {
+    try {
+      await regenerate("/api/v1/crops/crop-details/regenerate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ cropId: crop._id }),
+      });
+      successToast("Regeneration request sent!");
+    } catch (err) {
+      errorToast(
+        err instanceof Error
+          ? err.message
+          : "Failed to send regeneration request."
+      );
+    }
+  };
+
   return (
     <Card className="group flex flex-col h-full hover:shadow-xl transition-all duration-300 border-0 bg-card shadow-sm hover:scale-[1.02] overflow-hidden pt-0 rounded-md !rounded-tl-[60px] !rounded-br-[60px] gap-2">
       <CardHeader className="p-0">
@@ -155,31 +179,52 @@ const CropCard: React.FC<CropCardProps> = ({
               </>
             ) : (
               <>
-                <Loader className="h-4 w-4 mr-1 animate-spin" />
-                Loading...
+                <DottedLoader />
+                <span className="ml-2">Loading...</span>
               </>
             )}
           </Button>
 
-          <Button
-            size="sm"
-            disabled={
-              crop.details.status === "pending" || loadings.includes(crop._id)
-            }
-            onClick={() =>
-              crop?.details?.status === "success" && onAddToGarden(crop._id)
-            }
-            className="flex-1"
-          >
-            {loadings.includes(crop._id) ? (
-              <Loader className="h-4 w-4 animate-spin" />
-            ) : (
-              <>
-                <Plus className="h-4 w-4 mr-1" />
-                Add to Garden
-              </>
-            )}
-          </Button>
+          {crop.details.status === "failed" ? (
+            <Button
+              size="sm"
+              variant="destructive"
+              onClick={handleRegenerate}
+              disabled={isRegenerating}
+              className="flex-1"
+            >
+              {isRegenerating ? (
+                <DottedLoader />
+              ) : (
+                <>
+                  <RefreshCw className="h-4 w-4 mr-1" />
+                  Regenerate
+                </>
+              )}
+            </Button>
+          ) : (
+            <Button
+              size="sm"
+              disabled={
+                crop.details.status === "pending" ||
+                loadings.includes(crop._id) ||
+                isRegenerating
+              }
+              onClick={() =>
+                crop?.details?.status === "success" && onAddToGarden(crop._id)
+              }
+              className="flex-1"
+            >
+              {loadings.includes(crop._id) || isRegenerating ? (
+                <DottedLoader />
+              ) : (
+                <>
+                  <Plus className="h-4 w-4 mr-1" />
+                  Add to Garden
+                </>
+              )}
+            </Button>
+          )}
         </div>
       </CardFooter>
     </Card>

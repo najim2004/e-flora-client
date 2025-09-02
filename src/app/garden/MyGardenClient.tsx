@@ -31,9 +31,7 @@ export default function MyGardenClient({ garden }: MyGardenClientProps) {
 
   useEffect(() => {
     if (!garden) {
-      fetchData(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/garden/my-garden`
-      );
+      fetchData(`/api/v1/garden/my-garden`);
     }
   }, [garden, fetchData]);
 

@@ -20,7 +20,7 @@ export interface CropSuggestionManual {
   plantType: string[];
   currentCrops: string[];
   sunlight: string;
-  purpose: string;
+  purpose: string[];
   area: number;
   waterSource: string;
   soilType: string;
@@ -99,7 +99,7 @@ export interface CropSuggestionProgress {
 
 export interface Input {
   location: LocationWithAddress;
-  purpose: string;
+  purpose: string[];
   sunlight: string;
   soilType: string;
   area: number;

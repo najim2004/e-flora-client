@@ -15,21 +15,20 @@ import FarmDetailsForm, {
   FormData,
 } from "@/components/crop-suggestions/FarmDetailsForm";
 import { errorToast } from "@/components/common/CustomToast";
-import { useRequestCropSuggestionMutation } from "@/redux/features/cropSuggestions/cropSuggestionApiSlice";
 import { RootState } from "@/redux/store";
 import { CropSuggestionPayload } from "@/types/cropSuggestion";
 import { useCropSuggestionSocket } from "@/hooks/useCropSuggestionSocket";
 import { ProgressModal } from "@/components/common/CustomProgress";
+import { useFetch } from "@/hooks/useFetch";
 
 export default function CropSuggestionsPage() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const isAuthenticated = useSelector(
     (state: RootState) => state.user.isAuthenticated
   );
-  const [requestCropSuggestion, { isLoading: requestLoading }] =
-    useRequestCropSuggestionMutation();
+  const { loading: requestLoading, fetchData: requestCropSuggestion } =
+    useFetch<void>();
   const { progress, failed, completed } = useCropSuggestionSocket();
 
   // Redirect on completion
@@ -68,7 +67,6 @@ export default function CropSuggestionsPage() {
               "purpose",
               "area",
               "waterSource",
-              "soilType",
               "gardenType",
               "gardenerType",
             ];
@@ -104,9 +102,15 @@ export default function CropSuggestionsPage() {
             } as CropSuggestionPayload;
           })();
 
-      await requestCropSuggestion(body).unwrap();
-    } catch {
-      errorToast("Something went wrong while requesting crop suggestion");
+      await requestCropSuggestion("/api/v1/crops/crop-suggestion", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+    } catch (err) {
+      errorToast(err instanceof Error ? err.message : "Something went wrong while requesting crop suggestion");
     }
   };
 
@@ -116,18 +120,6 @@ export default function CropSuggestionsPage() {
     if (progress || failed) setIsOpen(true);
     else setIsOpen(false);
   }, [progress, failed]);
-  useEffect(() => {
-    if (
-      requestLoading ||
-      (progress &&
-        progress.status !== "completed" &&
-        progress.status !== "failed")
-    ) {
-      setIsLoading(true);
-    } else {
-      setIsLoading(false);
-    }
-  }, [isLoading, requestLoading, progress]);
 
   return (
     <div className="min-h-screen bg-green-50 relative">
@@ -140,7 +132,7 @@ export default function CropSuggestionsPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <FarmDetailsForm onSubmit={handleSubmit} isLoading={isLoading} />
+            <FarmDetailsForm onSubmit={handleSubmit} isLoading={requestLoading} />
           </CardContent>
         </Card>
       </div>

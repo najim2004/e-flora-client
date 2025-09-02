@@ -23,7 +23,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { useSignupMutation } from "@/redux/features/user/userApiSlice";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { errorToast } from "@/components/common/CustomToast";
 
 const formSchema = z
@@ -53,6 +53,8 @@ export default function SignUpPage() {
 
   const [signUpMutation, { isLoading }] = useSignupMutation();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect") || "/";
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
@@ -61,7 +63,7 @@ export default function SignUpPage() {
       const res = await signUpMutation(values).unwrap();
       if (res?.success) {
         console.log("User created successfully:", res);
-        router.push("/signin");
+        router.replace("/signin" + (redirect ? `?redirect=${redirect}` : "/"));
       } else {
         errorToast(
           res.message || "Something went wrong please try again letter"
@@ -69,11 +71,11 @@ export default function SignUpPage() {
       }
     } catch (error) {
       console.log("Error:", error);
-     const errMsg =
-       (error as { data?: { error?: { message?: string } } })?.data?.error
-         ?.message || "Something went wrong please try again later";
+      const errMsg =
+        (error as { data?: { error?: { message?: string } } })?.data?.error
+          ?.message || "Something went wrong please try again later";
 
-     errorToast(errMsg);
+      errorToast(errMsg);
     }
   }
 
@@ -91,7 +93,7 @@ export default function SignUpPage() {
         <CardContent>
           <div className="grid grid-cols-2 mb-6 bg-gray-100 p-1 rounded-sm">
             <NavLink
-              href="/signin"
+              href={`/signin${redirect ? `?redirect=${redirect}` : ""}`}
               className="p-1.5 text-center text-gray-600 rounded-sm text-sm font-medium"
               activeClass="bg-primary text-white"
             >
@@ -113,7 +115,9 @@ export default function SignUpPage() {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="!text-primary/80">Full Name</FormLabel>
+                    <FormLabel className="!text-primary/80">
+                      Full Name
+                    </FormLabel>
                     <FormControl>
                       <Input
                         placeholder="Enter your full name"
