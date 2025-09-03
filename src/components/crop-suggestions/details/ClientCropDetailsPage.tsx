@@ -102,7 +102,7 @@ const ClientCropDetailsPage = ({
     <div className="bg-gray-50">
       <div className="relative bg-gray-100">
         <div
-          className="h-64 bg-cover bg-center max-w-7xl mx-auto"
+          className="h-64 bg-cover bg-center"
           style={{ backgroundImage: `url(${cropDetails?.image?.url})` }}
         >
           <div className="absolute inset-0 bg-black/30 backdrop-blur-xs bg-opacity-50 flex items-center justify-center">

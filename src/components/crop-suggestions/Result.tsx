@@ -6,6 +6,8 @@ import CropGrid from "./CropGrid";
 import { CropSuggestionResult } from "@/types/cropSuggestion";
 import { notFound } from "next/navigation";
 import Cookies from "js-cookie";
+import { useCropSuggestionSocket } from "@/hooks/useCropSuggestionSocket";
+
 const Result = ({
   resultData,
   resultId,
@@ -17,6 +19,7 @@ const Result = ({
     resultData?.data || null
   );
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { cropDetails } = useCropSuggestionSocket();
 
   useEffect(() => {
     if (!resultData) {
@@ -59,6 +62,31 @@ const Result = ({
       setIsLoading(false);
     }
   }, [resultData, resultId]);
+
+  useEffect(() => {
+    if (cropDetails && cropDetails.status === "success" && cropData) {
+      setCropData((prevCropData) => {
+        if (!prevCropData) return null;
+
+        const updatedCrops = prevCropData.crops.map((crop) => {
+          if (crop.details.detailsId === cropDetails.detailsId) {
+            return {
+              ...crop,
+              details: {
+                ...crop.details,
+                status: cropDetails.status as "success" | "failed" | "pending",
+                slug: cropDetails.slug || crop.details.slug,
+              },
+            };
+          }
+          return crop;
+        });
+
+        return { ...prevCropData, crops: updatedCrops };
+      });
+    }
+  }, [cropDetails, cropData]);
+
   if (isLoading) {
     return (
       <div className="fixed inset-0 bg-white bg-opacity-75 flex items-center justify-center z-50">
