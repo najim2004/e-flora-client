@@ -73,7 +73,7 @@ export default function MyGardenClient({ garden }: MyGardenClientProps) {
           </div>
           {/* Sidebar */}
           <div className="space-y-6">
-            <WeatherSection weather={activeGarden.weather} />
+            <WeatherSection weather={activeGarden.weather} location={activeGarden.location} />
             <TodaysTasks tasks={todaysTasks} />
             <MiniCalendar />
           </div>

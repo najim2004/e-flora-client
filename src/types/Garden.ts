@@ -12,7 +12,6 @@ export interface Garden {
   description: string;
   location: LocationWithAddress;
   size: number;
-  weather: Weather;
   crops: Crop[]; // Active and pending crops
   activeCrops: number;
   pendingCrops: number;
@@ -44,21 +43,7 @@ export interface Crop {
   createdAt: string;
   updatedAt: string;
 }
-export interface Weather {
-  location: {
-    city: string;
-    country: string;
-  };
-  data: {
-    maxTemp: number;
-    minTemp: number;
-    humidity: number;
-    rainfall: number;
-    windSpeed: number;
-    dominantWindDirection: string;
-    date: Date;
-  };
-}
+
 export type SoilType =
   | "loamy"
   | "sandy"

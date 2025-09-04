@@ -1,7 +1,10 @@
 "use client";
-import { useMeQuery } from "@/redux/features/user/userApiSlice";
+import {
+  useLogoutMutation,
+  useMeQuery,
+} from "@/redux/features/user/userApiSlice";
 import { RootState } from "@/redux/store";
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 const FetchInitialData = () => {
@@ -11,6 +14,12 @@ const FetchInitialData = () => {
   useMeQuery(undefined, {
     skip: !isAuthenticated,
   });
+  const [logOut] = useLogoutMutation();
+  useEffect(() => {
+    if (!isAuthenticated) {
+      logOut({});
+    }
+  }, [isAuthenticated, logOut]);
   return <></>;
 };
 

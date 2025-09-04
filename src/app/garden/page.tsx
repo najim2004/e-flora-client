@@ -31,5 +31,6 @@ const getGardenData = async (): Promise<GardenApiResponse | null> => {
 
 export default async function MyGardenPage(): Promise<JSX.Element> {
   const gardenResponse = await getGardenData().catch(() => null);
+  console.log(gardenResponse);
   return <MyGardenClient garden={gardenResponse?.data || null} />;
 }

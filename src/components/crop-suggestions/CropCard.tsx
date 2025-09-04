@@ -21,6 +21,7 @@ import {
   Thermometer,
   AlertCircle,
   RefreshCw,
+  ArrowRight,
 } from "lucide-react";
 import type { CropCardType } from "@/types/cropSuggestion";
 import { useParams, useRouter } from "next/navigation";
@@ -63,7 +64,7 @@ const CropCard: React.FC<CropCardProps> = ({
   };
 
   return (
-    <Card className="group flex flex-col h-full hover:shadow-xl transition-all duration-300 border-0 bg-card shadow-sm hover:scale-[1.02] overflow-hidden pt-0 rounded-md !rounded-tl-[60px] !rounded-br-[60px] gap-2">
+    <Card className="group flex flex-col h-full hover:shadow-xl transition-all duration-300 border-0 bg-card shadow-sm hover:scale-[1.02] overflow-hidden pt-0 rounded-md gap-2">
       <CardHeader className="p-0">
         <div className="relative h-48 overflow-hidden">
           {crop?.image?.url && crop.image.index !== "default_image" ? (
@@ -168,10 +169,13 @@ const CropCard: React.FC<CropCardProps> = ({
               router.push(`/crop-suggestions/${id}/${crop.details.slug}`)
             }
             size="sm"
-            className="flex-1"
+            className="flex-1 flex hover:gap-4"
           >
             {crop.details.status === "success" ? (
-              "Learn More"
+              <>
+                Learn More
+                <ArrowRight />
+              </>
             ) : crop.details.status === "failed" ? (
               <>
                 <AlertCircle className="h-4 w-4 mr-1" />

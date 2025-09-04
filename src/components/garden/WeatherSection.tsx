@@ -1,9 +1,10 @@
 import { ThermometerSun, ThermometerSnowflake, Droplets, CloudRain, Wind, LocateFixed, Info } from "lucide-react";
-import type { Weather } from "@/types/Garden";
+import { IWeather } from "@/types/weather";
 import React, { JSX } from "react";
 
 interface WeatherSectionProps {
-  weather?: Weather | null;
+  weather?: IWeather['data'] | null;
+  location?: { city: string; country: string } | null;
 }
 
 const statBlock =
@@ -21,16 +22,15 @@ function getSafeString(s: unknown, fallback = "N/A"): string {
   return typeof s === "string" && s.trim().length > 0 ? s : fallback;
 }
 
-export default function WeatherSection({ weather }: WeatherSectionProps): JSX.Element {
-  const city = getSafeString(weather?.location?.city, "Unknown");
-  const country = getSafeString(weather?.location?.country, "Unknown");
-  const data = weather?.data ?? {};
-  const maxTemp = getSafeNumber((data as Weather["data"])?.maxTemp);
-  const minTemp = getSafeNumber((data as Weather["data"])?.minTemp);
-  const humidity = getSafeNumber((data as Weather["data"])?.humidity);
-  const rainfall = getSafeNumber((data as Weather["data"])?.rainfall);
-  const windSpeed = getSafeNumber((data as Weather["data"])?.windSpeed);
-  const windDir = getSafeString((data as Weather["data"])?.dominantWindDirection);
+export default function WeatherSection({ weather, location }: WeatherSectionProps): JSX.Element {
+  const city = getSafeString(location?.city, "Unknown");
+  const country = getSafeString(location?.country, "Unknown");
+  const maxTemp = getSafeNumber(weather?.maxTemp);
+  const minTemp = getSafeNumber(weather?.minTemp);
+  const humidity = getSafeNumber(weather?.humidity);
+  const rainfall = getSafeNumber(weather?.rainfall);
+  const windSpeed = getSafeNumber(weather?.windSpeed);
+  const windDir = getSafeString(weather?.dominantWindDirection);
 
   return (
     <section className="w-full bg-white rounded-xl shadow-sm border border-green-100 p-0 overflow-hidden mb-4">

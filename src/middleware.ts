@@ -51,5 +51,9 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/disease-detection/:path*", "/crop-suggestions/:path*"],
+  matcher: [
+    "/disease-detection/:path*",
+    "/crop-suggestions/:path*",
+    "/garden/:path*",
+  ],
 };
