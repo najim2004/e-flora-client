@@ -1,4 +1,5 @@
 import { LocationWithAddress } from "./cropSuggestion";
+import { Weather } from "./weather";
 
 // This is the main type for the getMyGarden API response
 export interface Garden {
@@ -24,6 +25,7 @@ export interface Garden {
   waterSource: WaterSource;
   gardenerType: GardenerType;
   archivedCrops: Crop[];
+  weather: Weather["data"];
 }
 
 // This interface for individual crop items is mostly correct and can be reused.
