@@ -60,7 +60,8 @@ export default function SignUpPage() {
     console.log(values);
     if (isLoading) return;
     try {
-      const res = await signUpMutation(values).unwrap();
+      const { name, email, password } = values; // Extract only the required fields
+      const res = await signUpMutation({ name, email, password }).unwrap(); // Pass only the required fields
       if (res?.success) {
         console.log("User created successfully:", res);
         router.replace("/signin" + (redirect ? `?redirect=${redirect}` : "/"));

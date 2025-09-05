@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -233,9 +234,11 @@ export default function UserProfilePage() {
       <main className="flex-1">
         {/* Cover Image */}
         <div className="relative h-48 md:h-64 bg-secondary/60 overflow-hidden">
-          <img
+          <Image
             src={userData.coverImage || "/placeholder.svg"}
             alt="Cover"
+            width={1200}
+            height={300}
             className="w-full h-full object-cover"
           />
           <div className="absolute top-4 left-4">
@@ -359,9 +362,11 @@ export default function UserProfilePage() {
                         key={index}
                         className="aspect-square bg-secondary/60 rounded-md overflow-hidden"
                       >
-                        <img
+                        <Image
                           src={photo || "/placeholder.svg"}
                           alt={`Photo ${index + 1}`}
+                          width={200}
+                          height={200}
                           className="w-full h-full object-cover"
                         />
                       </div>
@@ -524,9 +529,11 @@ export default function UserProfilePage() {
                             key={index}
                             className="aspect-square bg-secondary/60 rounded-md overflow-hidden"
                           >
-                            <img
+                            <Image
                               src={photo || "/placeholder.svg"}
                               alt={`Photo ${index + 1}`}
+                              width={200}
+                              height={200}
                               className="w-full h-full object-cover"
                             />
                           </div>

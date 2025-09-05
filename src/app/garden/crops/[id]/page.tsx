@@ -4,163 +4,170 @@ import type React from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Droplets, Heart, Leaf, Calendar } from "lucide-react";
+import { Droplets, Heart, Leaf, Calendar as CalendarIcon } from "lucide-react";
+import { Calendar as UiCalendar } from "@/components/ui/calendar";
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { format } from "date-fns";
+import { useParams } from "next/navigation";
+import { Input } from "@/components/ui/input";
+import PlantingGuideDisplay from "@/components/garden/PlantingGuideDisplay";
 
-const cropDetails = {
-  id: 1,
-  name: "Cherry Tomatoes",
-  stage: "Flowering",
-  health: 95,
-  status: "Active",
-  image: "/placeholder.svg?height=200&width=200",
-  plantedDate: "2024-01-15",
-  expectedHarvest: "2024-03-20",
-};
+interface PlantingStep {
+  _id?: string;
+  id: number;
+  title: string;
+  description: string;
+  instructions: string[];
+  tips?: string;
+  completed: boolean;
+}
 
-const nextTask = {
-  title: "Water Today",
-  description:
-    "Your tomatoes need watering. The soil moisture is below optimal level.",
-  priority: "high",
-  dueTime: "2:00 PM",
-};
+interface Task {
+  _id: string;
+  taskName: string;
+  dueDate: string; // Assuming date string
+  status: "pending" | "completed";
+  type: "water" | "fertilize" | "diagnosis" | "maintenance";
+}
 
-const taskTimeline = [
-  {
-    date: "2024-01-26",
-    task: "Water plants",
-    type: "water",
-    completed: false,
-    time: "2:00 PM",
-  },
-  {
-    date: "2024-01-27",
-    task: "Apply fertilizer",
-    type: "fertilize",
-    completed: false,
-    time: "10:00 AM",
-  },
-  {
-    date: "2024-01-28",
-    task: "Check for pests",
-    type: "diagnosis",
-    completed: false,
-    time: "6:00 PM",
-  },
-  {
-    date: "2024-01-24",
-    task: "Pruned lower leaves",
-    type: "maintenance",
-    completed: true,
-    time: "4:00 PM",
-  },
-  {
-    date: "2024-01-22",
-    task: "Watered plants",
-    type: "water",
-    completed: true,
-    time: "8:00 AM",
-  },
-];
-
-const plantingSteps = [
-  {
-    id: 1,
-    title: "Prepare Soil Mixture",
-    description: "Mix potting soil with compost in a 3:1 ratio",
-    details: [
-      "Get high-quality potting soil and organic compost",
-      "Mix 3 parts potting soil with 1 part compost",
-      "Add perlite for better drainage (optional)",
-      "Ensure the mixture is well combined",
-    ],
-    tips: "Use well-draining soil to prevent root rot",
-    completed: false,
-  },
-  {
-    id: 2,
-    title: "Prepare Planting Container",
-    description: "Set up the proper container with drainage",
-    details: [
-      "Choose a container at least 12 inches deep",
-      "Ensure drainage holes are present",
-      "Add gravel at the bottom for drainage",
-      "Fill container with prepared soil mix",
-    ],
-    tips: "Container size affects plant growth and yield",
-    completed: false,
-  },
-  {
-    id: 3,
-    title: "Plant Seeds Correctly",
-    description: "Plant seeds at proper depth and spacing",
-    details: [
-      "Make holes 1/4 inch deep",
-      "Space seeds 2 inches apart",
-      "Place 2-3 seeds per hole",
-      "Cover lightly with soil",
-    ],
-    tips: "Don't plant too deep - seeds need warmth to germinate",
-    completed: false,
-  },
-  {
-    id: 4,
-    title: "Initial Care Setup",
-    description: "Provide optimal conditions for germination",
-    details: [
-      "Water gently until soil is moist",
-      "Place in warm location (70-75°F)",
-      "Ensure 6-8 hours of sunlight",
-      "Cover with clear plastic to retain moisture",
-    ],
-    tips: "Remove plastic cover once sprouts appear",
-    completed: false,
-  },
-  {
-    id: 5,
-    title: "Support Structure",
-    description: "Install support system for growing plants",
-    details: [
-      "Install stakes or cages",
-      "Place supports without disturbing roots",
-      "Ensure supports are sturdy",
-      "Prepare plant ties",
-    ],
-    tips: "Install supports early to avoid root damage later",
-    completed: false,
-  },
-];
+interface CropDetailsData {
+  _id: string;
+  cropName: string;
+  scientificName: string;
+  healthScore: number;
+  status: "active" | "pending" | "removed";
+  currentStage: string;
+  plantingDate: string;
+  image: {
+    url: string;
+  };
+  plantingGuide: {
+    plantingSteps: PlantingStep[];
+  };
+  tasks: Task[];
+}
 
 export default function CropDetailsPage() {
-  const [steps, setSteps] = useState(plantingSteps);
-  const [selectedDate] = useState<Date | null>(null);
+  const params = useParams();
+  const cropId = params.id as string;
 
-  const completedStepsCount = useMemo(
-    () => steps.filter((s) => s.completed).length,
-    [steps]
-  );
-  const totalSteps = steps.length;
-  const isPlantingComplete = completedStepsCount === totalSteps;
-  const progressPercentage = (completedStepsCount / totalSteps) * 100;
+  const [cropDetails, setCropDetails] = useState<CropDetailsData | null>(null);
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [plantingSteps, setPlantingSteps] = useState<PlantingStep[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const currentStep = useMemo(() => steps.find((s) => !s.completed), [steps]);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
-  const handleCompleteStep = (stepId: number) => {
-    const newSteps = steps.map((step) =>
-      step.id === stepId ? { ...step, completed: true } : step
-    );
-    setSteps(newSteps);
+  useEffect(() => {
+    const fetchCropData = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/garden/crops/${cropId}`,
+          {
+            credentials: "include",
+          }
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const result = await response.json();
+        const data: CropDetailsData = result.data;
+
+        setCropDetails(data);
+        setTasks(data.tasks);
+        setPlantingSteps(data.plantingGuide.plantingSteps);
+        console.log("Fetched crop details:", data);
+        console.log("Planting Date:", data.plantingDate);
+        console.log(
+          "Tasks due dates:",
+          data.tasks.map((task) => task.dueDate)
+        );
+      } catch (err) {
+        setError((err as Error).message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (cropId) {
+      fetchCropData();
+    }
+  }, [cropId]);
+
+  const isPlantingComplete = cropDetails?.status === "active";
+
+  const handleCompleteStep = async (stepObjectId: string) => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/garden/complete-planting-step`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ gardenCropId: cropId, stepId: stepObjectId }),
+          credentials: "include",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      const { plantingGuide, gardenCropStatus } = result.data;
+
+      setPlantingSteps(plantingGuide.plantingSteps);
+      setCropDetails((prev) =>
+        prev ? { ...prev, status: gardenCropStatus } : null
+      );
+    } catch (err) {
+      console.error("Failed to complete planting step:", err);
+      setError("Failed to complete planting step.");
+    }
   };
 
   const tasksForSelectedDate = useMemo(() => {
     if (!selectedDate) return [];
     const dateKey = format(selectedDate, "yyyy-MM-dd");
-    return taskTimeline.filter((task) => task.date === dateKey);
-  }, [selectedDate]);
+    return tasks.filter(
+      (task) => format(new Date(task.dueDate), "yyyy-MM-dd") === dateKey
+    );
+  }, [selectedDate, tasks]);
+
+  const filteredTasks = useMemo(() => {
+    return tasks.filter((task) =>
+      task.taskName.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [tasks, searchQuery]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-yellow-50">
+        <p className="text-green-700 text-lg">Loading crop details...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-yellow-50">
+        <p className="text-red-500 text-lg">Error: {error}</p>
+      </div>
+    );
+  }
+
+  if (!cropDetails) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-yellow-50">
+        <p className="text-gray-700 text-lg">No crop details found.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-yellow-50 p-6">
@@ -170,8 +177,8 @@ export default function CropDetailsPage() {
           <CardContent className="p-6">
             <div className="flex flex-col md:flex-row gap-6">
               <Image
-                src={cropDetails.image || "/placeholder.svg"}
-                alt={cropDetails.name}
+                src={cropDetails.image?.url || "/placeholder.svg"}
+                alt={cropDetails.cropName}
                 width={200}
                 height={200}
                 className="rounded-lg object-cover mx-auto md:mx-0"
@@ -179,7 +186,7 @@ export default function CropDetailsPage() {
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-4">
                   <h2 className="text-xl font-semibold text-green-800">
-                    {cropDetails.name}
+                    {cropDetails.cropName}
                   </h2>
                   <Badge className="bg-green-100 text-green-800">
                     {cropDetails.status}
@@ -189,7 +196,7 @@ export default function CropDetailsPage() {
                   <div>
                     <p className="text-sm text-gray-600">Current Stage</p>
                     <p className="font-medium text-green-700">
-                      {cropDetails.stage}
+                      {cropDetails.currentStage}
                     </p>
                   </div>
                   <div>
@@ -198,24 +205,26 @@ export default function CropDetailsPage() {
                       <div className="w-full bg-gray-200 rounded-full h-2">
                         <div
                           className="bg-green-500 h-2 rounded-full"
-                          style={{ width: `${cropDetails.health}%` }}
+                          style={{ width: `${cropDetails.healthScore}%` }}
                         ></div>
                       </div>
                       <span className="text-sm font-medium text-green-700">
-                        {cropDetails.health}%
+                        {cropDetails.healthScore}%
                       </span>
                     </div>
                   </div>
                   <div>
                     <p className="text-sm text-gray-600">Planted Date</p>
                     <p className="font-medium text-green-700">
-                      {cropDetails.plantedDate}
+                      {cropDetails.plantingDate
+                        ? format(new Date(cropDetails.plantingDate), "PPP")
+                        : "N/A"}
                     </p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Expected Harvest</p>
+                    <p className="text-sm text-gray-600">Scientific Name</p>
                     <p className="font-medium text-green-700">
-                      {cropDetails.expectedHarvest}
+                      {cropDetails.scientificName}
                     </p>
                   </div>
                 </div>
@@ -227,32 +236,33 @@ export default function CropDetailsPage() {
         {isPlantingComplete ? (
           <>
             {/* Next Task Highlight */}
-            <Card className="mb-6 bg-gradient-to-r from-blue-500 to-blue-600 border-0 text-white">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className="h-12 w-12 bg-white/20 rounded-lg flex items-center justify-center">
-                      <Droplets className="h-6 w-6" />
+            {tasks.length > 0 && (
+              <Card className="mb-6 bg-gradient-to-r from-blue-500 to-blue-600 border-0 text-white">
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="h-12 w-12 bg-white/20 rounded-lg flex items-center justify-center">
+                        <Droplets className="h-6 w-6" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold">
+                          {tasks[0].taskName}
+                        </h3>
+                        <p className="text-blue-100">
+                          Due: {format(new Date(tasks[0].dueDate), "PPP")}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="text-lg font-semibold">
-                        {nextTask.title}
-                      </h3>
-                      <p className="text-blue-100">{nextTask.description}</p>
-                      <p className="text-sm text-blue-200 mt-1">
-                        Due: {nextTask.dueTime}
-                      </p>
-                    </div>
+                    <Button
+                      variant="secondary"
+                      className="bg-white text-blue-600 hover:bg-blue-50"
+                    >
+                      Mark Complete
+                    </Button>
                   </div>
-                  <Button
-                    variant="secondary"
-                    className="bg-white text-blue-600 hover:bg-blue-50"
-                  >
-                    Mark Complete
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            )}
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Calendar and Tasks for Selected Date */}
@@ -262,7 +272,14 @@ export default function CropDetailsPage() {
                     <CardTitle className="text-green-800">Calendar</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    
+                    <div className="flex justify-center">
+                      <UiCalendar
+                        mode="single"
+                        selected={selectedDate || undefined}
+                        onSelect={(date) => setSelectedDate(date || null)}
+                        className="rounded-md border"
+                      />
+                    </div>
                     <div className="mt-4">
                       <h4 className="font-semibold text-green-800 mb-2">
                         Tasks for{" "}
@@ -276,17 +293,20 @@ export default function CropDetailsPage() {
                         </p>
                       ) : (
                         <div className="space-y-2">
-                          {tasksForSelectedDate.map((task, index) => (
+                          {tasksForSelectedDate.map((task) => (
                             <div
-                              key={index}
+                              key={task._id}
                               className="flex items-center gap-2 text-sm text-gray-700"
                             >
                               <span
                                 className={`w-2 h-2 rounded-full ${
-                                  task.completed ? "bg-green-500" : "bg-blue-500"
+                                  task.status === "completed"
+                                    ? "bg-green-500"
+                                    : "bg-blue-500"
                                 }`}
                               ></span>
-                              {task.task} ({task.time})
+                              {task.taskName} (
+                              {format(new Date(task.dueDate), "p")})
                             </div>
                           ))}
                         </div>
@@ -298,162 +318,74 @@ export default function CropDetailsPage() {
 
               {/* Task Timeline - Takes 2 columns on desktop */}
               <div className="lg:col-span-2">
+                {/* Search Input */}
+                <div className="mb-4">
+                  <Input
+                    type="text"
+                    placeholder="Search tasks..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full"
+                  />
+                </div>
                 {/* Task Timeline Card */}
                 <Card className="bg-white border-green-200 shadow-sm">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2 text-green-800">
-                      <Calendar className="h-5 w-5" />
+                      <CalendarIcon className="h-5 w-5" />
                       Task Timeline
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
-                      {taskTimeline.map((task, index) => (
-                        <div key={index} className="flex items-center gap-3">
+                      {filteredTasks.length === 0 ? (
+                        <p className="text-gray-500 text-sm">No tasks found.</p>
+                      ) : (
+                        filteredTasks.map((task) => (
                           <div
-                            className={`w-3 h-3 rounded-full ${
-                              task.completed ? "bg-green-500" : "bg-gray-300"
-                            }`}
-                          ></div>
-                          <div className="flex-1">
-                            <div className="flex items-center justify-between">
-                              <p
-                                className={`text-sm font-medium ${
-                                  task.completed
-                                    ? "text-gray-500 line-through"
-                                    : "text-green-800"
-                                }`}
-                              >
-                                {task.task}
+                            key={task._id}
+                            className="flex items-center gap-3"
+                          >
+                            <div
+                              className={`w-3 h-3 rounded-full ${
+                                task.status === "completed"
+                                  ? "bg-green-500"
+                                  : "bg-gray-300"
+                              }`}
+                            ></div>
+                            <div className="flex-1">
+                              <div className="flex items-center justify-between">
+                                <p
+                                  className={`text-sm font-medium ${
+                                    task.status === "completed"
+                                      ? "text-gray-500 line-through"
+                                      : "text-green-800"
+                                  }`}
+                                >
+                                  {task.taskName}
+                                </p>
+                                <span className="text-xs text-gray-500">
+                                  {format(new Date(task.dueDate), "p")}
+                                </span>
+                              </div>
+                              <p className="text-xs text-gray-500">
+                                {format(new Date(task.dueDate), "PPP")}
                               </p>
-                              <span className="text-xs text-gray-500">
-                                {task.time}
-                              </span>
                             </div>
-                            <p className="text-xs text-gray-500">{task.date}</p>
+                            <div className="flex items-center gap-1">
+                              {task.type === "water" && (
+                                <Droplets className="h-4 w-4 text-blue-500" />
+                              )}
+                              {task.type === "fertilize" && (
+                                <Leaf className="h-4 w-4 text-green-500" />
+                              )}
+                              {task.type === "diagnosis" && (
+                                <Heart className="h-4 w-4 text-red-500" />
+                              )}
+                            </div>
                           </div>
-                          <div className="flex items-center gap-1">
-                            {task.type === "water" && (
-                              <Droplets className="h-4 w-4 text-blue-500" />
-                            )}
-                            {task.type === "fertilize" && (
-                              <Leaf className="h-4 w-4 text-green-500" />
-                            )}
-                            {task.type === "diagnosis" && (
-                              <Heart className="h-4 w-4 text-red-500" />
-                            )}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-
-              {/* Weather Updates - Takes 1 column */}
-              <div>
-                {/* New Weather Card goes here */}
-                <Card className="bg-white border-green-200 shadow-sm">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2 text-green-800">
-                      <svg
-                        className="h-5 w-5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"
-                        />
-                      </svg>
-                      Weather Updates
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="grid grid-cols-3 gap-4">
-                      <div className="text-center p-4 rounded-lg bg-blue-50">
-                        <p className="text-sm text-blue-600 mb-1">
-                          Temperature
-                        </p>
-                        <p className="text-xl font-semibold text-blue-700">
-                          24°C
-                        </p>
-                      </div>
-                      <div className="text-center p-4 rounded-lg bg-blue-50">
-                        <p className="text-sm text-blue-600 mb-1">Humidity</p>
-                        <p className="text-xl font-semibold text-blue-700">
-                          65%
-                        </p>
-                      </div>
-                      <div className="text-center p-4 rounded-lg bg-blue-50">
-                        <p className="text-sm text-blue-600 mb-1">Rainfall</p>
-                        <p className="text-xl font-semibold text-blue-700">
-                          0mm
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-
-              {/* Growth Analytics - Takes 2 columns */}
-              <div className="lg:col-span-2">
-                {/* New Growth Analytics Card goes here */}
-                <Card className="bg-white border-green-200 shadow-sm">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2 text-green-800">
-                      <svg
-                        className="h-5 w-5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-                        />
-                      </svg>
-                      Growth Analytics
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      <div>
-                        <div className="flex justify-between mb-1">
-                          <span className="text-sm font-medium text-green-800">
-                            Height
-                          </span>
-                          <span className="text-sm text-gray-600">15cm</span>
-                        </div>
-                        <Progress value={60} className="h-2 bg-green-100" />
-                      </div>
-                      <div>
-                        <div className="flex justify-between mb-1">
-                          <span className="text-sm font-medium text-green-800">
-                            Leaf Count
-                          </span>
-                          <span className="text-sm text-gray-600">
-                            12 leaves
-                          </span>
-                        </div>
-                        <Progress value={75} className="h-2 bg-green-100" />
-                      </div>
-                      <div>
-                        <div className="flex justify-between mb-1">
-                          <span className="text-sm font-medium text-green-800">
-                            Fruit Development
-                          </span>
-                          <span className="text-sm text-gray-600">
-                            4 fruits
-                          </span>
-                        </div>
-                        <Progress value={40} className="h-2 bg-green-100" />
-                      </div>
+                        ))
+                      )}
                     </div>
                   </CardContent>
                 </Card>
@@ -461,148 +393,10 @@ export default function CropDetailsPage() {
             </div>
           </>
         ) : (
-          <div className="space-y-6">
-            <Card className="bg-white border-green-200 shadow-sm">
-              <CardHeader>
-                <CardTitle className="text-green-800 flex items-center gap-2">
-                  <svg
-                    className="w-6 h-6 text-green-600"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-                    />
-                  </svg>
-                  Planting Guide
-                </CardTitle>
-                <div className="space-y-2">
-                  <p className="text-sm text-gray-600">
-                    Complete these steps in order to ensure successful growth
-                  </p>
-                  <div className="flex items-center gap-2">
-                    <Progress
-                      value={progressPercentage}
-                      className="flex-1 h-2 bg-green-100"
-                    />
-                    <span className="text-sm font-medium text-green-600">
-                      {completedStepsCount} of {totalSteps} steps completed
-                    </span>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {steps.map((step) => (
-                  <div
-                    key={step.id}
-                    className={`rounded-lg border ${
-                      step.completed
-                        ? "bg-green-50 border-green-200"
-                        : currentStep?.id === step.id
-                        ? "bg-white border-green-500 shadow-lg"
-                        : "bg-gray-50 border-gray-200"
-                    } transition-all duration-300`}
-                  >
-                    <div className="p-4">
-                      <div className="flex items-start justify-between">
-                        <div className="flex items-center gap-3">
-                          <div
-                            className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                              step.completed
-                                ? "bg-green-500 text-white"
-                                : "bg-gray-200 text-gray-600"
-                            }`}
-                          >
-                            {step.completed ? (
-                              <svg
-                                className="w-5 h-5"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M5 13l4 4L19 7"
-                                />
-                              </svg>
-                            ) : (
-                              step.id
-                            )}
-                          </div>
-                          <div>
-                            <h3
-                              className={`text-lg font-semibold ${
-                                step.completed
-                                  ? "text-green-800"
-                                  : "text-gray-800"
-                              }`}
-                            >
-                              {step.title}
-                            </h3>
-                            <p className="text-gray-600">{step.description}</p>
-                          </div>
-                        </div>
-                        {currentStep?.id === step.id && (
-                          <Button
-                            onClick={() => handleCompleteStep(step.id)}
-                            className="bg-green-600 hover:bg-green-700 text-white"
-                          >
-                            Complete Step
-                          </Button>
-                        )}
-                      </div>
-                      {currentStep?.id === step.id && (
-                        <div className="mt-4 space-y-4">
-                          <div className="bg-white rounded-lg p-4">
-                            <h4 className="font-medium text-green-800 mb-2">
-                              Step Details:
-                            </h4>
-                            <ul className="space-y-2">
-                              {step.details.map((detail, index) => (
-                                <li
-                                  key={index}
-                                  className="flex items-start gap-2"
-                                >
-                                  <span className="text-green-500 mt-1">•</span>
-                                  <span className="text-gray-700">
-                                    {detail}
-                                  </span>
-                                </li>
-                              ))}
-                            </ul>
-                            <div className="mt-4 flex items-start gap-2 bg-yellow-50 p-3 rounded-lg">
-                              <svg
-                                className="w-5 h-5 text-yellow-600 mt-0.5"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                />
-                              </svg>
-                              <p className="text-sm text-yellow-800">
-                                {step.tips}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-          </div>
+          <PlantingGuideDisplay
+            plantingSteps={plantingSteps}
+            onCompleteStep={handleCompleteStep}
+          />
         )}
       </div>
     </div>

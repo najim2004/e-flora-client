@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
@@ -161,7 +162,7 @@ export function CommunityPost({ post, onToggleSave, onLike }: CommunityPostProps
                   post.images.length === 1 ? "col-span-1" : index === 0 && post.images.length === 3 ? "col-span-2" : ""
                 }`}
               >
-                <img src={image || "/placeholder.svg"} alt="Post image" className="w-full h-auto" />
+                <Image src={image || "/placeholder.svg"} alt="Post image" width={500} height={300} className="w-full h-auto" />
               </div>
             ))}
           </div>

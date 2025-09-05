@@ -1,4 +1,5 @@
 import { Card } from "@/components/ui/card";
+import Image from "next/image";
 
 const mockPromos = [
   {
@@ -27,7 +28,7 @@ export default function PromoOffersSection() {
         {mockPromos.map((promo) => (
           <Card key={promo.id} className="flex-1 flex flex-col justify-between p-0 overflow-hidden border-green-200 shadow-md min-w-[210px]">
             <div className="relative h-28 bg-green-50 overflow-hidden">
-              <img src={promo.image} alt={promo.title} className="object-cover w-full h-full" />
+              <Image src={promo.image} alt={promo.title} width={300} height={150} className="object-cover w-full h-full" />
             </div>
             <div className="p-4 flex-1 flex flex-col justify-between">
               <div>
