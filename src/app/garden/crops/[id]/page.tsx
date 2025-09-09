@@ -131,13 +131,13 @@ export default function CropDetailsPage() {
     }
   };
 
-  const tasksForSelectedDate = useMemo(() => {
-    if (!selectedDate) return [];
-    const dateKey = format(selectedDate, "yyyy-MM-dd");
-    return tasks.filter(
-      (task) => format(new Date(task.dueDate), "yyyy-MM-dd") === dateKey
-    );
-  }, [selectedDate, tasks]);
+  // const tasksForSelectedDate = useMemo(() => {
+  //   if (!selectedDate) return [];
+  //   const dateKey = format(selectedDate, "yyyy-MM-dd");
+  //   return tasks.filter(
+  //     (task) => format(new Date(task.dueDate), "yyyy-MM-dd") === dateKey
+  //   );
+  // }, [selectedDate, tasks]);
 
   const filteredTasks = useMemo(() => {
     return tasks.filter((task) =>
@@ -264,10 +264,10 @@ export default function CropDetailsPage() {
               </Card>
             )}
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
               {/* Calendar and Tasks for Selected Date */}
-              <div className="lg:col-span-1">
-                <Card className="bg-white border-green-200 shadow-sm">
+              <div className="lg:col-span-3">
+                <Card className="bg-white border-green-200 shadow-sm gap-0">
                   <CardHeader>
                     <CardTitle className="text-green-800">Calendar</CardTitle>
                   </CardHeader>
@@ -280,44 +280,13 @@ export default function CropDetailsPage() {
                         className="rounded-md border"
                       />
                     </div>
-                    <div className="mt-4">
-                      <h4 className="font-semibold text-green-800 mb-2">
-                        Tasks for{" "}
-                        {selectedDate
-                          ? format(selectedDate, "MMM d, yyyy")
-                          : "No date selected"}
-                      </h4>
-                      {tasksForSelectedDate.length === 0 ? (
-                        <p className="text-gray-500 text-sm">
-                          No tasks for this date.
-                        </p>
-                      ) : (
-                        <div className="space-y-2">
-                          {tasksForSelectedDate.map((task) => (
-                            <div
-                              key={task._id}
-                              className="flex items-center gap-2 text-sm text-gray-700"
-                            >
-                              <span
-                                className={`w-2 h-2 rounded-full ${
-                                  task.status === "completed"
-                                    ? "bg-green-500"
-                                    : "bg-blue-500"
-                                }`}
-                              ></span>
-                              {task.taskName} (
-                              {format(new Date(task.dueDate), "p")})
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
+                    
                   </CardContent>
                 </Card>
               </div>
 
               {/* Task Timeline - Takes 2 columns on desktop */}
-              <div className="lg:col-span-2">
+              <div className="lg:col-span-9">
                 {/* Search Input */}
                 <div className="mb-4">
                   <Input
@@ -402,3 +371,6 @@ export default function CropDetailsPage() {
     </div>
   );
 }
+
+
+
